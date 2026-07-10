@@ -52,6 +52,7 @@
       <button id="btn-toc" class="iconbtn" title="Indice">☰</button>
       <div id="chapter-label">…</div>
       <div class="topbar-actions">
+        <button id="btn-tts" class="iconbtn" title="Ascolta il capitolo">🔊</button>
         <button id="btn-mode" class="iconbtn" title="Modifica">✏️</button>
         <button id="btn-save" class="iconbtn hidden" title="Salva sul repository">💾</button>
       </div>
@@ -88,6 +89,28 @@
       </div>
       <textarea id="editor-area" spellcheck="false" autocapitalize="off" autocorrect="off"></textarea>
     </main>
+
+    <!-- Barra di lettura ad alta voce -->
+    <div id="tts-bar" class="hidden">
+      <div class="tts-row">
+        <button id="tts-prev" class="iconbtn" title="Paragrafo precedente">⏮</button>
+        <button id="tts-play" class="iconbtn tts-big" title="Ascolta">▶</button>
+        <button id="tts-next" class="iconbtn" title="Paragrafo successivo">⏭</button>
+        <select id="tts-rate" title="Velocità">
+          <option value="0.8">0.8×</option>
+          <option value="1" selected>1×</option>
+          <option value="1.2">1.2×</option>
+          <option value="1.5">1.5×</option>
+        </select>
+        <button id="tts-close" class="iconbtn" title="Chiudi">✕</button>
+      </div>
+      <div class="tts-row">
+        <label class="tts-voice-label">Voce
+          <select id="tts-voice"></select>
+        </label>
+      </div>
+      <div id="tts-hint">Tocca un paragrafo per iniziare a leggere da lì</div>
+    </div>
 
     <div id="toast" class="hidden"></div>
     <div id="loading" class="hidden"><div class="spinner"></div><span id="loading-msg">Caricamento…</span></div>

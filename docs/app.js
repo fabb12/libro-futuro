@@ -607,6 +607,11 @@ function renderReader() {
   hydrateImages();
   hydrateFootnotes();
   updateNavButtons();
+  // capitolo nuovo: ferma la lettura in corso e riprepara la coda
+  if (typeof ttsStop === 'function') {
+    ttsStop();
+    if (!$('tts-bar').classList.contains('hidden')) ttsBuildQueue();
+  }
 }
 
 function hydrateImages() {
@@ -643,6 +648,7 @@ function updateNavButtons() {
 /* ---------------- Modalita' lettura / modifica ---------------- */
 function setMode(mode) {
   if (mode === 'edit') {
+    if (typeof ttsCloseBar === 'function') ttsCloseBar();
     hide($('reader')); show($('editor')); show($('btn-save'));
     $('btn-mode').textContent = '📖'; // 📖
     $('btn-mode').title = 'Torna alla lettura';
@@ -686,7 +692,17 @@ async function saveFile() {
     if (state.current.path === 'main.tex') await buildToc(newText);
     toast('✓ Salvato: ' + state.current.path);
   } catch (err) {
-    toast('Errore nel salvataggio: ' + err.message, true);
+    if (err.status === 403 || err.status === 401) {
+      state.pendingSave = true;
+      initSetupScreen('Il token non ha i permessi per scrivere su questo repository. ' +
+        'Aprilo su GitHub (Settings → Developer settings → Fine-grained tokens): in "Repository access" scegli ' +
+        '"Only select repositories" con ' + state.repo + ' e in "Permissions" imposta Contents = Read and write. ' +
+        'Poi torna qui e premi "Salva e continua" (le tue modifiche non sono andate perse).');
+      $('setup-error').textContent = 'GitHub ha risposto: ' + err.message;
+      show($('setup-error'));
+    } else {
+      toast('Errore nel salvataggio: ' + err.message, true);
+    }
   } finally {
     loading(false);
   }
@@ -789,6 +805,236 @@ function initUi() {
   });
 }
 
+/* =========================================================================
+ * Lettura ad alta voce (TTS)
+ * ========================================================================= */
+const TTS_LS = { rate: 'lf.ttsRate', voice: 'lf.ttsVoice' };
+const tts = {
+  queue: [],      // elementi del capitolo da leggere, in ordine
+  idx: 0,         // elemento corrente
+  chunkIdx: 0,    // frase corrente dentro l'elemento
+  chunks: [],
+  playing: false,
+  gen: 0,         // contatore per invalidare gli utterance in coda
+  errStreak: 0,   // errori consecutivi di sintesi
+  voices: [],
+  wakeLock: null
+};
+const TTS_SEL = 'h1,h2,h3,h4,p,li,blockquote,.epigraph,.msg,.flushright';
+
+function ttsSupported() { return 'speechSynthesis' in window; }
+
+function ttsCollectVoices() {
+  if (!ttsSupported()) return;
+  const vs = speechSynthesis.getVoices().filter(v => v.lang && v.lang.toLowerCase().startsWith('it'));
+  // preferisci le voci piu' naturali: neurali/online prima delle robotiche locali
+  const score = v =>
+    (/natural|neural|premium|enhanced|wavenet/i.test(v.name) ? 8 : 0) +
+    (/google/i.test(v.name) ? 4 : 0) +
+    (v.localService ? 0 : 2);
+  vs.sort((a, b) => score(b) - score(a));
+  tts.voices = vs;
+  const sel = $('tts-voice');
+  sel.innerHTML = '';
+  if (!vs.length) {
+    const o = document.createElement('option');
+    o.textContent = 'voce predefinita del dispositivo';
+    sel.appendChild(o);
+    return;
+  }
+  const saved = localStorage.getItem(TTS_LS.voice);
+  vs.forEach((v, i) => {
+    const o = document.createElement('option');
+    o.value = v.name;
+    o.textContent = v.name.replace(/^(Microsoft|Google)\s*/i, '') + (v.localService ? '' : ' · online');
+    if (v.name === saved || (!saved && i === 0)) o.selected = true;
+    sel.appendChild(o);
+  });
+}
+
+function ttsPickedVoice() {
+  const name = $('tts-voice').value;
+  return tts.voices.find(v => v.name === name) || tts.voices[0] || null;
+}
+
+function ttsBuildQueue() {
+  const root = $('reader-content');
+  tts.queue = [...root.querySelectorAll(TTS_SEL)].filter(el => {
+    if (el.closest('.endnotes') || el.closest('figure')) return false;
+    if (el.querySelector(TTS_SEL)) return false; // tieni solo i "blocchi foglia"
+    return ttsTextOf(el).length > 0;
+  });
+  tts.idx = 0; tts.chunkIdx = 0;
+}
+
+function ttsTextOf(el) {
+  const clone = el.cloneNode(true);
+  clone.querySelectorAll('sup.fnref, .img-loading, img').forEach(n => n.remove());
+  return clone.textContent.replace(/\s+/g, ' ').trim();
+}
+
+function ttsSplit(text) {
+  // spezza in frasi e raggruppa in blocchi brevi (Chrome tronca gli utterance lunghi)
+  const sentences = text.match(/[^.!?…]+[.!?…]+[»"”')\]]*\s*|[^.!?…]+$/g) || [text];
+  const chunks = [];
+  let cur = '';
+  for (const s of sentences) {
+    if (cur && (cur + s).length > 220) { chunks.push(cur.trim()); cur = s; }
+    else cur += s;
+  }
+  if (cur.trim()) chunks.push(cur.trim());
+  return chunks;
+}
+
+function ttsHighlight(el) {
+  document.querySelectorAll('.tts-current').forEach(n => n.classList.remove('tts-current'));
+  if (el) {
+    el.classList.add('tts-current');
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+async function ttsWakeLock(on) {
+  try {
+    if (on && 'wakeLock' in navigator && !tts.wakeLock) {
+      tts.wakeLock = await navigator.wakeLock.request('screen');
+      tts.wakeLock.addEventListener('release', () => { tts.wakeLock = null; });
+    } else if (!on && tts.wakeLock) {
+      await tts.wakeLock.release();
+      tts.wakeLock = null;
+    }
+  } catch (e) {}
+}
+
+function ttsSpeakChunk() {
+  const gen = tts.gen;
+  if (!tts.playing || tts.idx >= tts.queue.length) { ttsStop(); return; }
+  const el = tts.queue[tts.idx];
+  if (tts.chunkIdx === 0) {
+    tts.chunks = ttsSplit(ttsTextOf(el));
+    ttsHighlight(el);
+  }
+  if (tts.chunkIdx >= tts.chunks.length) {
+    tts.idx++; tts.chunkIdx = 0;
+    ttsSpeakChunk();
+    return;
+  }
+  const u = new SpeechSynthesisUtterance(tts.chunks[tts.chunkIdx]);
+  u.lang = 'it-IT';
+  const v = ttsPickedVoice();
+  if (v) u.voice = v;
+  u.rate = parseFloat($('tts-rate').value) || 1;
+  u.onend = () => {
+    if (gen !== tts.gen || !tts.playing) return;
+    tts.errStreak = 0;
+    tts.chunkIdx++;
+    ttsSpeakChunk();
+  };
+  u.onerror = ev => {
+    if (gen !== tts.gen || !tts.playing) return;
+    if (ev.error === 'interrupted' || ev.error === 'canceled') return;
+    if (++tts.errStreak >= 3) {
+      ttsStop();
+      toast('La sintesi vocale non funziona su questo dispositivo: controlla che sia installata una voce italiana', true);
+      return;
+    }
+    tts.chunkIdx++;
+    ttsSpeakChunk();
+  };
+  speechSynthesis.speak(u);
+}
+
+function ttsPlay(fromIdx) {
+  if (!ttsSupported()) { toast('La sintesi vocale non è disponibile su questo browser', true); return; }
+  if (!tts.queue.length) ttsBuildQueue();
+  if (!tts.queue.length) { toast('Niente da leggere in questa pagina', true); return; }
+  speechSynthesis.cancel();
+  tts.gen++;
+  if (typeof fromIdx === 'number') { tts.idx = Math.max(0, Math.min(fromIdx, tts.queue.length - 1)); tts.chunkIdx = 0; }
+  tts.playing = true;
+  $('tts-play').textContent = '⏸';
+  $('tts-play').title = 'Pausa';
+  ttsWakeLock(true);
+  ttsSpeakChunk();
+}
+
+function ttsPause() {
+  tts.playing = false;
+  tts.gen++;
+  speechSynthesis.cancel();  // riprenderemo dall'inizio della frase corrente
+  $('tts-play').textContent = '▶';
+  $('tts-play').title = 'Ascolta';
+  ttsWakeLock(false);
+}
+
+function ttsStop() {
+  ttsPause();
+  tts.idx = 0; tts.chunkIdx = 0;
+  ttsHighlight(null);
+}
+
+function ttsSkip(delta) {
+  const wasPlaying = tts.playing;
+  tts.gen++;
+  speechSynthesis.cancel();
+  tts.idx = Math.max(0, Math.min(tts.idx + delta, tts.queue.length - 1));
+  tts.chunkIdx = 0;
+  ttsHighlight(tts.queue[tts.idx]);
+  if (wasPlaying) { tts.playing = true; ttsSpeakChunk(); }
+}
+
+function ttsOpenBar() {
+  ttsBuildQueue();
+  ttsCollectVoices();
+  show($('tts-bar'));
+  document.body.classList.add('tts-open');
+}
+
+function ttsCloseBar() {
+  ttsStop();
+  hide($('tts-bar'));
+  document.body.classList.remove('tts-open');
+}
+
+function initTts() {
+  if (!ttsSupported()) { hide($('btn-tts')); return; }
+  $('tts-rate').value = localStorage.getItem(TTS_LS.rate) || '1';
+  speechSynthesis.onvoiceschanged = ttsCollectVoices;
+  ttsCollectVoices();
+
+  $('btn-tts').onclick = () => {
+    if ($('tts-bar').classList.contains('hidden')) {
+      if (currentMode() === 'edit') setMode('read');
+      ttsOpenBar();
+    } else ttsCloseBar();
+  };
+  $('tts-close').onclick = ttsCloseBar;
+  $('tts-play').onclick = () => tts.playing ? ttsPause() : ttsPlay();
+  $('tts-prev').onclick = () => ttsSkip(-1);
+  $('tts-next').onclick = () => ttsSkip(1);
+  $('tts-rate').onchange = () => {
+    localStorage.setItem(TTS_LS.rate, $('tts-rate').value);
+    if (tts.playing) { tts.gen++; speechSynthesis.cancel(); ttsSpeakChunk(); }
+  };
+  $('tts-voice').onchange = () => {
+    localStorage.setItem(TTS_LS.voice, $('tts-voice').value);
+    if (tts.playing) { tts.gen++; speechSynthesis.cancel(); ttsSpeakChunk(); }
+  };
+  // toccando un paragrafo (con la barra aperta) la lettura parte da li'
+  $('reader-content').addEventListener('click', e => {
+    if ($('tts-bar').classList.contains('hidden')) return;
+    if (e.target.closest('sup.fnref')) return; // le note restano toccabili
+    const el = e.target.closest(TTS_SEL);
+    if (!el || el.closest('.endnotes')) return;
+    const i = tts.queue.indexOf(el);
+    if (i >= 0) ttsPlay(i);
+  });
+  // se cambia pagina o si passa all'editor, ferma la lettura
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && tts.playing) ttsWakeLock(true);
+  });
+}
+
 /* ---------------- Service worker ---------------- */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
@@ -796,6 +1042,7 @@ if ('serviceWorker' in navigator) {
 
 /* ---------------- Boot ---------------- */
 initUi();
+initTts();
 // Il libro si apre subito (il repository e' pubblico, per leggere non serve nulla).
 // Le impostazioni/token compaiono solo per salvare o se il caricamento fallisce.
 startApp();
