@@ -1,0 +1,89 @@
+RISCRITTURA CAPITOLO CON SIMPOSIO DI ESPERTI (APPROCCIO PIERO ANGELA E FILOSOFICO)
+
+Riscrivi e migliora il capitolo fornito seguendo queste istruzioni. Usa il metodo del Simposio di Esperti nel tuo ragionamento (Chain of Thought) prima di scrivere il testo finale.
+
+FASE 1: SIMPOSIO DI ESPERTI (NEL TUO RAGIONAMENTO)
+
+Prima di scrivere, simula una discussione tra sei esperti. L'obiettivo è unire rigore scientifico, profondità filosofica e massima chiarezza divulgativa. Questo processo deve avvenire nel tuo pensiero ma non apparire nel testo finale.
+
+PANEL DEGLI ESPERTI:
+
+Prof.ssa Elena Marchetti (Neuroscienziata e Clinica)
+Focus: Cervello fisico, neurobiologia, patologie.
+Ruolo: Garantisce che i dati medici e scientifici siano esatti e rigorosi.
+Stile: Preciso e autorevole.
+
+Dr. Sofia Chen (Esperta Intelligenza Artificiale e Futuro)
+Focus: Intelligenza artificiale, tecnologie digitali.
+Ruolo: Collega il funzionamento del cervello alle moderne tecnologie.
+Stile: Analitico e visionario.
+
+Prof. Laura Bianchi (Psicologa Cognitiva e Comportamentale)
+Focus: Mente, emozioni, bias, comportamento sociale.
+Ruolo: Spiega il perché dei nostri comportamenti e sentimenti.
+Stile: Empatico e basato sull'evidenza.
+
+Prof. Lorenzo Fabbri (Filosofo della Natura Umana)
+Focus: Condizione umana, etica, libero arbitrio, significato dell'esistenza.
+Ruolo: Esplora le implicazioni esistenziali delle scoperte scientifiche. Riflette su cosa significhi essere umani alla luce dei dati oggettivi, unendo la biologia al senso della vita.
+Stile: Riflessivo, profondo, interrogativo.
+
+Maestro Carlo Venier (Divulgatore Narrativo)
+Focus: Storia, cultura, filosofia della scienza, visione d'insieme.
+Ruolo: Trasforma i dati in un racconto affascinante. Collega la scienza alla storia e all'arte.
+Stile: Elegante, colto, calmo, narrativo (stile documentario classico).
+
+Dott.ssa Giulia Moretti (Divulgatrice Pratica)
+Focus: Semplificazione estrema, metafore visive.
+Ruolo: Traduce il difficile in facile. Caccia i tecnicismi inutili. Usa la regola del bar (capirebbe chiunque?).
+Stile: Cristallino, ricco di esempi quotidiani (esempio: Il DNA come una cerniera).
+
+PROCESSO DEL SIMPOSIO:
+Step 1: Gli scienziati (Marchetti, Chen, Bianchi) verificano la correttezza dei contenuti e la solidità dei dati.
+Step 2: Il filosofo (Fabbri) interviene per dare spessore etico ed esistenziale ai concetti, ponendo domande sulle conseguenze per la natura umana.
+Step 3: I divulgatori (Venier, Moretti) intervengono per tradurre il tutto. Venier aggiunge il contesto storico e culturale, mentre Moretti crea le metafore per spiegare i concetti difficili.
+Step 4: Sintesi operativa per la stesura.
+
+FASE 2: STILE E TONO
+
+Obiettivo: Unire l'eleganza scientifica alla profondità filosofica, alla chiarezza divulgativa e alla narrativa coinvolgente.
+
+Linee guida:
+
+Semplicità: Spiega concetti complessi con parole comuni.
+
+Metafore: Usa immagini visive.
+
+Curiosità: Inizia i paragrafi con domande o fatti sorprendenti.
+
+Umanizzazione e Senso: Alterna dati tecnici a riflessioni sulla condizione umana, aneddoti storici o esempi di vita quotidiana.
+
+Niente Accademichese: Evita termini troppo oscuri o burocratici. Il testo deve scorrere fluidamente.
+
+FASE 3: STRUTTURA TECNICA (LATEX)
+
+Formato base: \chapter{Titolo}
+Sezioni: Massimo cinque o sei sezioni principali (\section{}).
+Flusso: Testo continuo e discorsivo, evitare elenchi puntati se non assolutamente indispensabili.
+
+Citazioni:
+Usa il formato \footnote{Autore (Anno). Titolo. Fonte.} in modo che non interrompano la lettura.
+
+Immagini:
+Usa il codice standard LaTeX:
+\begin{center}
+\includegraphics[width=0.4\textwidth]{images/nome_file.jpg}
+\captionof{figure}{Descrizione parlante che spiega il concetto visivo.}
+\label{fig:etichetta}
+\end{center}
+
+ISTRUZIONI OPERATIVE FINALI E REGOLE INVALICABILI:
+
+1. Leggi il testo originale.
+2. Attiva il Simposio nel tuo ragionamento nascosto.
+3. Riscrivi il capitolo integrando rigore, indagine filosofica e narrazione divulgativa.
+4. Consegna SOLO ed esclusivamente il codice LaTeX finale.
+
+DIVIETO ASSOLUTO DEL SIMBOLO DEL TRATTINO: È severamente vietato digitare il carattere del trattino (sia la versione corta usata per la sottrazione, sia la versione lunga per gli incisi) in qualsiasi punto della tua risposta. Per unire le parole usa uno spazio, per separare i concetti usa la virgola, il punto, i due punti o le parentesi. Questa direttiva ha la priorità assoluta su tutto il resto.
+
+non cambiare i nomi delle immagini originali

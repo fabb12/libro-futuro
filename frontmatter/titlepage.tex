@@ -1,0 +1,49 @@
+% =============================================================================
+% Title Page – titolo in alto, sottotitolo, rettangolo semi-trasparente
+% =============================================================================
+\begin{titlepage}
+	\thispagestyle{empty}
+	
+	% Sfondo a tutta pagina
+	\AddToShipoutPictureBG*{%
+		\AtPageLowerLeft{\includegraphics[width=\paperwidth,height=\paperheight]{cover.png}}%
+	}
+	
+	% --- BLOCCO TITOLO + SOTTOTITOLO CON RETTANGOLO TRASPARENTE ---
+	\begin{tikzpicture}[remember picture,overlay]
+		\node[
+		anchor=north,
+		align=center,
+		yshift=-2.0cm,          % distanza dal bordo superiore
+		text=white,             % colore del testo
+		text opacity=1,
+		fill=black,             % colore del rettangolo
+		fill opacity=.30,       % trasparenza (0=trasp., 1=opaco)
+		rounded corners=10pt,
+		inner xsep=18pt,
+		inner ysep=14pt,
+		text width=.82\paperwidth
+		] at (current page.north) {%
+			{\fontsize{34}{40}\selectfont\sffamily\bfseries\textls[100]{\MakeUppercase{\booktitle}}\par}
+			\vspace{0.8em}
+			
+			{\normalsize\sffamily\itshape
+				\subtitleA\\[0.8em]\subtitleB\par
+			}
+			\vspace{0.9em}
+			{\large\sffamily\textls[80]{\MakeUppercase{\authorname}}}
+			
+		};
+		
+		% --- CHIP EDITORE: leggermente più in basso ---
+		\node[
+		anchor=south,
+		fill=black,
+		text=white,
+		rounded corners=6pt,
+		inner xsep=10pt,
+		inner ysep=6pt
+		] at ([yshift=6mm]current page.south) {\large\sffamily\textls[50]{\MakeUppercase{\publisher}}};
+	\end{tikzpicture}
+	
+\end{titlepage}

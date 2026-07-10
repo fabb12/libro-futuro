@@ -1,0 +1,92 @@
+----------------------------------------------
+METODOLOGIE PER SCRIVERE USANDO GLI LLM
+----------------------------------------------
+
+FASE 1 - PREPARAZIONE:
+
+1. creare un prompt di sistema per la scrittura del libro 
+punti chiave:
+	tono
+	pubblico target
+	metafore ( fare un file con tutte le metafore da usare)
+	termini tecnici vs divulgativi
+    
+
+
+2. fornire il contesto 
+Per ogni nuovo capitolo:
+
+	1. Scrivi prima una bozza (300-500 parole) con tutti i punti da toccare
+        fare un file con le nuove idee da argomentare
+	
+	2. Identifica 3-5 fonti scientifiche chiave da citare
+	
+	3. Raccogli esempi concreti/aneddoti prima di iniziare
+
+
+------------------------------------------------------------------------------------
+FASE 2 - SCRITTURA:
+
+1. dividi il capitolo in 3 o 4 sezioni da 800-1200 parole
+2. lavorare una sezione per volta , non l-intero capitolo
+
+3.Usa prompt tipo: "Scrivi la sezione X basandoti su questa bozza [bozza], mantieni questo stile [esempio stile], integra queste fonti [fonti]"
+
+Per mantenere coerenza:
+	Inizia ogni prompt con: "Continua il capitolo su [argomento]. Finora abbiamo: [riassunto 100 parole]"
+	Fornisci sempre l'ultimo paragrafo scritto per garantire fluidità
+	Usa un personaggio/metafora ricorrente per tutto il capitolo
+
+
+------------------------------------------------------------------------------------
+FASE 3 - REVISIONE:
+
+
+1. Identifica i 3-5 paragrafi più deboli
+2. Chiedi revisioni mirate: "Rendi questo paragrafo più chiaro/coinvolgente/ scientifico"
+3. Usa prompt comparativi: "Quale versione funziona meglio e perché?"
+
+Controllo qualità rapido:
+
+1. Identifica ridondanze in questo testo
+2. Quali concetti potrebbero confondere un lettore non esperto?
+3. Suggerisci 3 modi per rendere questo esempio più memorabile
+
+
+------------------------------------------------------------------------------------
+FASE 4 - OTTIMIZZAZIONE:
+
+Per velocizzare:
+
+1. Riusa strutture che funzionano: "Applica la struttura del capitolo 2 a questo nuovo argomento"
+2. Crea template per sezioni ricorrenti (introduzioni, conclusioni, transizioni)
+3. Batch processing: prepara tutti gli esempi/metafore in una sessione dedicata
+
+Per migliorare qualità:
+
+1. Alterna scrittura e fact-checking: "Verifica queste affermazioni e suggerisci fonti"
+2. Testa la chiarezza: "Spiega questo concetto come se fossi al bar con un amico"
+3. Aggiungi layer progressivi: prima il contenuto, poi lo stile, poi i riferimenti
+
+
+------------------------------------------------------------------------------------
+FASE 5: WORKFLOW CONSIGLIATO
+Sessione tipo (2 ore):
+
+15 min: Rileggi ultimo capitolo + prepara outline nuovo
+60 min: Scrittura prima bozza (2-3 sezioni)
+30 min: Revisione e affinamento stile
+15 min: Aggiunta citazioni e collegamenti
+
+Trucchi:
+
+Salva prompt che funzionano in un file "Prompt Library"
+Usa versioning: mantieni V1, V2, V3 di ogni capitolo
+Non cercare perfezione al primo giro: 70% prima bozza → 90% revisione → 100% editing finale
+
+Da evitare:
+
+Non chiedere "Scrivi un capitolo su X" (troppo generico)
+Non fare sessioni oltre 3 ore (cala qualità output)
+Non mischiare lingue nel prompt se scrivi in italiano
+Non dimenticare di specificare il pubblico target ogni volta

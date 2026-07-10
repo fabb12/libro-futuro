@@ -1,0 +1,2485 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.18)  20 JUN 2026 23:22
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**./main.tex
+(main.tex
+LaTeX2e <2025-11-01>
+L3 programming layer <2025-10-24>
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/base\book.cls
+Document Class: book 2025/01/22 v1.4n Standard LaTeX document class
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/base\bk11.clo
+File: bk11.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count275
+\c@chapter=\count276
+\c@section=\count277
+\c@subsection=\count278
+\c@subsubsection=\count279
+\c@paragraph=\count280
+\c@subparagraph=\count281
+\c@figure=\count282
+\c@table=\count283
+\abovecaptionskip=\skip49
+\belowcaptionskip=\skip50
+\bibindent=\dimen148
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
+Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
+Package: inputenc 2024/02/08 v1.3d Input encoding file
+\inpenc@prehook=\toks17
+\inpenc@posthook=\toks18
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/base\textcomp.sty
+Package: textcomp 2024/04/24 v2.1b Standard LaTeX package
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 274.
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
+File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
+Package xcolor Info: Model `RGB' extended on input line 1365.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
+) (C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/contour\contour.sty
+Package: contour 2004/11/18 v2.14 Print contoured text (HH, MH)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty
+Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
+)
+\con@length=\skip51
+
+Loading configuration file `contour.cfg'.
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/contour\contour.cfg
+File: contour.cfg 2004/11/18 v2.14 Print contoured text (HH, MH)
+)
+contour: Using driver file `pdftex.cnt'.
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/contour\pdftex.cnt
+File: pdftex.cnt 2004/11/18 v2.14 Print contoured text (HH, MH)
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/comment\comment.sty
+\CommentStream=\write3
+
+Excluding comment 'comment') (misc/options.tex
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
+Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype.sty
+Package: microtype 2025/07/09 v3.2b Micro-typographical refinements (RS)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks19
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
+Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count284
+)
+\MT@toks=\toks20
+\MT@tempbox=\box53
+\MT@count=\count285
+LaTeX Info: Redefining \noprotrusionifhmode on input line 1087.
+LaTeX Info: Redefining \leftprotrusion on input line 1088.
+\MT@prot@toks=\toks21
+LaTeX Info: Redefining \rightprotrusion on input line 1107.
+LaTeX Info: Redefining \textls on input line 1449.
+\MT@outer@kern=\dimen149
+LaTeX Info: Redefining \microtypecontext on input line 2053.
+LaTeX Info: Redefining \textmicrotypecontext on input line 2070.
+\MT@listname@count=\count286
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype-pdf
+tex.def
+File: microtype-pdftex.def 2025/07/09 v3.2b Definitions specific to pdftex (RS)
+
+LaTeX Info: Redefining \lsstyle on input line 944.
+LaTeX Info: Redefining \lslig on input line 944.
+\MT@outer@space=\skip52
+)
+Package microtype Info: Loading configuration file microtype.cfg.
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype.cfg
+File: microtype.cfg 2025/07/09 v3.2b microtype main configuration file (RS)
+)
+LaTeX Info: Redefining \microtypesetup on input line 3065.
+) (C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.sty
+Package: babel 2025/10/22 v25.14 The multilingual framework for LuaLaTeX, pdfLa
+TeX and XeLaTeX
+\babel@savecnt=\count287
+LaTeX Encoding Info:    Redeclaring text command \ij (encoding OT1) on input li
+ne 2050.
+LaTeX Encoding Info:    Redeclaring text command \IJ (encoding OT1) on input li
+ne 2052.
+LaTeX Encoding Info:    Redeclaring text command \ij (encoding T1) on input lin
+e 2054.
+LaTeX Encoding Info:    Redeclaring text command \IJ (encoding T1) on input lin
+e 2055.
+LaTeX Encoding Info:    Ignoring declaration for text command \ij (encoding ?) 
+on input line 2056.
+LaTeX Encoding Info:    Ignoring declaration for text command \IJ (encoding ?) 
+on input line 2058.
+LaTeX Encoding Info:    Ignoring declaration for text command \SS (encoding ?) 
+on input line 2083.
+\U@D=\dimen150
+\l@unhyphenated=\language79
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/babel\txtbabel.def)
+\bbl@readstream=\read2
+\bbl@dirlevel=\count288
+
+
+Package babel Warning: Configuration files are deprecated, as
+(babel)                they can break document portability.
+(babel)                Reported on input line 4172.
+
+*************************************
+* Local config file bblopts.cfg used
+*
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/arabi\bblopts.cfg
+File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
+ babel
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/babel/locale/en\babel
+-english.tex)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/babel/locale/it\babel
+-italian.tex)
+Package babel Info: Importing font and identification data for english
+(babel)             from babel-en.ini. Reported on input line 4295.
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/babel-english\english.l
+df
+Language: english 2017/06/06 v3.3r English support from the babel system
+Package babel Info: Hyphen rules for 'canadian' set to \l@english
+(babel)             (\language0). Reported on input line 102.
+Package babel Info: Hyphen rules for 'australian' set to \l@ukenglish
+(babel)             (\language73). Reported on input line 105.
+Package babel Info: Hyphen rules for 'newzealand' set to \l@ukenglish
+(babel)             (\language73). Reported on input line 108.
+)
+Package babel Info: Importing font and identification data for italian
+(babel)             from babel-it.ini. Reported on input line 4295.
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/babel-italian\italian.l
+df
+Language: italian 2024/10/10 v.1.5.01 Italian support for the babel system
+\it@lettering=\count289
+\it@doublequoteactive=\count290
+\it@ISOcompliance=\count291
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/sourceserifpro\sourcese
+rifpro.sty
+Package: sourceserifpro 2018/11/10 v1.4 Adobe's Source Serif Pro typeface
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifxetex.sty
+Package: ifxetex 2019/10/25 v0.7 ifxetex legacy package. Use iftex instead.
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
+Package: iftex 2024/12/12 v1.0g TeX engine tests
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifluatex.sty
+Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/xkeyval\xkeyval.sty
+Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/xkeyval\xkeyval.tex
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/xkeyval\xkvutils.tex
+\XKV@toks=\toks22
+\XKV@tempa@toks=\toks23
+)
+\XKV@depth=\count292
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+)) (C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
+Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/ly1\ly1enc.def
+File: ly1enc.def 2022/06/11 v0.8 TeX 'n ANSI encoding (DPC/KB)
+Now handling font encoding LY1 ...
+... processing UTF-8 mapping file for font encoding LY1
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/base\ly1enc.dfu
+File: ly1enc.dfu 2022/06/07 v1.3c UTF-8 support
+   defining Unicode char U+00A0 (decimal 160)
+   defining Unicode char U+00A1 (decimal 161)
+   defining Unicode char U+00A2 (decimal 162)
+   defining Unicode char U+00A3 (decimal 163)
+   defining Unicode char U+00A4 (decimal 164)
+   defining Unicode char U+00A5 (decimal 165)
+   defining Unicode char U+00A6 (decimal 166)
+   defining Unicode char U+00A7 (decimal 167)
+   defining Unicode char U+00AA (decimal 170)
+   defining Unicode char U+00AB (decimal 171)
+   defining Unicode char U+00AD (decimal 173)
+   defining Unicode char U+00AE (decimal 174)
+   defining Unicode char U+00B0 (decimal 176)
+   defining Unicode char U+00B5 (decimal 181)
+   defining Unicode char U+00B6 (decimal 182)
+   defining Unicode char U+00B7 (decimal 183)
+   defining Unicode char U+00BA (decimal 186)
+   defining Unicode char U+00BB (decimal 187)
+   defining Unicode char U+00BC (decimal 188)
+   defining Unicode char U+00BD (decimal 189)
+   defining Unicode char U+00BE (decimal 190)
+   defining Unicode char U+00BF (decimal 191)
+   defining Unicode char U+00C0 (decimal 192)
+   defining Unicode char U+00C1 (decimal 193)
+   defining Unicode char U+00C2 (decimal 194)
+   defining Unicode char U+00C3 (decimal 195)
+   defining Unicode char U+00C4 (decimal 196)
+   defining Unicode char U+00C5 (decimal 197)
+   defining Unicode char U+00C6 (decimal 198)
+   defining Unicode char U+00C7 (decimal 199)
+   defining Unicode char U+00C8 (decimal 200)
+   defining Unicode char U+00C9 (decimal 201)
+   defining Unicode char U+00CA (decimal 202)
+   defining Unicode char U+00CB (decimal 203)
+   defining Unicode char U+00CC (decimal 204)
+   defining Unicode char U+00CD (decimal 205)
+   defining Unicode char U+00CE (decimal 206)
+   defining Unicode char U+00CF (decimal 207)
+   defining Unicode char U+00D0 (decimal 208)
+   defining Unicode char U+00D1 (decimal 209)
+   defining Unicode char U+00D2 (decimal 210)
+   defining Unicode char U+00D3 (decimal 211)
+   defining Unicode char U+00D4 (decimal 212)
+   defining Unicode char U+00D5 (decimal 213)
+   defining Unicode char U+00D6 (decimal 214)
+   defining Unicode char U+00D8 (decimal 216)
+   defining Unicode char U+00D9 (decimal 217)
+   defining Unicode char U+00DA (decimal 218)
+   defining Unicode char U+00DB (decimal 219)
+   defining Unicode char U+00DC (decimal 220)
+   defining Unicode char U+00DD (decimal 221)
+   defining Unicode char U+00DE (decimal 222)
+   defining Unicode char U+00DF (decimal 223)
+   defining Unicode char U+00E0 (decimal 224)
+   defining Unicode char U+00E1 (decimal 225)
+   defining Unicode char U+00E2 (decimal 226)
+   defining Unicode char U+00E3 (decimal 227)
+   defining Unicode char U+00E4 (decimal 228)
+   defining Unicode char U+00E5 (decimal 229)
+   defining Unicode char U+00E6 (decimal 230)
+   defining Unicode char U+00E7 (decimal 231)
+   defining Unicode char U+00E8 (decimal 232)
+   defining Unicode char U+00E9 (decimal 233)
+   defining Unicode char U+00EA (decimal 234)
+   defining Unicode char U+00EB (decimal 235)
+   defining Unicode char U+00EC (decimal 236)
+   defining Unicode char U+00ED (decimal 237)
+   defining Unicode char U+00EE (decimal 238)
+   defining Unicode char U+00EF (decimal 239)
+   defining Unicode char U+00F0 (decimal 240)
+   defining Unicode char U+00F1 (decimal 241)
+   defining Unicode char U+00F2 (decimal 242)
+   defining Unicode char U+00F3 (decimal 243)
+   defining Unicode char U+00F4 (decimal 244)
+   defining Unicode char U+00F5 (decimal 245)
+   defining Unicode char U+00F6 (decimal 246)
+   defining Unicode char U+00F8 (decimal 248)
+   defining Unicode char U+00F9 (decimal 249)
+   defining Unicode char U+00FA (decimal 250)
+   defining Unicode char U+00FB (decimal 251)
+   defining Unicode char U+00FC (decimal 252)
+   defining Unicode char U+00FD (decimal 253)
+   defining Unicode char U+00FE (decimal 254)
+   defining Unicode char U+00FF (decimal 255)
+   defining Unicode char U+0131 (decimal 305)
+   defining Unicode char U+0141 (decimal 321)
+   defining Unicode char U+0142 (decimal 322)
+   defining Unicode char U+0152 (decimal 338)
+   defining Unicode char U+0153 (decimal 339)
+   defining Unicode char U+0160 (decimal 352)
+   defining Unicode char U+0161 (decimal 353)
+   defining Unicode char U+0174 (decimal 372)
+   defining Unicode char U+0175 (decimal 373)
+   defining Unicode char U+0176 (decimal 374)
+   defining Unicode char U+0177 (decimal 375)
+   defining Unicode char U+0178 (decimal 376)
+   defining Unicode char U+017D (decimal 381)
+   defining Unicode char U+017E (decimal 382)
+   defining Unicode char U+0192 (decimal 402)
+   defining Unicode char U+0218 (decimal 536)
+   defining Unicode char U+0219 (decimal 537)
+   defining Unicode char U+021A (decimal 538)
+   defining Unicode char U+021B (decimal 539)
+   defining Unicode char U+0237 (decimal 567)
+   defining Unicode char U+02C6 (decimal 710)
+   defining Unicode char U+02DC (decimal 732)
+   defining Unicode char U+2013 (decimal 8211)
+   defining Unicode char U+2014 (decimal 8212)
+   defining Unicode char U+201C (decimal 8220)
+   defining Unicode char U+201D (decimal 8221)
+   defining Unicode char U+2020 (decimal 8224)
+   defining Unicode char U+2021 (decimal 8225)
+   defining Unicode char U+2022 (decimal 8226)
+   defining Unicode char U+2026 (decimal 8230)
+   defining Unicode char U+2030 (decimal 8240)
+   defining Unicode char U+2039 (decimal 8249)
+   defining Unicode char U+203A (decimal 8250)
+   defining Unicode char U+2122 (decimal 8482)
+   defining Unicode char U+FB00 (decimal 64256)
+   defining Unicode char U+FB01 (decimal 64257)
+   defining Unicode char U+FB02 (decimal 64258)
+   defining Unicode char U+FB03 (decimal 64259)
+   defining Unicode char U+FB04 (decimal 64260)
+   defining Unicode char U+FB05 (decimal 64261)
+   defining Unicode char U+FB06 (decimal 64262)
+))))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/sourcesanspro\sourcesan
+spro.sty
+Package: sourcesanspro 2018/05/19 v2.7 Adobe's Source Sans Pro typeface
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
+Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
+LaTeX Font Info:    Trying to load font information for T1+SourceSerifPro-LF on
+ input line 116.
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/sourceserifpro\t1source
+serifpro-lf.fd
+File: T1SourceSerifPro-LF.fd 2018/09/05 (autoinst) Font definitions for T1/Sour
+ceSerifPro-LF.
+)
+LaTeX Font Info:    Font shape `T1/SourceSerifPro-LF/m/n' will be
+(Font)              scaled to size 10.95pt on input line 116.
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/sourcecodepro\sourcecod
+epro.sty
+Package: sourcecodepro 2025/04/06 v2.8 Adobe's Source Code Pro typeface
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
+Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/lettrine\lettrine.sty
+File: lettrine.sty 2025-01-30 v2.80 (Daniel Flipo)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/l3packages/xfp\xfp.sty
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/l3kernel\expl3.sty
+Package: expl3 2025-10-24 L3 programming layer (loader) 
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
+tex.def
+File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count293
+))
+Package: xfp 2025-10-09 L3 Floating point unit
+)
+\c@DefaultLines=\count294
+\c@DefaultDepth=\count295
+\DefaultFindent=\dimen151
+\DefaultNindent=\dimen152
+\DefaultSlope=\dimen153
+\DiscardVskip=\dimen154
+\L@lettrine=\box54
+\L@lbox=\box55
+\L@tbox=\box56
+\c@L@lines=\count296
+\c@L@depth=\count297
+\L@Pindent=\dimen155
+\L@Findent=\dimen156
+\L@Nindent=\dimen157
+\L@lraise=\dimen158
+\L@first=\dimen159
+\L@next=\dimen160
+\L@slope=\dimen161
+\L@height=\dimen162
+\L@novskip=\dimen163
+\L@target@ht=\dimen164
+\L@target@dp=\dimen165
+\L@target@tht=\dimen166
+\LettrineWidth=\dimen167
+\LettrineHeight=\dimen168
+\LettrineDepth=\dimen169
+\L@finalht=\dimen170
+\L@finaldp=\dimen171
+
+Loading lettrine.cfg
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/lettrine\lettrine.cfg)
+\Lettrine@tweaks=\toks24
+\Llist@everypar=\toks25
+) (C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
+Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
+Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.c
+fg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 106.
+)
+\Gin@req@height=\dimen172
+\Gin@req@width=\dimen173
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcolorbox.sty
+Package: tcolorbox 2025/09/09 version 6.8.0 text color boxes
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/pgf/frontendlayer\tikz.
+sty
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/pgf/basiclayer\pgf.sty
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfrcs.st
+y
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil
+-common.tex
+\pgfutil@everybye=\toks26
+\pgfutil@tempdima=\dimen174
+\pgfutil@tempdimb=\dimen175
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil
+-latex.def
+\pgfutil@abb=\box57
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfrcs.
+code.tex
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf\pgf.revision.tex)
+Package: pgfrcs 2025-08-29 v3.1.11a (3.1.11a)
+))
+Package: pgf 2025-08-29 v3.1.11a (3.1.11a)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/pgf/basiclayer\pgfcore.
+sty
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/pgf/systemlayer\pgfsys.
+sty
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+s.code.tex
+Package: pgfsys 2025-08-29 v3.1.11a (3.1.11a)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys
+.code.tex
+\pgfkeys@pathtoks=\toks27
+\pgfkeys@temptoks=\toks28
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys
+libraryfiltered.code.tex
+\pgfkeys@tmptoks=\toks29
+))
+\pgf@x=\dimen176
+\pgf@y=\dimen177
+\pgf@xa=\dimen178
+\pgf@ya=\dimen179
+\pgf@xb=\dimen180
+\pgf@yb=\dimen181
+\pgf@xc=\dimen182
+\pgf@yc=\dimen183
+\pgf@xd=\dimen184
+\pgf@yd=\dimen185
+\w@pgf@writea=\write4
+\r@pgf@reada=\read3
+\c@pgf@counta=\count298
+\c@pgf@countb=\count299
+\c@pgf@countc=\count300
+\c@pgf@countd=\count301
+\t@pgf@toka=\toks30
+\t@pgf@tokb=\toks31
+\t@pgf@tokc=\toks32
+\pgf@sys@id@count=\count302
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgf.c
+fg
+File: pgf.cfg 2025-08-29 v3.1.11a (3.1.11a)
+)
+Driver file for pgf: pgfsys-pdftex.def
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+s-pdftex.def
+File: pgfsys-pdftex.def 2025-08-29 v3.1.11a (3.1.11a)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+s-common-pdf.def
+File: pgfsys-common-pdf.def 2025-08-29 v3.1.11a (3.1.11a)
+)))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+ssoftpath.code.tex
+File: pgfsyssoftpath.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfsyssoftpath@smallbuffer@items=\count303
+\pgfsyssoftpath@bigbuffer@items=\count304
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
+sprotocol.code.tex
+File: pgfsysprotocol.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+e.code.tex
+Package: pgfcore 2025-08-29 v3.1.11a (3.1.11a)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmath.code
+.tex
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathutil.
+code.tex)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathparse
+r.code.tex
+\pgfmath@dimen=\dimen186
+\pgfmath@count=\count305
+\pgfmath@box=\box58
+\pgfmath@toks=\toks33
+\pgfmath@stack@operand=\toks34
+\pgfmath@stack@operation=\toks35
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.code.tex)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.basic.code.tex)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.trigonometric.code.tex)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.random.code.tex)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.comparison.code.tex)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.base.code.tex)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.round.code.tex)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.misc.code.tex)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunct
+ions.integerarithmetics.code.tex)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathcalc.
+code.tex)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfloat
+.code.tex
+\c@pgfmathroundto@lastzeros=\count306
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfint.code.
+tex)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epoints.code.tex
+File: pgfcorepoints.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@picminx=\dimen187
+\pgf@picmaxx=\dimen188
+\pgf@picminy=\dimen189
+\pgf@picmaxy=\dimen190
+\pgf@pathminx=\dimen191
+\pgf@pathmaxx=\dimen192
+\pgf@pathminy=\dimen193
+\pgf@pathmaxy=\dimen194
+\pgf@xx=\dimen195
+\pgf@xy=\dimen196
+\pgf@yx=\dimen197
+\pgf@yy=\dimen198
+\pgf@zx=\dimen199
+\pgf@zy=\dimen256
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epathconstruct.code.tex
+File: pgfcorepathconstruct.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@path@lastx=\dimen257
+\pgf@path@lasty=\dimen258
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epathusage.code.tex
+File: pgfcorepathusage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@shorten@end@additional=\dimen259
+\pgf@shorten@start@additional=\dimen260
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+escopes.code.tex
+File: pgfcorescopes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfpic=\box59
+\pgf@hbox=\box60
+\pgf@layerbox@main=\box61
+\pgf@picture@serial@count=\count307
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+egraphicstate.code.tex
+File: pgfcoregraphicstate.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgflinewidth=\dimen261
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+etransformations.code.tex
+File: pgfcoretransformations.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@pt@x=\dimen262
+\pgf@pt@y=\dimen263
+\pgf@pt@temp=\dimen264
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+equick.code.tex
+File: pgfcorequick.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eobjects.code.tex
+File: pgfcoreobjects.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epathprocessing.code.tex
+File: pgfcorepathprocessing.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+earrows.code.tex
+File: pgfcorearrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfarrowsep=\dimen265
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eshade.code.tex
+File: pgfcoreshade.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@max=\dimen266
+\pgf@sys@shading@range@num=\count308
+\pgf@shadingcount=\count309
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eimage.code.tex
+File: pgfcoreimage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+eexternal.code.tex
+File: pgfcoreexternal.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfexternal@startupbox=\box62
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+elayers.code.tex
+File: pgfcorelayers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+etransparency.code.tex
+File: pgfcoretransparency.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+epatterns.code.tex
+File: pgfcorepatterns.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
+erdf.code.tex
+File: pgfcorerdf.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
+shapes.code.tex
+File: pgfmoduleshapes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfnodeparttextbox=\box63
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
+plot.code.tex
+File: pgfmoduleplot.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/pgf/compatibility\pgfco
+mp-version-0-65.sty
+Package: pgfcomp-version-0-65 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@nodesepstart=\dimen267
+\pgf@nodesepend=\dimen268
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/pgf/compatibility\pgfco
+mp-version-1-18.sty
+Package: pgfcomp-version-1-18 2025-08-29 v3.1.11a (3.1.11a)
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgffor.st
+y
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfkeys.s
+ty
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys
+.code.tex))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/pgf/math\pgfmath.sty
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmath.code
+.tex))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgffor.
+code.tex
+Package: pgffor 2025-08-29 v3.1.11a (3.1.11a)
+\pgffor@iter=\dimen269
+\pgffor@skip=\dimen270
+\pgffor@stack=\toks36
+\pgffor@toks=\toks37
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z\tikz.code.tex
+Package: tikz 2025-08-29 v3.1.11a (3.1.11a)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibr
+aryplothandlers.code.tex
+File: pgflibraryplothandlers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@plot@mark@count=\count310
+\pgfplotmarksize=\dimen271
+)
+\tikz@lastx=\dimen272
+\tikz@lasty=\dimen273
+\tikz@lastxsaved=\dimen274
+\tikz@lastysaved=\dimen275
+\tikz@lastmovetox=\dimen276
+\tikz@lastmovetoy=\dimen277
+\tikzleveldistance=\dimen278
+\tikzsiblingdistance=\dimen279
+\tikz@figbox=\box64
+\tikz@figbox@bg=\box65
+\tikz@tempbox=\box66
+\tikz@tempbox@bg=\box67
+\tikztreelevel=\count311
+\tikznumberofchildren=\count312
+\tikznumberofcurrentchild=\count313
+\tikz@fig@count=\count314
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
+matrix.code.tex
+File: pgfmodulematrix.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfmatrixcurrentrow=\count315
+\pgfmatrixcurrentcolumn=\count316
+\pgf@matrix@numberofcolumns=\count317
+)
+\tikz@expandcount=\count318
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/tools\verbatim.sty
+Package: verbatim 2024-01-22 v1.5x LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks38
+\verbatim@line=\toks39
+\verbatim@in@stream=\read4
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/environ\environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/trimspaces\trimspaces.s
+ty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+)
+\@envbody=\toks40
+)
+\tcb@titlebox=\box68
+\tcb@upperbox=\box69
+\tcb@lowerbox=\box70
+\tcb@phantombox=\box71
+\c@tcbbreakpart=\count319
+\c@tcblayer=\count320
+\c@tcolorbox@number=\count321
+\l__tcobox_tmpa_box=\box72
+\l__tcobox_tmpa_dim=\dimen280
+\tcb@temp=\box73
+\tcb@temp=\box74
+\tcb@temp=\box75
+\tcb@temp=\box76
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbskins.code
+.tex
+Library (tcolorbox): 'tcbskins.code.tex' version '6.8.0'
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/tikzfill\tikzfill.image
+.sty
+Package: tikzfill.image 2023/08/08 v1.0.1 Image filling library for TikZ
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/tikzfill\tikzfill-commo
+n.sty
+Package: tikzfill-common 2023/08/08 v1.0.1 Auxiliary code for tikzfill
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/tikzfill\tikzlibraryfil
+l.image.code.tex
+File: tikzlibraryfill.image.code.tex 2023/08/08 v1.0.1 Image filling library
+\l__tikzfill_img_box=\box77
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbskinsjigsa
+w.code.tex
+Library (tcolorbox): 'tcbskinsjigsaw.code.tex' version '6.8.0'
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcbbreakable.
+code.tex
+Library (tcolorbox): 'tcbbreakable.code.tex' version '6.8.0'
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/pdfcol\pdfcol.sty
+Package: pdfcol 2022-09-21 v1.7 Handle new color stacks for pdfTeX (HO)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.s
+ty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+))
+Package pdfcol Info: New color stack `tcb@breakable' = 1 on input line 23.
+\tcb@testbox=\box78
+\tcb@totalupperbox=\box79
+\tcb@totallowerbox=\box80
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+)
+\Gm@cnth=\count322
+\Gm@cntv=\count323
+\c@Gm@tempcnt=\count324
+\Gm@bindingoffset=\dimen281
+\Gm@wd@mp=\dimen282
+\Gm@odd@mp=\dimen283
+\Gm@even@mp=\dimen284
+\Gm@layoutwidth=\dimen285
+\Gm@layoutheight=\dimen286
+\Gm@layouthoffset=\dimen287
+\Gm@layoutvoffset=\dimen288
+\Gm@dimlist=\toks41
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/tocloft\tocloft.sty
+Package: tocloft 2017/08/31 v2.3i parameterised ToC, etc., typesetting
+Package tocloft Info: The document has chapter divisions on input line 51.
+\cftparskip=\skip53
+\cftbeforetoctitleskip=\skip54
+\cftaftertoctitleskip=\skip55
+\cftbeforepartskip=\skip56
+\cftpartnumwidth=\skip57
+\cftpartindent=\skip58
+\cftbeforechapskip=\skip59
+\cftchapindent=\skip60
+\cftchapnumwidth=\skip61
+\cftbeforesecskip=\skip62
+\cftsecindent=\skip63
+\cftsecnumwidth=\skip64
+\cftbeforesubsecskip=\skip65
+\cftsubsecindent=\skip66
+\cftsubsecnumwidth=\skip67
+\cftbeforesubsubsecskip=\skip68
+\cftsubsubsecindent=\skip69
+\cftsubsubsecnumwidth=\skip70
+\cftbeforeparaskip=\skip71
+\cftparaindent=\skip72
+\cftparanumwidth=\skip73
+\cftbeforesubparaskip=\skip74
+\cftsubparaindent=\skip75
+\cftsubparanumwidth=\skip76
+\cftbeforeloftitleskip=\skip77
+\cftafterloftitleskip=\skip78
+\cftbeforefigskip=\skip79
+\cftfigindent=\skip80
+\cftfignumwidth=\skip81
+\c@lofdepth=\count325
+\c@lotdepth=\count326
+\cftbeforelottitleskip=\skip82
+\cftafterlottitleskip=\skip83
+\cftbeforetabskip=\skip84
+\cfttabindent=\skip85
+\cfttabnumwidth=\skip86
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/titlesec\titlesec.sty
+Package: titlesec 2025/01/04 v2.17 Sectioning titles
+\ttl@box=\box81
+\beforetitleunit=\skip87
+\aftertitleunit=\skip88
+\ttl@plus=\dimen289
+\ttl@minus=\dimen290
+\ttl@toksa=\toks42
+\titlewidth=\dimen291
+\titlewidthlast=\dimen292
+\titlewidthfirst=\dimen293
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/fancyhdr\fancyhdr.sty
+Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
+
+\f@nch@headwidth=\skip89
+\f@nch@offset@elh=\skip90
+\f@nch@offset@erh=\skip91
+\f@nch@offset@olh=\skip92
+\f@nch@offset@orh=\skip93
+\f@nch@offset@elf=\skip94
+\f@nch@offset@erf=\skip95
+\f@nch@offset@olf=\skip96
+\f@nch@offset@orf=\skip97
+\f@nch@height=\skip98
+\f@nch@footalignment=\skip99
+\f@nch@widthL=\skip100
+\f@nch@widthC=\skip101
+\f@nch@widthR=\skip102
+\@temptokenb=\toks43
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/csquotes\csquotes.sty
+Package: csquotes 2024-04-04 v5.2o context-sensitive quotations (JAW)
+\csq@reset=\count327
+\csq@gtype=\count328
+\csq@glevel=\count329
+\csq@qlevel=\count330
+\csq@maxlvl=\count331
+\csq@tshold=\count332
+\csq@ltx@everypar=\toks44
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/csquotes\csquotes.def
+File: csquotes.def 2024-04-04 v5.2o csquotes generic definitions (JAW)
+)
+Package csquotes Info: Trying to load configuration file 'csquotes.cfg'...
+Package csquotes Info: ... configuration file loaded successfully.
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/csquotes\csquotes.cfg
+File: csquotes.cfg 
+)) (C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/enumitem\enumitem.st
+y
+Package: enumitem 2025/02/06 v3.11 Customized lists
+\labelindent=\skip103
+\enit@outerparindent=\dimen294
+\enit@toks=\toks45
+\enit@inbox=\box82
+\enit@count@id=\count333
+\enitdp@description=\count334
+) (C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen295
+\captionmargin=\dimen296
+\caption@leftmargin=\dimen297
+\caption@rightmargin=\dimen298
+\caption@width=\dimen299
+\caption@indent=\dimen300
+\caption@parindent=\dimen301
+\caption@hangindent=\dimen302
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count335
+\c@continuedfloat=\count336
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/footmisc\footmisc.sty
+Package: footmisc 2025/05/09 v7.0b a miscellany of footnote facilities
+\FN@temptoken=\toks46
+\footnotemargin=\dimen303
+Package footmisc Info: Declaring symbol style bringhurst on input line 549.
+Package footmisc Info: Declaring symbol style chicago on input line 557.
+Package footmisc Info: Declaring symbol style wiley on input line 566.
+Package footmisc Info: Declaring symbol style lamport-robust on input line 577.
+
+Package footmisc Info: Declaring symbol style lamport* on input line 597.
+Package footmisc Info: Declaring symbol style lamport*-robust on input line 618
+.
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/lastpage\lastpage.sty
+Package: lastpage 2025/08/14 v2.1h lastpage: 2.09 or 2e? (HMM)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/lastpage\lastpage2e.sty
+Package: lastpage2e 2025/08/14 v2.1h Decide which 2e lastpage version to use (H
+MM)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/lastpage\lastpagemodern
+.sty
+Package: lastpagemodern 2025-08-14 v2.1h Refers to last page's name (HMM; JPG)
+\c@lastpagecount=\count337
+) 
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
+Package: hyperref 2025-07-12 v7.01o Hypertext links for LaTeX
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefine
+keys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.s
+ty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds
+.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
+Package: nameref 2025-06-21 v2.57 Cross-referencing by name of section
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettit
+lestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+))
+\c@section@level=\count338
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\stringenc.s
+ty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
+)
+)
+\@linkdim=\dimen304
+\Hy@linkcounter=\count339
+\Hy@pagecounter=\count340
+ (C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
+File: pd1enc.def 2025-07-12 v7.01o Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+) (C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+\Hy@SavedSpaceFactor=\count341
+ (C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def
+File: puenc.def 2025-07-12 v7.01o Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 4066.
+Package hyperref Info: Option `bookmarks' set `true' on input line 4066.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 4066.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 4066
+.
+Package hyperref Info: Hyper figures OFF on input line 4195.
+Package hyperref Info: Link nesting OFF on input line 4200.
+Package hyperref Info: Hyper index ON on input line 4203.
+Package hyperref Info: Plain pages OFF on input line 4210.
+Package hyperref Info: Backreferencing OFF on input line 4215.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4462.
+\c@Hy@tempcnt=\count342
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
+\Urlmuskip=\muskip17
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4801.
+\XeTeXLinkMargin=\dimen305
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc
+.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count343
+\Field@Width=\dimen306
+\Fld@charsize=\dimen307
+Package hyperref Info: Hyper figures OFF on input line 6078.
+Package hyperref Info: Link nesting OFF on input line 6083.
+Package hyperref Info: Hyper index ON on input line 6086.
+Package hyperref Info: backreferencing OFF on input line 6093.
+Package hyperref Info: Link coloring ON on input line 6096.
+Package hyperref Info: Link coloring with OCG OFF on input line 6103.
+Package hyperref Info: PDF/A mode OFF on input line 6108.
+\Hy@abspage=\count344
+\c@Item=\count345
+\c@Hfootnote=\count346
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
+File: hpdftex.def 2025-07-12 v7.01o Hyperref driver for pdfTeX
+\Fld@listcount=\count347
+\c@bookmark@seq@number=\count348
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfil
+echeck.sty
+Package: rerunfilecheck 2025-06-21 v1.11 Rerun checks for auxiliary files (HO)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquec
+ounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+84.
+)
+\Hy@SectionHShift=\skip104
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+Package: amsmath 2025/07/09 v2.17z AMS math features
+\@mathmargin=\skip105
+
+For additional information on amsmath, use the `?' option.
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+Package: amstext 2024/11/17 v2.01 AMS text
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks47
+\ex@=\dimen308
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen309
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count349
+LaTeX Info: Redefining \frac on input line 233.
+\uproot@=\count350
+\leftroot@=\count351
+LaTeX Info: Redefining \overline on input line 398.
+LaTeX Info: Redefining \colon on input line 409.
+\classnum@=\count352
+\DOTSCASE@=\count353
+LaTeX Info: Redefining \ldots on input line 495.
+LaTeX Info: Redefining \dots on input line 498.
+LaTeX Info: Redefining \cdots on input line 619.
+\Mathstrutbox@=\box83
+\strutbox@=\box84
+LaTeX Info: Redefining \big on input line 721.
+LaTeX Info: Redefining \Big on input line 722.
+LaTeX Info: Redefining \bigg on input line 723.
+LaTeX Info: Redefining \Bigg on input line 724.
+\big@size=\dimen310
+LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
+\macc@depth=\count354
+LaTeX Info: Redefining \bmod on input line 904.
+LaTeX Info: Redefining \pmod on input line 909.
+LaTeX Info: Redefining \smash on input line 939.
+LaTeX Info: Redefining \relbar on input line 969.
+LaTeX Info: Redefining \Relbar on input line 970.
+\c@MaxMatrixCols=\count355
+\dotsspace@=\muskip18
+\c@parentequation=\count356
+\dspbrk@lvl=\count357
+\tag@help=\toks48
+\row@=\count358
+\column@=\count359
+\maxfields@=\count360
+\andhelp@=\toks49
+\eqnshift@=\dimen311
+\alignsep@=\dimen312
+\tagshift@=\dimen313
+\tagwidth@=\dimen314
+\totwidth@=\dimen315
+\lineht@=\dimen316
+\@envbody=\toks50
+\multlinegap=\skip106
+\multlinetaggap=\skip107
+\mathdisplay@stack=\toks51
+LaTeX Info: Redefining \[ on input line 2950.
+LaTeX Info: Redefining \] on input line 2951.
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/epigraph\epigraph.sty
+Package: epigraph 2020/01/02 v1.5e typesetting epigraphs
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/nextpage\nextpage.sty
+Package: nextpage 2009/09/03 v1.1a additional page commands
+)
+\beforeepigraphskip=\skip108
+\afterepigraphskip=\skip109
+\epigraphwidth=\skip110
+\epigraphrule=\skip111
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibraryshapes.code.tex
+File: tikzlibraryshapes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibraryshapes.geometric.code.tex
+File: tikzlibraryshapes.geometric.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries/shapes\
+pgflibraryshapes.geometric.code.tex
+File: pgflibraryshapes.geometric.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibraryshapes.misc.code.tex
+File: tikzlibraryshapes.misc.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries/shapes\
+pgflibraryshapes.misc.code.tex
+File: pgflibraryshapes.misc.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibraryshapes.symbols.code.tex
+File: tikzlibraryshapes.symbols.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries/shapes\
+pgflibraryshapes.symbols.code.tex
+File: pgflibraryshapes.symbols.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibraryshapes.arrows.code.tex
+File: tikzlibraryshapes.arrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries/shapes\
+pgflibraryshapes.arrows.code.tex
+File: pgflibraryshapes.arrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibraryshapes.callouts.code.tex
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries/shapes\
+pgflibraryshapes.callouts.code.tex))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibraryshapes.multipart.code.tex
+File: tikzlibraryshapes.multipart.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries/shapes\
+pgflibraryshapes.multipart.code.tex
+File: pgflibraryshapes.multipart.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfnodepartlowerbox=\box85
+\pgfnodeparttwobox=\box86
+\pgfnodepartthreebox=\box87
+\pgfnodepartfourbox=\box88
+\pgfnodeparttwentybox=\box89
+\pgfnodepartnineteenbox=\box90
+\pgfnodeparteighteenbox=\box91
+\pgfnodepartseventeenbox=\box92
+\pgfnodepartsixteenbox=\box93
+\pgfnodepartfifteenbox=\box94
+\pgfnodepartfourteenbox=\box95
+\pgfnodepartthirteenbox=\box96
+\pgfnodeparttwelvebox=\box97
+\pgfnodepartelevenbox=\box98
+\pgfnodeparttenbox=\box99
+\pgfnodepartninebox=\box100
+\pgfnodeparteightbox=\box101
+\pgfnodepartsevenbox=\box102
+\pgfnodepartsixbox=\box103
+\pgfnodepartfivebox=\box104
+)))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibraryarrows.code.tex
+File: tikzlibraryarrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibr
+aryarrows.code.tex
+File: pgflibraryarrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\arrowsize=\dimen317
+))
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
+z/libraries\tikzlibrarypositioning.code.tex
+File: tikzlibrarypositioning.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen318
+\lightrulewidth=\dimen319
+\cmidrulewidth=\dimen320
+\belowrulesep=\dimen321
+\belowbottomsep=\dimen322
+\aboverulesep=\dimen323
+\abovetopsep=\dimen324
+\cmidrulesep=\dimen325
+\cmidrulekern=\dimen326
+\defaultaddspace=\dimen327
+\@cmidla=\count361
+\@cmidlb=\count362
+\@aboverulesep=\dimen328
+\@belowrulesep=\dimen329
+\@thisruleclass=\count363
+\@lastruleclass=\count364
+\@thisrulewidth=\dimen330
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/imakeidx\imakeidx.sty
+Package: imakeidx 2016/10/15 v1.3e Package for typesetting indices in a synchro
+nous mode
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/tools\multicol.sty
+Package: multicol 2025/10/21 v2.0b multicolumn formatting (FMi)
+\c@tracingmulticols=\count365
+\mult@box=\box105
+\multicol@leftmargin=\dimen331
+\c@unbalance=\count366
+\c@collectmore=\count367
+\doublecol@number=\count368
+\multicoltolerance=\count369
+\multicolpretolerance=\count370
+\full@width=\dimen332
+\page@free=\dimen333
+\premulticols=\dimen334
+\postmulticols=\dimen335
+\multicolsep=\skip112
+\multicolbaselineskip=\skip113
+\partial@page=\box106
+\last@line=\box107
+\mc@boxedresult=\box108
+\maxbalancingoverflow=\dimen336
+\mult@rightbox=\box109
+\mult@grightbox=\box110
+\mult@firstbox=\box111
+\mult@gfirstbox=\box112
+\@tempa=\box113
+\@tempa=\box114
+\@tempa=\box115
+\@tempa=\box116
+\@tempa=\box117
+\@tempa=\box118
+\@tempa=\box119
+\@tempa=\box120
+\@tempa=\box121
+\@tempa=\box122
+\@tempa=\box123
+\@tempa=\box124
+\@tempa=\box125
+\@tempa=\box126
+\@tempa=\box127
+\@tempa=\box128
+\@tempa=\box129
+\@tempa=\box130
+\@tempa=\box131
+\@tempa=\box132
+\@tempa=\box133
+\@tempa=\box134
+\@tempa=\box135
+\@tempa=\box136
+\@tempa=\box137
+\@tempa=\box138
+\@tempa=\box139
+\@tempa=\box140
+\@tempa=\box141
+\@tempa=\box142
+\@tempa=\box143
+\@tempa=\box144
+\@tempa=\box145
+\@tempa=\box146
+\@tempa=\box147
+\@tempa=\box148
+\c@minrows=\count371
+\c@columnbadness=\count372
+\c@finalcolumnbadness=\count373
+\last@try=\dimen337
+\multicolovershoot=\dimen338
+\multicolundershoot=\dimen339
+\mult@nat@firstbox=\box149
+\colbreak@box=\box150
+\mc@col@check@num=\count374
+\g__mc_curr_col_int=\count375
+))
+\main@idxfile=\write5
+\openout5 = `main.idx'.
+
+
+Writing index file main.idx
+\cognitive@idxfile=\write6
+\openout6 = `cognitive.idx'.
+
+Writing index file cognitive.idx
+) (C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/eso-pic\eso-pic.sty
+Package: eso-pic 2023/05/03 v3.0c eso-pic (RN)
+\ESO@tempdima=\dimen340
+\ESO@tempdimb=\dimen341
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/ragged2e\ragged2e.sty
+Package: ragged2e 2023/06/22 v3.6 ragged2e Package
+\CenteringLeftskip=\skip114
+\RaggedLeftLeftskip=\skip115
+\RaggedRightLeftskip=\skip116
+\CenteringRightskip=\skip117
+\RaggedLeftRightskip=\skip118
+\RaggedRightRightskip=\skip119
+\CenteringParfillskip=\skip120
+\RaggedLeftParfillskip=\skip121
+\RaggedRightParfillskip=\skip122
+\JustifyingParfillskip=\skip123
+\CenteringParindent=\skip124
+\RaggedLeftParindent=\skip125
+\RaggedRightParindent=\skip126
+\JustifyingParindent=\skip127
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/bookmark\bookmark.sty
+Package: bookmark 2023-12-10 v1.31 PDF bookmarks (HO)
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/bookmark\bkm-pdftex.def
+File: bkm-pdftex.def 2023-12-10 v1.31 bookmark driver for pdfTeX and luaTeX (HO
+)
+\BKM@id=\count376
+))
+Package csquotes Info: Checking for multilingual support...
+Package csquotes Info: ... found 'babel' package.
+Package csquotes Info: Adjusting default style.
+Package csquotes Info: Redefining alias 'default' -> 'italian'.
+ (main.aux)
+\openout1 = `main.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for LY1/ptm/m/n on input line 146.
+LaTeX Font Info:    Trying to load font information for LY1+ptm on input line 1
+46.
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/ly1\ly1ptm.fd
+File: ly1ptm.fd 2001/02/01 font definitions for LY1/ptm using Berry names.
+)
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
+ii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count377
+\scratchdimen=\dimen342
+\scratchbox=\box151
+\nofMPsegments=\count378
+\nofMParguments=\count379
+\everyMPshowfont=\toks52
+\MPscratchCnt=\count380
+\MPscratchDim=\dimen343
+\MPnumerator=\count381
+\makeMPintoPDFobject=\count382
+\everyMPtoPDFconversion=\toks53
+)
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
+ase.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.c
+fg
+File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
+))
+LaTeX Info: Redefining \microtypecontext on input line 146.
+Package microtype Info: Applying patch `item' on input line 146.
+Package microtype Info: Applying patch `toc' on input line 146.
+Package microtype Info: Applying patch `eqnum' on input line 146.
+Package microtype Info: Applying patch `footnote' on input line 146.
+Package microtype Info: Applying patch `verbatim' on input line 146.
+LaTeX Info: Redefining \microtypesetup on input line 146.
+Package microtype Info: Generating PDF output.
+Package microtype Info: Character protrusion enabled (level 2),
+(microtype)             factor: 1100.
+Package microtype Info: Using default protrusion set `alltext'.
+Package microtype Info: Automatic font expansion enabled (level 2),
+(microtype)             stretch: 10, shrink: 10, step: 1, non-selected.
+Package microtype Info: Using default expansion set `alltext-nott'.
+Package microtype Info: Patching command `\showhyphens'.
+Package microtype Info: Tracking enabled.
+Package microtype Info: Using default tracking set `smallcaps'.
+Package microtype Info: Adjustment of interword spacing enabled.
+
+
+Package microtype Warning: You are using the `ragged2e' package.
+(microtype)                Adjustment of interword spacing may lead to
+(microtype)                undesired results when used with `ragged2e'.
+(microtype)                In this case, disable the `spacing' option.
+
+Package microtype Info: Using default spacing set `alltext-nott'.
+Package microtype Info: Adjustment of character kerning enabled.
+Package microtype Info: Using default kerning set `alltext'.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `SourceSerifPro-LF' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+LaTeX Info: Redefining \it@ocap on input line 146.
+LaTeX Info: Redefining \it@ccap on input line 146.
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: custom
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: twoside 
+* h-part:(L,W,R)=(71.13188pt, 355.65945pt, 56.9055pt)
+* v-part:(T,H,B)=(56.9055pt, 554.82875pt, 71.13188pt)
+* \paperwidth=483.69684pt
+* \paperheight=682.86613pt
+* \textwidth=355.65945pt
+* \textheight=554.82875pt
+* \oddsidemargin=-1.1381pt
+* \evensidemargin=-15.36449pt
+* \topmargin=-50.12668pt
+* \headheight=25.0pt
+* \headsep=22.76219pt
+* \topskip=11.0pt
+* \footskip=34.1433pt
+* \marginparwidth=116.0pt
+* \marginparsep=7.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: hyperref package is loaded.
+Package caption Info: End \AtBeginDocument code.
+Package hyperref Info: Link coloring ON on input line 146.
+(frontmatter/titlepage.tex
+LaTeX Font Info:    Font shape `T1/SourceSerifPro-LF/m/n' will be
+(Font)              scaled to size 34.0pt on input line 27.
+LaTeX Font Info:    Trying to load font information for T1+SourceSansPro-TLF on
+ input line 27.
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/sourcesanspro\t1sources
+anspro-tlf.fd
+File: T1SourceSansPro-TLF.fd 2020/01/19 (autoinst) Font definitions for T1/Sour
+ceSansPro-TLF.
+)
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/n' aliased to
+(Font)              `T1/SourceSansPro-TLF/regular/n' on input line 27.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/n' will be
+(Font)              scaled to size 34.0pt on input line 27.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `SourceSansPro-TLF' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/b/n' aliased to
+(Font)              `T1/SourceSansPro-TLF/bold/n' on input line 27.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/bold/n' will be
+(Font)              scaled to size 34.0pt on input line 27.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/n' aliased to
+(Font)              `T1/SourceSansPro-TLF/regular/n' on input line 30.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/n' will be
+(Font)              scaled to size 10.95pt on input line 30.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/it' aliased to
+(Font)              `T1/SourceSansPro-TLF/regular/it' on input line 30.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/it' will be
+(Font)              scaled to size 10.95pt on input line 30.
+LaTeX Font Info:    Font shape `T1/SourceSerifPro-LF/m/n' will be
+(Font)              scaled to size 12.0pt on input line 34.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/n' aliased to
+(Font)              `T1/SourceSansPro-TLF/regular/n' on input line 34.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/n' will be
+(Font)              scaled to size 12.0pt on input line 34.
+<images/cover.png, id=6, 769.87625pt x 1027.84pt>
+File: images/cover.png Graphic file (type png)
+<use images/cover.png>
+Package pdftex.def Info: images/cover.png  used on input line 49.
+(pdftex.def)             Requested size: 483.70891pt x 682.87769pt.
+ [1
+
+
+
+{C:/Users/fabio/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/fabi
+o/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/sourcesanspro/a_emkxm5.enc} <./
+images/cover.png (PNG copy)>]) [2
+
+]
+LaTeX Font Info:    Trying to load font information for TS1+SourceSerifPro-LF o
+n input line 161.
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/sourceserifpro\ts1sourc
+eserifpro-lf.fd
+File: TS1SourceSerifPro-LF.fd 2018/09/05 (autoinst) Font definitions for TS1/So
+urceSerifPro-LF.
+)
+LaTeX Font Info:    Font shape `TS1/SourceSerifPro-LF/m/n' will be
+(Font)              scaled to size 10.95pt on input line 161.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `SourceSerifPro-LF' (encoding: TS1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+LaTeX Font Info:    Font shape `T1/SourceSerifPro-LF/m/n' will be
+(Font)              scaled to size 10.0pt on input line 166.
+ [3
+
+{C:/Users/fabio/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/sourceserifpro/a_
+rlbtkr.enc}{C:/Users/fabio/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/source
+serifpro/a_nqu667.enc}] [4
+
+]
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/n' aliased to
+(Font)              `T1/SourceSansPro-TLF/regular/n' on input line 178.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/n' will be
+(Font)              scaled to size 24.88pt on input line 178.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/b/n' aliased to
+(Font)              `T1/SourceSansPro-TLF/bold/n' on input line 178.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/bold/n' will be
+(Font)              scaled to size 24.88pt on input line 178.
+ (main.toc
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-cmr.cfg
+File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
+(RS)
+)
+LaTeX Font Info:    Font shape `T1/SourceSerifPro-LF/sb/n' will be
+(Font)              scaled to size 12.0pt on input line 4.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/n' aliased to
+(Font)              `T1/SourceSansPro-TLF/regular/n' on input line 25.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/n' will be
+(Font)              scaled to size 10.0pt on input line 25.
+
+[5
+
+] [6] [7] [8] [9] [10] [11] [12] [13] [14] [15] [16])
+\tf@toc=\write7
+\openout7 = `main.toc'.
+
+ [17] [18
+
+]
+(frontmatter/preface.tex [19
+
+] [20] [21]
+LaTeX Font Info:    Font shape `T1/SourceSerifPro-LF/m/it' will be
+(Font)              scaled to size 10.95pt on input line 29.
+) [22{C:/Users/fabio/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/sourceserifp
+ro/a_5mjl2d.enc}] (content/prologo.tex
+LaTeX Font Info:    Font shape `T1/SourceSerifPro-LF/m/n' will be
+(Font)              scaled to size 8.0pt on input line 4.
+LaTeX Font Info:    Font shape `T1/SourceSerifPro-LF/m/n' will be
+(Font)              scaled to size 9.0pt on input line 4.
+LaTeX Font Info:    Font shape `T1/SourceSerifPro-LF/m/n' will be
+(Font)              scaled to size 6.0pt on input line 4.
+LaTeX Font Info:    Font shape `T1/SourceSerifPro-LF/m/it' will be
+(Font)              scaled to size 9.0pt on input line 4.
+
+Underfull \hbox (badness 10000) in paragraph at lines 8--10
+
+ []
+
+[1
+
+
+]
+LaTeX Font Info:    Font shape `T1/SourceSerifPro-LF/sb/n' will be
+(Font)              scaled to size 10.95pt on input line 12.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/n' aliased to
+(Font)              `T1/SourceSansPro-TLF/regular/n' on input line 18.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/n' will be
+(Font)              scaled to size 9.0pt on input line 18.
+ [2] [3] [4] [5] [6] [7] [8] [9]) [10] (parts/part1.tex
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/n' aliased to
+(Font)              `T1/SourceSansPro-TLF/regular/n' on input line 14.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/n' will be
+(Font)              scaled to size 20.74pt on input line 14.
+LaTeX Font Info:    Font shape `T1/SourceSerifPro-LF/m/it' will be
+(Font)              scaled to size 12.0pt on input line 31.
+ [11
+
+
+] [12
+
+])
+(content/part1/chapter1.tex
+Capitolo 1.
+LaTeX Font Info:    Font shape `T1/SourceSerifPro-LF/m/sc' will be
+(Font)              scaled to size 10.95pt on input line 5.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/n' aliased to
+(Font)              `T1/SourceSansPro-TLF/regular/n' on input line 11.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/n' will be
+(Font)              scaled to size 14.4pt on input line 11.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/b/n' aliased to
+(Font)              `T1/SourceSansPro-TLF/bold/n' on input line 11.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/bold/n' will be
+(Font)              scaled to size 14.4pt on input line 11.
+[13
+
+{C:/Users/fabio/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/sourceserifpro/a_
+lseshj.enc}] [14]
+<images/cambriano_alieni.jpg, id=943, 809.0225pt x 619.31375pt>
+File: images/cambriano_alieni.jpg Graphic file (type jpg)
+<use images/cambriano_alieni.jpg>
+Package pdftex.def Info: images/cambriano_alieni.jpg  used on input line 32.
+(pdftex.def)             Requested size: 266.74458pt x 204.19461pt.
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 33.
+See the caption package documentation for explanation.
+
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/n' aliased to
+(Font)              `T1/SourceSansPro-TLF/regular/n' on input line 33.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/n' will be
+(Font)              scaled to size 8.0pt on input line 33.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/b/n' aliased to
+(Font)              `T1/SourceSansPro-TLF/bold/n' on input line 33.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/bold/n' will be
+(Font)              scaled to size 8.0pt on input line 33.
+[15 <./images/cambriano_alieni.jpg>]
+LaTeX Font Info:    Font shape `T1/SourceSerifPro-LF/m/n' will be
+(Font)              scaled to size 14.4pt on input line 51.
+ [16]
+<images/bias_condominio3.jpg, id=960, 2007.5pt x 1541.76pt>
+File: images/bias_condominio3.jpg Graphic file (type jpg)
+<use images/bias_condominio3.jpg>
+Package pdftex.def Info: images/bias_condominio3.jpg  used on input line 56.
+(pdftex.def)             Requested size: 355.65945pt x 273.1291pt.
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 57.
+See the caption package documentation for explanation.
+
+[17 <./images/bias_condominio3.jpg>] [18] [19]
+<images/tre_mappe_anima.png, id=982, 1156.32pt x 2040.8747pt>
+File: images/tre_mappe_anima.png Graphic file (type png)
+<use images/tre_mappe_anima.png>
+Package pdftex.def Info: images/tre_mappe_anima.png  used on input line 109.
+(pdftex.def)             Requested size: 284.52864pt x 502.183pt.
+
+
+LaTeX Warning: Float too large for page by 12.19395pt on input line 112.
+
+[20] [21 <./images/tre_mappe_anima.png>]) (content/part1/chapter2.tex [22]
+Capitolo 2.
+[23
+
+]
+<images/prima_dopo2.png, id=1008, 1541.76pt x 1027.84pt>
+File: images/prima_dopo2.png Graphic file (type png)
+<use images/prima_dopo2.png>
+Package pdftex.def Info: images/prima_dopo2.png  used on input line 19.
+(pdftex.def)             Requested size: 355.65945pt x 237.10399pt.
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 20.
+See the caption package documentation for explanation.
+
+[24 <./images/prima_dopo2.png (PNG copy)>]
+Underfull \hbox (badness 5460) in paragraph at lines 28--28
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Spinoza, B. (1677). \T1/SourceSerif
+Pro-LF/m/it/9 (+10) Ethi-ca, or-di-ne geo-me-tri-co de-mon-stra-ta\T1/SourceSer
+ifPro-LF/m/n/9 (+10) . Pub-bli-ca-zio-ne po-stu-ma,
+ []
+
+<images/bilancia_allarmi.png, id=1017, 1027.84pt x 1541.76pt>
+File: images/bilancia_allarmi.png Graphic file (type png)
+<use images/bilancia_allarmi.png>
+Package pdftex.def Info: images/bilancia_allarmi.png  used on input line 34.
+(pdftex.def)             Requested size: 320.09132pt x 480.12852pt.
+[25] [26 <./images/bilancia_allarmi.png (PNG copy)>] [27]
+<images/tempi_amigdala.png, id=1039, 1027.84pt x 1027.84pt>
+File: images/tempi_amigdala.png Graphic file (type png)
+<use images/tempi_amigdala.png>
+Package pdftex.def Info: images/tempi_amigdala.png  used on input line 56.
+(pdftex.def)             Requested size: 284.52864pt x 284.53105pt.
+ [28 <./images/tempi_amigdala.png (PNG copy)>] [29] [30]
+Underfull \hbox (badness 1910) in paragraph at lines 83--83
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Schultz, W. (2015). Neu-ro-nal rewa
+rd and de-ci-sion si-gnals: From theo-ries to da-ta.
+ []
+
+[31] [32]
+Underfull \hbox (badness 1817) in paragraph at lines 93--93
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Schultz, W. (2015). Neu-ro-nal rewa
+rd and de-ci-sion si-gnals: From theo-ries to da-ta.
+ []
+
+[33] [34] [35]) (content/part1/chapter6.tex [36]
+Capitolo 3.
+[37
+
+] [38]
+<images/infografica_cap3_1.png, id=1139, 1156.32pt x 2034.85219pt>
+File: images/infografica_cap3_1.png Graphic file (type png)
+<use images/infografica_cap3_1.png>
+Package pdftex.def Info: images/infografica_cap3_1.png  used on input line 31.
+(pdftex.def)             Requested size: 320.09132pt x 563.26543pt.
+
+
+LaTeX Warning: Float too large for page by 50.85652pt on input line 34.
+
+[39] [40 <./images/infografica_cap3_1.png>] [41] [42] [43] [44] [45] [46]
+[47]
+Underfull \hbox (badness 1838) in paragraph at lines 85--85
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Niven, C. A. (1988). La-bour pain: 
+Long-term re-call and con-se-quen-ces. \T1/SourceSerifPro-LF/m/it/9 (+10) Jour-
+nal of
+ []
+
+[48] [49]
+<images/Perch√©_gli_anni_volano_.png, id=1223, 1156.32pt x 2040.8747pt>
+File: images/Perch√©_gli_anni_volano_.png Graphic file (type png)
+<use images/Perch√©_gli_anni_volano_.png>
+Package pdftex.def Info: images/Perch√©_gli_anni_volano_.png  used on input lin
+e 99.
+(pdftex.def)             Requested size: 284.52864pt x 502.183pt.
+
+
+LaTeX Warning: Float too large for page by 0.98402pt on input line 102.
+
+[50] [51 <./images/Perch√©_gli_anni_volano_.png>] [52] [53])
+(content/part1/chapter7.tex [54]
+Capitolo 4.
+[55
+
+]
+Underfull \hbox (badness 5711) in paragraph at lines 18--18
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Spinoza, B. (1677). \T1/SourceSerif
+Pro-LF/m/it/9 (+10) Ethi-ca, or-di-ne geo-me-tri-co de-mon-stra-ta\T1/SourceSer
+ifPro-LF/m/n/9 (+10) . Pub-bli-ca-zio-ne po-stu-ma,
+ []
+
+[56] [57]
+<images/elefante_mahout.png, id=1282, 1027.84pt x 1541.76pt>
+File: images/elefante_mahout.png Graphic file (type png)
+<use images/elefante_mahout.png>
+Package pdftex.def Info: images/elefante_mahout.png  used on input line 36.
+(pdftex.def)             Requested size: 355.65945pt x 533.48398pt.
+
+
+LaTeX Warning: Float too large for page by 32.285pt on input line 39.
+
+[58] [59 <./images/elefante_mahout.png (PNG copy)>] [60] [61] [62] [63]
+[64] [65] [66] [67]) (content/part1/chapter22.tex [68]
+Capitolo 5.
+[69
+
+] [70] [71] [72] [73] [74]
+<images/disso.png, id=1395, 1156.32pt x 2031.84094pt>
+File: images/disso.png Graphic file (type png)
+<use images/disso.png>
+Package pdftex.def Info: images/disso.png  used on input line 61.
+(pdftex.def)             Requested size: 320.09132pt x 562.43188pt.
+
+
+LaTeX Warning: Float too large for page by 38.81305pt on input line 64.
+
+[75] [76 <./images/disso.png>] [77]) (content/part1/chapter9.tex [78]
+Capitolo 6.
+[79
+
+] [80]
+<images/tre_regole.png, id=1434, 2826.56pt x 1541.76pt>
+File: images/tre_regole.png Graphic file (type png)
+<use images/tre_regole.png>
+Package pdftex.def Info: images/tre_regole.png  used on input line 28.
+(pdftex.def)             Requested size: 320.09132pt x 174.5815pt.
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 29.
+See the caption package documentation for explanation.
+
+[81 <./images/tre_regole.png (PNG copy)>] [82] [83] [84]
+Underfull \hbox (badness 2644) in paragraph at lines 55--55
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Wang, J., e al-tri (2024). Ha-mil-t
+on's in-clu-si-ve fit-ness main-tains he-ri-ta-ble al-trui-sm
+ []
+
+[85]
+Underfull \hbox (badness 1394) in paragraph at lines 61--61
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Moll, J., e al-tri (2006). Hu-man f
+ronto-mesolimbic net-works gui-de de-ci-sions about
+ []
+
+[86] [87] [88] [89]
+<images/L_Espansione_del_Cerchio_Morale (1).png, id=1516, 1156.32pt x 2047.65pt
+>
+File: images/L_Espansione_del_Cerchio_Morale (1).png Graphic file (type png)
+<use images/L_Espansione_del_Cerchio_Morale (1).png>
+Package pdftex.def Info: images/L_Espansione_del_Cerchio_Morale (1).png  used o
+n input line 79.
+(pdftex.def)             Requested size: 284.52864pt x 503.85014pt.
+
+
+LaTeX Warning: Float too large for page by 13.8611pt on input line 82.
+
+[90] [91 <./images/L_Espansione_del_Cerchio_Morale (1).png>] [92] [93])
+[94] (parts/part2.tex [95] [96
+
+] [97] [98
+
+]) (content/part2/chapter11.tex
+Capitolo 7.
+[99
+
+] [100]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 27.
+See the caption package documentation for explanation.
+
+[101] [102] [103] [104] [105] [106] [107] [108]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 82.
+See the caption package documentation for explanation.
+
+) (content/part2/chapter14.tex [109] [110
+
+]
+Capitolo 8.
+[111] [112] [113] [114] [115] [116]) (content/part2/chapter15.tex [117]
+[118
+
+]
+Capitolo 9.
+[119] [120] [121] [122] [123] [124] [125]) (content/part2/chapter28.tex
+[126]
+Capitolo 10.
+[127
+
+] [128] [129]
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/b/n' aliased to
+(Font)              `T1/SourceSansPro-TLF/bold/n' on input line 43.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/bold/n' will be
+(Font)              scaled to size 12.0pt on input line 43.
+ [130] [131] [132]
+Underfull \hbox (badness 3646) in paragraph at lines 83--83
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Journal of Em-pi-ri-cal Le-gal Stu-
+dies, "Bia-ses in le-gal decision-making: Com-pa-ring
+ []
+
+[133] [134] [135] [136]
+Underfull \hbox (badness 2875) in paragraph at lines 131--131
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Washington Sta-te Uni-ver-si-ty, "T
+e-st of po-li-ce im-pli-cit bias trai-ning sho-ws mo-de-st
+ []
+
+[137]) (content/part2/chapter18.tex [138]
+Capitolo 11.
+[139
+
+] [140] [141]
+Underfull \hbox (badness 3250) in paragraph at lines 57--58
+[]\T1/SourceSerifPro-LF/m/n/10.95 (+10) Durante le con-fe-ren-ze COP28 e COP29,
+ so-no sta-ti iden-ti-fi-ca-ti ri-
+ []
+
+[142] [143]
+Overfull \hbox (0.86942pt too wide) in paragraph at lines 93--94
+\T1/SourceSerifPro-LF/m/n/10.95 (-10) fit-to, in-no-va-zio-ne, si-cu-rez-za ene
+r-ge-ti-ca na-zio-na-le. Non ``sal-via-mo il pia-ne-ta''
+ []
+
+[144]) (content/part2/chapter16.tex [145] [146
+
+]
+Capitolo 12.
+[147] [148] [149] [150] [151] [152] [153]) (content/part2/chapter24.tex
+[154]
+Capitolo 13.
+[155
+
+] [156] [157]
+Underfull \hbox (badness 1259) in paragraph at lines 38--38
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Heath, C., & Heath, D. (2007). Cap.
+ 6: "Emo-tio-nal". Ana-li-si di co-me le nar-ra-zio-ni
+ []
+
+[158] [159]
+Underfull \hbox (badness 1490) in paragraph at lines 58--58
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) 151RB. (2023). Con-fron-to det-ta-g
+lia-to tra le ver-sio-ni ori-gi-na-li del-le fia-be e le lo-ro
+ []
+
+[160]
+Underfull \hbox (badness 2744) in paragraph at lines 73--73
+\T1/SourceSerifPro-LF/m/n/9 (+10) Hi-la-riou-sly Bru-tal". La rea-zio-ne di Miy
+a-za-ki di-ven-ne leg-gen-da-ria ne-gli am-bien-ti
+ []
+
+[161] [162]
+Underfull \hbox (badness 1199) in paragraph at lines 101--101
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Linkiesta. (2023). "Tre-men-da-men-
+te rea-le | Le-zio-ni di uma-ni-t‡ da ca-ni au-stra-lia-ni
+ []
+
+
+Underfull \hbox (badness 1158) in paragraph at lines 103--103
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Editorialdomani. (2024). "Bluey, un
+a pa-ren-te-si edu-ca-ti-va in una tv che non cre-de
+ []
+
+[163]
+Underfull \hbox (badness 3250) in paragraph at lines 115--115
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Guardian. (2023). "La mi-glior se-r
+ie te-le-vi-si-va del mon-do Ë tor-na-ta". Il suc-ces-so
+ []
+
+[164] [165] [166] [167] [168]
+Underfull \hbox (badness 1043) in paragraph at lines 181--181
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Gottschall, J. (2012). Cap. 8: "Tro
+u-ble with Fic-tion". Ana-li-si di co-me le nar-ra-zio-ni
+ []
+
+[169] [170] [171] [172]) (content/part2/chapter20.tex [173] [174
+
+]
+Capitolo 14.
+[175] [176] [177] [178] [179] [180]
+Underfull \hbox (badness 2035) in paragraph at lines 70--70
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Woolley, A. W., et al. (2010). ``Ev
+i-den-ce for a col-lec-ti-ve in-tel-li-gen-ce fac-tor in the
+ []
+
+[181] [182]) (content/part2/chapter13.tex [183] [184
+
+]
+Capitolo 15.
+[185]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 19.
+See the caption package documentation for explanation.
+
+[186] [187]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 53.
+See the caption package documentation for explanation.
+
+[188] [189] [190] [191]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 99.
+See the caption package documentation for explanation.
+
+[192] [193] [194] [195]) (content/part2/chapter12.tex [196]
+Capitolo 16.
+[197
+
+]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 19.
+See the caption package documentation for explanation.
+
+[198]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 35.
+See the caption package documentation for explanation.
+
+[199] [200]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 63.
+See the caption package documentation for explanation.
+
+[201] [202] [203] [204]) (content/part2/chapter29.tex [205] [206
+
+]
+Capitolo 17.
+[207]
+Overfull \hbox (185.54306pt too wide) in paragraph at lines 9--10
+ [][] 
+ []
+
+[208]
+Overfull \hbox (64.88528pt too wide) in paragraph at lines 28--29
+ [][] 
+ []
+
+[209]
+Overfull \hbox (184.08678pt too wide) in paragraph at lines 49--50
+ [][] 
+ []
+
+[210] [211]
+Overfull \hbox (17.20915pt too wide) in paragraph at lines 76--77
+ [][] 
+ []
+
+[212] [213]
+Overfull \hbox (146.14516pt too wide) in paragraph at lines 103--104
+ [][] 
+ []
+
+[214] [215] [216] [217]
+Overfull \hbox (73.49199pt too wide) in paragraph at lines 165--166
+ [][] 
+ []
+
+
+Underfull \hbox (badness 1472) in paragraph at lines 180--180
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) European Com-mis-sion. (2022). Di-g
+i-tal Edu-ca-tion Ac-tion Plan 2021-2027: Re-set-ting
+ []
+
+[218] [219]) (content/part2/chapter21.tex [220]
+Capitolo 18.
+[221
+
+] [222] [223] [224] [225]) (content/part2/chapter30.tex [226]
+Capitolo 19.
+[227
+
+] [228] [229] [230] [231] [232]) (parts/part3.tex [233] [234
+
+] [235]
+[236
+
+]) (content/part3/chapter11.tex
+Capitolo 20.
+[237
+
+] [238]
+Overfull \hbox (0.8606pt too wide) in paragraph at lines 33--34
+\T1/SourceSerifPro-LF/m/n/10.95 (-10) primi capitoli - quello che divide automa
+ticamente il mondo in ``noi'' e ``loro''
+ []
+
+[239] [240] [241] [242]) (content/part3/chapter35.tex [243] [244
+
+]
+Capitolo 21.
+[245] [246]
+<images/no_memory.png, id=2589, 1027.84pt x 1541.76pt>
+File: images/no_memory.png Graphic file (type png)
+<use images/no_memory.png>
+Package pdftex.def Info: images/no_memory.png  used on input line 21.
+(pdftex.def)             Requested size: 284.52864pt x 426.79659pt.
+ [247] [248] [249 <./images/no_memory.png (PNG copy)>] [250]
+[251] [252]) (content/part3/chapter37.tex [253] [254
+
+]
+Capitolo 22.
+LaTeX Font Info:    Font shape `T1/SourceSerifPro-LF/m/it' will be
+(Font)              scaled to size 10.0pt on input line 3.
+[255] [256] [257] [258]) (content/part3/chapter24.tex [259] [260
+
+]
+Capitolo 23.
+[261] [262]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 95.
+See the caption package documentation for explanation.
+
+[263] [264]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 178.
+See the caption package documentation for explanation.
+
+[265] [266]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 257.
+See the caption package documentation for explanation.
+
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/it' aliased to
+(Font)              `T1/SourceSansPro-TLF/regular/it' on input line 257.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/it' will be
+(Font)              scaled to size 8.0pt on input line 257.
+[267]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 324.
+See the caption package documentation for explanation.
+
+[268]) (content/part3/chapter23.tex [269] [270
+
+]
+Capitolo 24.
+[271] [272] [273] [274] [275] [276]
+Underfull \hbox (badness 2707) in paragraph at lines 127--128
+\T1/SourceSerifPro-LF/m/n/10.95 (+10) - ma im-pa-ra-re a bal-la-re con-sa-pe-vo
+l-men-te. Ri-co-no-sce-re che stia-mo
+ []
+
+[277]) (content/part3/chapter27.tex [278]
+Capitolo 25.
+[279
+
+] [280]
+Underfull \hbox (badness 10000) in paragraph at lines 32--32
+|[]\T1/SourceSansPro-TLF/bold/n/14.4 (+10) I Mec-ca-ni-smi del-la Dan-za: Co-me
+ Av-vie-ne la
+ []
+
+[281] [282] [283] [284]
+Underfull \hbox (badness 1960) in paragraph at lines 114--115
+\T1/SourceSerifPro-LF/m/n/10.95 (+10) Nel fu-tu-ro ot-ti-mi-sta, rag-giun-gia-m
+o quel-lo che i tec-no-lo-gi chia-ma-no
+ []
+
+[285] [286] [287] [288]) (content/part3/chapter38.tex [289] [290
+
+]
+Capitolo 26.
+[291] [292] [293] [294]) (parts/part4.tex [295] [296
+
+] [297] [298
+
+])
+(content/part4/chapter10.tex
+Capitolo 27.
+
+Underfull \hbox (badness 1142) in paragraph at lines 7--7
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Schultz, W. (2016). Do-pa-mi-ne rew
+ard pre-dic-tion er-ror co-ding. \T1/SourceSerifPro-LF/m/it/9 (+10) Dia-lo-gues
+ in Cli-ni-cal
+ []
+
+[299
+
+] [300] [301]
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/b/n' aliased to
+(Font)              `T1/SourceSansPro-TLF/bold/n' on input line 50.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/bold/n' will be
+(Font)              scaled to size 10.95pt on input line 50.
+ [302] [303] [304] [305] [306] [307] [308] [309])
+(content/part4/chapter31.tex [310]
+Capitolo 28.
+[311
+
+] [312] [313] [314] [315] [316] [317]) (content/part4/chapter32.tex
+[318]
+Capitolo 29.
+[319
+
+] [320] [321] [322] [323] [324] [325] [326] [327] [328] [329] [330]
+[331]
+Underfull \hbox (badness 1237) in paragraph at lines 209--210
+[]\T1/SourceSerifPro-LF/m/n/10.95 (+10) La scel-ta che af-fron-tia-mo non Ë tra
+ in-tel-li-gen-za ar-ti-fi-cia-le e non-
+ []
+
+[332]) (content/part4/chapter33.tex [333] [334
+
+]
+Capitolo 30.
+
+Underfull \hbox (badness 1189) in paragraph at lines 7--7
+\T1/SourceSerifPro-LF/m/n/9 (+10) ses''. \T1/SourceSerifPro-LF/m/it/9 (+10) Sci
+en-ce\T1/SourceSerifPro-LF/m/n/9 (+10) , 185(4157), 1124-1131. Que-sto pa-per s
+e-mi-na-le ha ri-vo-lu-zio-na-to la no-stra
+ []
+
+[335] [336] [337] [338]
+Underfull \hbox (badness 1796) in paragraph at lines 35--35
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Ariely, D. (2008). \T1/SourceSerifP
+ro-LF/m/it/9 (+10) Pre-dic-ta-bly Ir-ra-tio-nal: The Hid-den For-ces That Sha-p
+e Our De-ci-sions\T1/SourceSerifPro-LF/m/n/9 (+10) .
+ []
+
+[339] [340]
+Underfull \hbox (badness 1082) in paragraph at lines 51--52
+\T1/SourceSerifPro-LF/m/n/10.95 (+10) fi-nan-zia-rio co-me le emo-zio-ni in-flu
+en-za-no il giu-di-zio sot-to pres-sio-ne.
+ []
+
+[341] [342]) (content/part4/chapter34.tex [343] [344
+
+]
+Capitolo 31.
+) (content/part4/chapter17.tex [345] [346]
+Capitolo 32.
+[347
+
+] [348] [349] [350] [351] [352]) (content/part4/chapter8.tex [353] [354]
+Capitolo 33.
+[355
+
+] [356] [357] [358] [359]) (content/part4/chapter39.tex [360]
+Capitolo 34.
+[361
+
+] [362]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 22.
+See the caption package documentation for explanation.
+
+[363]
+Underfull \hbox (badness 1867) in paragraph at lines 50--50
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) NewsGuard (2025). ``The Un-re-lia-b
+le AI-Generated News Si-tes Pro-li-fe-ra-ting On-li-ne''.
+ []
+
+[364] [365]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 71.
+See the caption package documentation for explanation.
+
+[366] [367] [368] [369]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 109.
+See the caption package documentation for explanation.
+
+[370] [371]) (content/part4/chapter40.tex [372] [373] [374
+
+]
+Capitolo 35.
+[375]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 30.
+See the caption package documentation for explanation.
+
+[376] [377]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 62.
+See the caption package documentation for explanation.
+
+[378] [379]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 94.
+See the caption package documentation for explanation.
+
+[380] [381]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 130.
+See the caption package documentation for explanation.
+
+[382] [383]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 174.
+See the caption package documentation for explanation.
+
+[384] [385] [386]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 222.
+See the caption package documentation for explanation.
+
+[387]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 243.
+See the caption package documentation for explanation.
+
+
+Underfull \hbox (badness 1694) in paragraph at lines 247--247
+[][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Shulman, M. (2025). Po-d-ca-st in-t
+er-view, ci-ta-to in \T1/SourceSerifPro-LF/m/it/9 (+10) The Mu-si-cian's Gui-de
+ to Su-no AI\T1/SourceSerifPro-LF/m/n/9 (+10) ,
+ []
+
+[388] [389]) (content/part4/chapter25.tex [390]
+Capitolo 36.
+[391
+
+] [392] [393] [394] [395] [396]) (content/part4/chapter41.tex [397]
+[398
+
+]
+Capitolo 37.
+[399] [400] [401] [402] [403] [404] [405]) (content/part4/chapter26.tex
+[406]
+Capitolo 38.
+[407
+
+] [408]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 35.
+See the caption package documentation for explanation.
+
+[409]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 49.
+See the caption package documentation for explanation.
+
+[410] [411] [412]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 81.
+See the caption package documentation for explanation.
+
+[413] [414] [415] [416]) [417] [418
+
+] (appendix/dialogue.tex
+Overfull \hbox (13.13995pt too wide) in paragraph at lines 29--30
+[][] 
+ []
+
+[419
+
+] [420] [421]
+Overfull \hbox (13.13995pt too wide) in paragraph at lines 75--77
+[][]
+ []
+
+[422] [423]
+Overfull \hbox (13.13995pt too wide) in paragraph at lines 95--96
+[][] 
+ []
+
+) [424]
+No file main.ind.
+No file cognitive.ind.
+(frontmatter/backpage.tex
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/it' aliased to
+(Font)              `T1/SourceSansPro-TLF/regular/it' on input line 21.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/it' will be
+(Font)              scaled to size 14.4pt on input line 21.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/it' aliased to
+(Font)              `T1/SourceSansPro-TLF/regular/it' on input line 40.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/it' will be
+(Font)              scaled to size 10.0pt on input line 40.
+LaTeX Font Info:    Trying to load font information for TS1+SourceSansPro-TLF o
+n input line 64.
+
+(C:\Users\fabio\AppData\Local\Programs\MiKTeX\tex/latex/sourcesanspro\ts1source
+sanspro-tlf.fd
+File: TS1SourceSansPro-TLF.fd 2020/01/19 (autoinst) Font definitions for TS1/So
+urceSansPro-TLF.
+)
+LaTeX Font Info:    Font shape `TS1/SourceSansPro-TLF/m/n' aliased to
+(Font)              `TS1/SourceSansPro-TLF/regular/n' on input line 64.
+LaTeX Font Info:    Font shape `TS1/SourceSansPro-TLF/regular/n' will be
+(Font)              scaled to size 10.0pt on input line 64.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `SourceSansPro-TLF' (encoding: TS1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/n' aliased to
+(Font)              `T1/SourceSansPro-TLF/regular/n' on input line 71.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/n' will be
+(Font)              scaled to size 6.0pt on input line 71.
+LaTeX Font Info:    Font shape `TS1/SourceSansPro-TLF/m/n' aliased to
+(Font)              `TS1/SourceSansPro-TLF/regular/n' on input line 71.
+LaTeX Font Info:    Font shape `TS1/SourceSansPro-TLF/regular/n' will be
+(Font)              scaled to size 6.0pt on input line 71.
+
+Missing character: There is no m in font SourceSansPro-Regular-tlf-ts1!
+Missing character: There is no i in font SourceSansPro-Regular-tlf-ts1!
+Missing character: There is no u in font SourceSansPro-Regular-tlf-ts1!
+Missing character: There is no s in font SourceSansPro-Regular-tlf-ts1!
+Missing character: There is no 0 in font SourceSansPro-Regular-tlf-ts1!
+Missing character: There is no p in font SourceSansPro-Regular-tlf-ts1!
+Missing character: There is no t in font SourceSansPro-Regular-tlf-ts1!
+) [425
+
+
+
+
+
+
+{C:/Users/fabio/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/sourcesanspro/a_5
+ponh6.enc}]
+
+Package imakeidx Warning: Remember to run (pdf)latex again after calling
+(imakeidx)                `texindy -L italian -C utf8 -I latex main.idx'.
+
+
+Package imakeidx Warning: Remember to run (pdf)latex again after calling
+(imakeidx)                `texindy -L italian -C utf8 -I latex cognitive.idx'.
+
+
+enddocument/afterlastpage (AED): lastpage setting LastPage.
+(main.aux)
+ ***********
+LaTeX2e <2025-11-01>
+L3 programming layer <2025-10-24>
+ ***********
+ ) 
+Here is how much of TeX's memory you used:
+ 38399 strings out of 467871
+ 787780 string characters out of 5418375
+ 1226005 words of memory out of 5000000
+ 64354 multiletter control sequences out of 15000+600000
+ 1315697 words of font info for 615 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 103i,14n,120p,2041b,832s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/fabio/AppData/Local/Programs/MiKTeX/fonts/type1/adobe/sourcesanspro
+/SourceSansPro-Bold.pfb><C:/Users/fabio/AppData/Local/Programs/MiKTeX/fonts/typ
+e1/adobe/sourcesanspro/SourceSansPro-It.pfb><C:/Users/fabio/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/adobe/sourcesanspro/SourceSansPro-Regular.pfb><C:/Users/
+fabio/AppData/Local/Programs/MiKTeX/fonts/type1/adobe/sourceserifpro/SourceSeri
+fPro-It.pfb><C:/Users/fabio/AppData/Local/Programs/MiKTeX/fonts/type1/adobe/sou
+rceserifpro/SourceSerifPro-Regular.pfb><C:/Users/fabio/AppData/Local/Programs/M
+iKTeX/fonts/type1/adobe/sourceserifpro/SourceSerifPro-Semibold.pfb>
+Output written on main.pdf (447 pages, 53268856 bytes).
+PDF statistics:
+ 5110 PDF objects out of 5155 (max. 8388607)
+ 1354 named destinations out of 1440 (max. 500000)
+ 172003 words of extra memory for PDF output out of 184870 (max. 10000000)
+
