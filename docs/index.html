@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#1a1a2e">
+  <title>Memorie di un futuro anteriore — Editor</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+  <!-- ===== Setup / login ===== -->
+  <div id="setup-screen" class="screen hidden">
+    <div class="setup-card">
+      <h1>📖 Il mio libro</h1>
+      <p class="setup-sub">Lettura e modifica del libro LaTeX direttamente dal repository GitHub.</p>
+
+      <label>Owner / Repository
+        <input id="cfg-repo" type="text" value="fabb12/libro-futuro" autocapitalize="off" autocorrect="off">
+      </label>
+      <label>Branch
+        <input id="cfg-branch" type="text" value="main" autocapitalize="off" autocorrect="off">
+      </label>
+      <label>Token GitHub (per salvare le modifiche)
+        <input id="cfg-token" type="password" placeholder="github_pat_… oppure ghp_…" autocapitalize="off">
+      </label>
+      <details class="token-help">
+        <summary>Come creo il token?</summary>
+        <ol>
+          <li>Vai su <b>github.com → Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token</b></li>
+          <li>In <b>Repository access</b> seleziona solo <b>fabb12/libro-futuro</b></li>
+          <li>In <b>Permissions → Repository permissions</b> imposta <b>Contents: Read and write</b></li>
+          <li>Genera e incolla qui il token. Resta salvato solo su questo dispositivo.</li>
+        </ol>
+        <p>Senza token puoi comunque leggere il libro se il repository è pubblico, ma non salvare.</p>
+      </details>
+
+      <button id="btn-connect" class="btn primary">Apri il libro</button>
+      <p id="setup-error" class="error hidden"></p>
+    </div>
+  </div>
+
+  <!-- ===== App ===== -->
+  <div id="app-screen" class="screen hidden">
+    <header id="topbar">
+      <button id="btn-toc" class="iconbtn" title="Indice">☰</button>
+      <div id="chapter-label">…</div>
+      <div class="topbar-actions">
+        <button id="btn-mode" class="iconbtn" title="Modifica">✏️</button>
+        <button id="btn-save" class="iconbtn hidden" title="Salva sul repository">💾</button>
+      </div>
+    </header>
+
+    <!-- TOC drawer -->
+    <nav id="toc-drawer" class="hidden">
+      <div class="toc-head">
+        <strong>Indice</strong>
+        <button id="btn-toc-close" class="iconbtn">✕</button>
+      </div>
+      <div id="toc-list"></div>
+      <div class="toc-foot">
+        <button id="btn-refresh" class="btn small">↻ Ricarica dal repo</button>
+        <button id="btn-logout" class="btn small ghost">Impostazioni / esci</button>
+      </div>
+    </nav>
+    <div id="toc-backdrop" class="hidden"></div>
+
+    <!-- Reader -->
+    <main id="reader" class="view">
+      <article id="reader-content"></article>
+      <div id="chapter-nav">
+        <button id="btn-prev" class="btn ghost">← Precedente</button>
+        <button id="btn-next" class="btn ghost">Successivo →</button>
+      </div>
+    </main>
+
+    <!-- Editor -->
+    <main id="editor" class="view hidden">
+      <div id="editor-bar">
+        <span id="editor-path"></span>
+        <span id="dirty-flag" class="hidden">● non salvato</span>
+      </div>
+      <textarea id="editor-area" spellcheck="false" autocapitalize="off" autocorrect="off"></textarea>
+    </main>
+
+    <div id="toast" class="hidden"></div>
+    <div id="loading" class="hidden"><div class="spinner"></div><span id="loading-msg">Caricamento…</span></div>
+  </div>
+
+  <!-- Footnote popup -->
+  <div id="fn-popup" class="hidden">
+    <div id="fn-popup-text"></div>
+    <button id="fn-popup-close" class="btn small">Chiudi</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
