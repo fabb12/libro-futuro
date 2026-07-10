@@ -1,0 +1,782 @@
+/* =========================================================================
+ * Libro Futuro — PWA reader/editor per il libro LaTeX su GitHub
+ * ========================================================================= */
+'use strict';
+
+/* ---------------- Config & stato ---------------- */
+const LS = {
+  repo: 'lf.repo', branch: 'lf.branch', token: 'lf.token',
+  titles: 'lf.titles', lastPath: 'lf.lastPath', fileCache: 'lf.file:'
+};
+const state = {
+  repo: localStorage.getItem(LS.repo) || 'fabb12/libro-futuro',
+  branch: localStorage.getItem(LS.branch) || 'main',
+  token: localStorage.getItem(LS.token) || '',
+  toc: [],            // [{path, title, part, editorOnly}]
+  current: null,      // entry corrente
+  fileSha: null,      // sha del file aperto
+  fileText: '',       // testo remoto del file aperto
+  dirty: false,
+  notes: [],          // footnotes del capitolo corrente
+  imagesIndex: null,  // {name -> {sha,size}}
+  imgUrls: {},        // sha -> objectURL
+  titles: JSON.parse(localStorage.getItem(LS.titles) || '{}')
+};
+
+/* ---------------- Helpers DOM ---------------- */
+const $ = id => document.getElementById(id);
+function show(el) { el.classList.remove('hidden'); }
+function hide(el) { el.classList.add('hidden'); }
+let toastTimer = null;
+function toast(msg, isErr) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.toggle('err', !!isErr);
+  show(t);
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => hide(t), 3500);
+}
+function loading(on, msg) {
+  if (msg) $('loading-msg').textContent = msg;
+  on ? show($('loading')) : hide($('loading'));
+}
+
+/* ---------------- GitHub API ---------------- */
+const API = 'https://api.github.com';
+function ghHeaders() {
+  const h = { 'Accept': 'application/vnd.github+json' };
+  if (state.token) h['Authorization'] = 'Bearer ' + state.token;
+  return h;
+}
+async function ghJson(url, opts) {
+  const res = await fetch(url, Object.assign({ headers: ghHeaders() }, opts));
+  if (!res.ok) {
+    let msg = res.status + ' ' + res.statusText;
+    try { msg += ': ' + (await res.json()).message; } catch (e) {}
+    const err = new Error(msg); err.status = res.status; throw err;
+  }
+  return res.json();
+}
+function b64ToText(b64) {
+  const bin = atob(b64.replace(/\n/g, ''));
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return new TextDecoder('utf-8').decode(bytes);
+}
+function textToB64(text) {
+  const bytes = new TextEncoder().encode(text);
+  let bin = '';
+  for (let i = 0; i < bytes.length; i += 0x8000)
+    bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+async function ghGetFile(path) {
+  try {
+    const j = await ghJson(`${API}/repos/${state.repo}/contents/${encodeURIComponent(path).replace(/%2F/g, '/')}?ref=${state.branch}`);
+    const text = b64ToText(j.content);
+    try { localStorage.setItem(LS.fileCache + path, JSON.stringify({ sha: j.sha, text })); } catch (e) {}
+    return { text, sha: j.sha };
+  } catch (err) {
+    // offline / errore: prova la copia locale
+    const cached = localStorage.getItem(LS.fileCache + path);
+    if (cached) {
+      toast('Offline: mostro l’ultima copia locale di ' + path, true);
+      const c = JSON.parse(cached);
+      return { text: c.text, sha: c.sha, fromCache: true };
+    }
+    throw err;
+  }
+}
+async function ghPutFile(path, text, sha, message) {
+  return ghJson(`${API}/repos/${state.repo}/contents/${encodeURIComponent(path).replace(/%2F/g, '/')}`, {
+    method: 'PUT',
+    body: JSON.stringify({ message, content: textToB64(text), sha, branch: state.branch })
+  });
+}
+
+/* ---------------- Immagini (via git blobs, con cache) ---------------- */
+async function loadImagesIndex() {
+  if (state.imagesIndex) return state.imagesIndex;
+  try {
+    const list = await ghJson(`${API}/repos/${state.repo}/contents/images?ref=${state.branch}`);
+    state.imagesIndex = {};
+    for (const f of list) state.imagesIndex[f.name.toLowerCase()] = { sha: f.sha };
+  } catch (e) { state.imagesIndex = {}; }
+  return state.imagesIndex;
+}
+function mimeFor(name) {
+  if (/\.jpe?g$/i.test(name)) return 'image/jpeg';
+  if (/\.gif$/i.test(name)) return 'image/gif';
+  if (/\.svg$/i.test(name)) return 'image/svg+xml';
+  if (/\.webp$/i.test(name)) return 'image/webp';
+  return 'image/png';
+}
+async function imageUrl(texPath) {
+  // normalizza: "images/foo.png" | "foo.png" | "foo" (senza estensione)
+  let name = texPath.replace(/^\.?\//, '').replace(/^images\//, '').toLowerCase();
+  const idx = await loadImagesIndex();
+  let entry = idx[name];
+  if (!entry) {
+    for (const ext of ['.png', '.jpg', '.jpeg']) {
+      if (idx[name + ext]) { entry = idx[name + ext]; name += ext; break; }
+    }
+  }
+  if (!entry) throw new Error('immagine non trovata: ' + texPath);
+  if (state.imgUrls[entry.sha]) return state.imgUrls[entry.sha];
+
+  const cacheKey = 'https://img.cache/' + entry.sha;
+  let blob = null;
+  if (window.caches) {
+    try {
+      const hit = await caches.match(cacheKey);
+      if (hit) blob = await hit.blob();
+    } catch (e) {}
+  }
+  if (!blob) {
+    const j = await ghJson(`${API}/repos/${state.repo}/git/blobs/${entry.sha}`);
+    const bin = atob(j.content.replace(/\n/g, ''));
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    blob = new Blob([bytes], { type: mimeFor(name) });
+    if (window.caches) {
+      try { const c = await caches.open('lf-images'); await c.put(cacheKey, new Response(blob)); } catch (e) {}
+    }
+  }
+  const url = URL.createObjectURL(blob);
+  state.imgUrls[entry.sha] = url;
+  return url;
+}
+
+/* =========================================================================
+ * Convertitore LaTeX -> HTML (sottoinsieme usato dal libro)
+ * ========================================================================= */
+const ACCENTS = {
+  '`': { a: 'à', e: 'è', i: 'ì', o: 'ò', u: 'ù', A: 'À', E: 'È', I: 'Ì', O: 'Ò', U: 'Ù' },
+  "'": { a: 'á', e: 'é', i: 'í', o: 'ó', u: 'ú', A: 'Á', E: 'É', I: 'Í', O: 'Ó', U: 'Ú' },
+  '^': { a: 'â', e: 'ê', i: 'î', o: 'ô', u: 'û' },
+  '"': { a: 'ä', e: 'ë', i: 'ï', o: 'ö', u: 'ü' },
+  '~': { n: 'ñ', a: 'ã', o: 'õ' }
+};
+function escHtml(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function latexToHtml(src, notes) {
+  // --- pulizia preliminare ---
+  src = src.replace(/\\begin\{comment\}[\s\S]*?\\end\{comment\}/g, '');
+  src = src.replace(/\\iffalse[\s\S]*?\\fi/g, '');
+  // commenti di riga (% non preceduto da \)
+  src = src.split('\n').map(line => {
+    let out = '';
+    for (let i = 0; i < line.length; i++) {
+      if (line[i] === '%' && line[i - 1] !== '\\') break;
+      out += line[i];
+    }
+    return out;
+  }).join('\n');
+
+  let pos = 0;
+
+  function readCmdName() { // dopo il backslash
+    let n = '';
+    while (pos < src.length && /[a-zA-Z]/.test(src[pos])) n += src[pos++];
+    return n;
+  }
+  function skipWs() { while (pos < src.length && /[ \t\n]/.test(src[pos])) pos++; }
+  function readBraceArg() {
+    const save = pos;
+    skipWs();
+    if (src[pos] !== '{') { pos = save; return null; }
+    pos++; // {
+    let depth = 1, out = '';
+    while (pos < src.length && depth > 0) {
+      const c = src[pos];
+      if (c === '\\' && (src[pos + 1] === '{' || src[pos + 1] === '}')) { out += c + src[pos + 1]; pos += 2; continue; }
+      if (c === '{') depth++;
+      else if (c === '}') { depth--; if (depth === 0) { pos++; break; } }
+      out += c; pos++;
+    }
+    return out;
+  }
+  function readOptArg() {
+    const save = pos;
+    skipWs();
+    if (src[pos] !== '[') { pos = save; return null; }
+    pos++;
+    let out = '';
+    while (pos < src.length && src[pos] !== ']') out += src[pos++];
+    pos++;
+    return out;
+  }
+
+  // renderizza una stringa isolata (argomenti di comandi) come inline
+  function renderFragment(s) {
+    const savedSrc = src, savedPos = pos;
+    src = s; pos = 0;
+    const html = parseBlocks(null, true);
+    src = savedSrc; pos = savedPos;
+    return html;
+  }
+
+  function envSplitItems(body) {
+    // divide su \item a profondita' zero
+    const items = [];
+    let depth = 0, cur = '', i = 0;
+    while (i < body.length) {
+      if (body[i] === '\\') {
+        if (body.startsWith('\\begin', i)) depth++;
+        else if (body.startsWith('\\end', i)) depth--;
+        else if (depth === 0 && body.startsWith('\\item', i) && !/[a-zA-Z]/.test(body[i + 5] || '')) {
+          items.push(cur); cur = ''; i += 5; continue;
+        }
+      } else if (body[i] === '{') depth++;
+      else if (body[i] === '}') depth--;
+      cur += body[i]; i++;
+    }
+    items.push(cur);
+    return items.slice(1).length ? items.slice(1) : items; // scarta il preambolo prima del primo \item
+  }
+
+  function extractEnvBody(name) {
+    // pos e' subito dopo \begin{name}: estrae fino al \end{name} corrispondente
+    let depth = 1, body = '';
+    const beginTok = '\\begin{' + name + '}', endTok = '\\end{' + name + '}';
+    while (pos < src.length) {
+      if (src.startsWith(beginTok, pos)) { depth++; body += beginTok; pos += beginTok.length; continue; }
+      if (src.startsWith(endTok, pos)) {
+        depth--;
+        pos += endTok.length;
+        if (depth === 0) return body;
+        body += endTok; continue;
+      }
+      body += src[pos++];
+    }
+    return body;
+  }
+
+  function handleEnv(name, para) {
+    const opt = readOptArg(); // es. [htbp]
+    const body = extractEnvBody(name);
+    switch (name) {
+      case 'itemize': case 'enumerate': {
+        const tag = name === 'itemize' ? 'ul' : 'ol';
+        const items = envSplitItems(body).map(it => '<li>' + renderFragment(it) + '</li>').join('');
+        return `<${tag}>${items}</${tag}>`;
+      }
+      case 'quote': case 'quotation': case 'modernquote': case 'displayquote':
+        return '<blockquote>' + renderFragment(body) + '</blockquote>';
+      case 'flushright': return '<div class="flushright">' + renderFragment(body) + '</div>';
+      case 'flushleft': return '<div class="flushleft">' + renderFragment(body) + '</div>';
+      case 'center': case 'figure': case 'table': {
+        const inner = renderFragment(body);
+        if (/data-imgpath|<figcaption/.test(inner)) return '<figure>' + inner + '</figure>';
+        return '<div class="center">' + inner + '</div>';
+      }
+      case 'minipage': readBraceArg(); return '<div class="center">' + renderFragment(body.replace(/^\s*\{[^}]*\}/, '')) + '</div>';
+      case 'tabular': case 'tabularx':
+        return '<pre class="fbox">' + escHtml(body) + '</pre>';
+      default:
+        return renderFragment(body);
+    }
+  }
+
+  function imgTag(path, opt) {
+    let style = '';
+    const m = opt && opt.match(/width\s*=\s*([\d.]+)\\(?:text|line|column)width/);
+    if (m) style = ` style="width:${Math.round(parseFloat(m[1]) * 100)}%"`;
+    return `<span class="img-slot"><img data-imgpath="${escHtml(path)}" alt=""${style}><span class="img-loading">Carico immagine…</span></span>`;
+  }
+
+  function handleCommand(name) {
+    switch (name) {
+      // --- struttura ---
+      case 'chapter': {
+        const star = src[pos] === '*'; if (star) pos++;
+        return { block: '<h1>' + renderFragment(readBraceArg() || '') + '</h1>' };
+      }
+      case 'section': {
+        if (src[pos] === '*') pos++;
+        return { block: '<h2>' + renderFragment(readBraceArg() || '') + '</h2>' };
+      }
+      case 'subsection': {
+        if (src[pos] === '*') pos++;
+        return { block: '<h3>' + renderFragment(readBraceArg() || '') + '</h3>' };
+      }
+      case 'subsubsection': {
+        if (src[pos] === '*') pos++;
+        return { block: '<h4>' + renderFragment(readBraceArg() || '') + '</h4>' };
+      }
+      // --- inline con 1 argomento ---
+      case 'textit': case 'emph': case 'itshape':
+        return { inline: '<em>' + renderFragment(readBraceArg() || '') + '</em>' };
+      case 'textbf': case 'firstwords':
+        return { inline: '<strong>' + renderFragment(readBraceArg() || '') + '</strong>' };
+      case 'textsc': case 'smallcaps':
+        return { inline: '<span class="smallcaps">' + renderFragment(readBraceArg() || '') + '</span>' };
+      case 'texttt':
+        return { inline: '<code>' + renderFragment(readBraceArg() || '') + '</code>' };
+      case 'underline': case 'uline':
+        return { inline: '<u>' + renderFragment(readBraceArg() || '') + '</u>' };
+      case 'MakeUppercase':
+        return { inline: '<span style="text-transform:uppercase">' + renderFragment(readBraceArg() || '') + '</span>' };
+      case 'textls':
+        readOptArg();
+        return { inline: renderFragment(readBraceArg() || '') };
+      case 'fbox': case 'mbox':
+        return { inline: '<span class="fbox">' + renderFragment(readBraceArg() || '') + '</span>' };
+      case 'footnote': {
+        const content = readBraceArg() || '';
+        notes.push(renderFragment(content));
+        const n = notes.length;
+        return { inline: `<sup class="fnref" data-note="${n - 1}">${n}</sup>` };
+      }
+      // --- immagini e didascalie ---
+      case 'includegraphics': {
+        const opt = readOptArg();
+        const path = readBraceArg() || '';
+        return { inline: imgTag(path, opt) };
+      }
+      case 'caption':
+        return { inline: '<figcaption>' + renderFragment(readBraceArg() || '') + '</figcaption>' };
+      case 'captionof': {
+        readBraceArg(); // "figure"
+        return { inline: '<figcaption>' + renderFragment(readBraceArg() || '') + '</figcaption>' };
+      }
+      // --- citazioni ---
+      case 'epigraph': case 'chapterquote': {
+        const q = renderFragment(readBraceArg() || '');
+        const a = renderFragment(readBraceArg() || '');
+        return { block: `<div class="epigraph"><div>${q}</div><div class="epigraph-source">${a}</div></div>` };
+      }
+      // --- dialoghi appendice ---
+      case 'human': case 'humanbox':
+        return { block: `<div class="msg human"><span class="msg-label">UMANO</span>${renderFragment(readBraceArg() || '')}</div>` };
+      case 'ai': case 'aibox':
+        return { block: `<div class="msg ai"><span class="msg-label">AI</span>${renderFragment(readBraceArg() || '')}</div>` };
+      // --- spaziature ---
+      case 'bigskip': return { block: '<div class="bigskip"></div>' };
+      case 'medskip': return { block: '<div class="medskip"></div>' };
+      case 'smallskip': return { block: '<div class="smallskip"></div>' };
+      case 'vspace': { if (src[pos] === '*') pos++; readBraceArg(); return { block: '<div class="medskip"></div>' }; }
+      case 'hspace': { if (src[pos] === '*') pos++; readBraceArg(); return { inline: ' ' }; }
+      case 'rule': { readOptArg(); readBraceArg(); readBraceArg(); return { block: '<hr class="latex-rule">' }; }
+      case 'par': return { parbreak: true };
+      // --- accenti in forma \c{c} ---
+      case 'c': {
+        const a = readBraceArg();
+        if (a === 'c') return { inline: 'ç' };
+        if (a === 'C') return { inline: 'Ç' };
+        return { inline: a || '' };
+      }
+      // --- da ignorare (con eventuali argomenti da consumare) ---
+      case 'index': readOptArg(); readBraceArg(); return { inline: '' };
+      case 'label': readBraceArg(); return { inline: '' };
+      case 'ref': case 'pageref': readBraceArg(); return { inline: '<em>(vedi figura)</em>' };
+      case 'cite': readOptArg(); readBraceArg(); return { inline: '' };
+      case 'color': case 'pagestyle': case 'thispagestyle': case 'bibliographystyle':
+        readBraceArg(); return { inline: '' };
+      case 'addcontentsline': readBraceArg(); readBraceArg(); readBraceArg(); return { inline: '' };
+      case 'setcounter': case 'setlength': readBraceArg(); readBraceArg(); return { inline: '' };
+      case 'input': case 'include': case 'graphicspath': readBraceArg(); return { inline: '' };
+      case 'lettrine': { readOptArg(); const a = readBraceArg() || '', b = readBraceArg() || ''; return { inline: renderFragment(a + b) }; }
+      case 'noindent': case 'centering': case 'justifying': case 'raggedright':
+      case 'clearpage': case 'cleardoublepage': case 'newpage': case 'vfill': case 'hfill':
+      case 'sffamily': case 'rmfamily': case 'bfseries': case 'scshape': case 'normalfont':
+      case 'small': case 'footnotesize': case 'scriptsize': case 'normalsize':
+      case 'large': case 'Large': case 'LARGE': case 'huge': case 'Huge':
+      case 'tableofcontents': case 'printindex': case 'appendix':
+      case 'frontmatter': case 'mainmatter': case 'backmatter': case 'protect':
+      case 'hrule': case 'linebreak': case 'nolinebreak': case 'nopagebreak': case 'pagebreak':
+      case 'phantomsection': case 'indent': case 'relax': case 'ldots':
+        return { inline: name === 'ldots' ? '…' : '' };
+      case 'dots': case 'textellipsis': return { inline: '…' };
+      case 'textquotedblleft': return { inline: '“' };
+      case 'textquotedblright': return { inline: '”' };
+      case 'LaTeX': return { inline: 'LaTeX' };
+      case 'TeX': return { inline: 'TeX' };
+      case 'begin': case 'end': return null; // gestiti dal chiamante
+      default: {
+        // comando sconosciuto: se ha un argomento, mostra il contenuto
+        const arg = readBraceArg();
+        if (arg !== null) return { inline: renderFragment(arg) };
+        return { inline: '' };
+      }
+    }
+  }
+
+  function parseBlocks(stopEnv, inlineMode) {
+    let html = '', para = '';
+    const flush = () => {
+      const t = para.trim();
+      if (t) html += inlineMode && !/<(h\d|div|figure|blockquote|ul|ol|figcaption|hr|pre)/.test(html + t)
+        ? t : '<p>' + t + '</p>';
+      para = '';
+    };
+    while (pos < src.length) {
+      const c = src[pos];
+      if (c === '\\') {
+        pos++;
+        const nxt = src[pos];
+        // simboli speciali \\, \%, \&, \_, ecc.
+        if (nxt === '\\') { pos++; readOptArg(); para += '<br>'; continue; }
+        if ('%&_#$'.indexOf(nxt) >= 0) { para += escHtml(nxt); pos++; continue; }
+        if (nxt === '{' || nxt === '}') { para += nxt; pos++; continue; }
+        if (nxt === ',') { para += ' '; pos++; continue; }
+        if (nxt === ' ') { para += ' '; pos++; continue; }
+        if (ACCENTS[nxt]) { // \`{a} oppure \`a
+          pos++;
+          let ch = null;
+          if (src[pos] === '{') { const a = readBraceArg(); ch = a && a.length === 1 ? a : null; if (!ch && a) { para += escHtml(a); continue; } }
+          else { ch = src[pos]; pos++; }
+          para += (ACCENTS[nxt][ch] || ch || '');
+          continue;
+        }
+        const name = readCmdName();
+        if (!name) continue;
+        if (name === 'begin') {
+          const env = readBraceArg();
+          flush();
+          html += handleEnv(env, para);
+          continue;
+        }
+        if (name === 'end') {
+          const env = readBraceArg();
+          if (stopEnv && env === stopEnv) { flush(); return html; }
+          continue;
+        }
+        const r = handleCommand(name);
+        if (!r) continue;
+        if (r.parbreak) { flush(); continue; }
+        if (r.block) { flush(); html += r.block; continue; }
+        para += r.inline || '';
+        continue;
+      }
+      if (c === '\n') {
+        // riga vuota => nuovo paragrafo
+        let j = pos + 1, blank = false;
+        while (j < src.length && (src[j] === ' ' || src[j] === '\t')) j++;
+        if (src[j] === '\n') blank = true;
+        if (blank) { flush(); while (pos < src.length && /\s/.test(src[pos])) pos++; }
+        else { para += ' '; pos++; }
+        continue;
+      }
+      if (c === '`') {
+        if (src[pos + 1] === '`') { para += '“'; pos += 2; } else { para += '‘'; pos++; }
+        continue;
+      }
+      if (c === "'") {
+        if (src[pos + 1] === "'") { para += '”'; pos += 2; } else { para += '’'; pos++; }
+        continue;
+      }
+      if (c === '-') {
+        if (src.startsWith('---', pos)) { para += '—'; pos += 3; }
+        else if (src.startsWith('--', pos)) { para += '–'; pos += 2; }
+        else { para += '-'; pos++; }
+        continue;
+      }
+      if (c === '~') { para += ' '; pos++; continue; }
+      if (c === '{' || c === '}') { pos++; continue; } // gruppi anonimi
+      para += escHtml(c);
+      pos++;
+    }
+    flush();
+    return html;
+  }
+
+  return parseBlocks(null, false);
+}
+
+/* =========================================================================
+ * TOC: parsing di main.tex
+ * ========================================================================= */
+const PART_TITLES = { part1: 'Parte I', part2: 'Parte II', part3: 'Parte III', part4: 'Parte IV' };
+function parseMainTex(text) {
+  const toc = [];
+  toc.push({ path: 'frontmatter/preface.tex', title: 'Prefazione', part: 'Inizio' });
+  let currentPart = 'Inizio';
+  const partDesc = {}; // part1 -> "LA MENTE INASPETTATA"
+  const partRe = /^%\s*PARTE\s+([IV]+)\s*:\s*(.+)$/;
+  const lines = text.split('\n');
+  const roman = { I: 'part1', II: 'part2', III: 'part3', IV: 'part4' };
+  for (const raw of lines) {
+    const line = raw.trim();
+    const pm = line.match(partRe);
+    if (pm && roman[pm[1]]) { partDesc[roman[pm[1]]] = pm[2].trim(); continue; }
+    if (line.startsWith('%')) continue;
+    const m = line.match(/^\\input\{([^}]+)\}\s*(?:%\s*(.*))?$/);
+    if (!m) continue;
+    let p = m[1];
+    if (!/\.tex$/.test(p)) p += '.tex';
+    const comment = (m[2] || '').trim();
+    const partMatch = p.match(/^parts\/(part\d)\.tex$/);
+    if (partMatch) {
+      const key = partMatch[1];
+      currentPart = PART_TITLES[key] + (partDesc[key] ? ' — ' + titleCase(partDesc[key]) : '');
+      continue;
+    }
+    if (p.startsWith('frontmatter/') || p.startsWith('misc/')) continue; // preambolo, titlepage ecc.
+    let title = state.titles[p] || comment || p.split('/').pop().replace('.tex', '');
+    if (p === 'content/prologo.tex') title = state.titles[p] || 'Prologo';
+    if (p.startsWith('appendix/')) { currentPart = 'Appendice'; title = state.titles[p] || 'Dialogo'; }
+    toc.push({ path: p, title, part: currentPart });
+  }
+  toc.push({ path: 'main.tex', title: 'Struttura del libro (main.tex)', part: 'File sorgente', editorOnly: true });
+  return toc;
+}
+function titleCase(s) {
+  return s.toLowerCase().replace(/(^|\s)\S/g, c => c.toUpperCase());
+}
+
+/* ---------------- TOC UI ---------------- */
+function renderToc() {
+  const list = $('toc-list');
+  list.innerHTML = '';
+  let lastPart = null;
+  for (const entry of state.toc) {
+    if (entry.part !== lastPart) {
+      const h = document.createElement('div');
+      h.className = 'toc-part';
+      h.textContent = entry.part;
+      list.appendChild(h);
+      lastPart = entry.part;
+    }
+    const b = document.createElement('button');
+    b.className = 'toc-item' + (state.current && state.current.path === entry.path ? ' active' : '');
+    b.textContent = entry.title;
+    b.onclick = () => { closeToc(); openChapter(entry); };
+    list.appendChild(b);
+  }
+}
+function openToc() { show($('toc-drawer')); show($('toc-backdrop')); renderToc(); }
+function closeToc() { hide($('toc-drawer')); hide($('toc-backdrop')); }
+
+/* ---------------- Apertura capitolo ---------------- */
+async function openChapter(entry, keepMode) {
+  if (state.dirty && !confirm('Ci sono modifiche non salvate. Le abbandoni?')) return;
+  loading(true, 'Carico ' + entry.title + '…');
+  try {
+    const f = await ghGetFile(entry.path);
+    state.current = entry;
+    state.fileSha = f.sha;
+    state.fileText = f.text;
+    state.dirty = false;
+    localStorage.setItem(LS.lastPath, entry.path);
+
+    // aggiorna titolo dal \chapter{...}
+    const tm = f.text.match(/\\chapter\*?\s*\{/);
+    if (tm) {
+      const start = tm.index + tm[0].length;
+      let depth = 1, i = start, t = '';
+      while (i < f.text.length && depth > 0) {
+        if (f.text[i] === '{') depth++;
+        else if (f.text[i] === '}') { depth--; if (!depth) break; }
+        t += f.text[i]; i++;
+      }
+      const plain = t.replace(/\\[a-zA-Z]+\*?(\[[^\]]*\])?/g, '').replace(/[{}]/g, '').trim();
+      if (plain) {
+        entry.title = plain;
+        state.titles[entry.path] = plain;
+        localStorage.setItem(LS.titles, JSON.stringify(state.titles));
+      }
+    }
+    $('chapter-label').textContent = entry.title;
+    $('editor-path').textContent = entry.path;
+    $('editor-area').value = f.text;
+    hide($('dirty-flag'));
+
+    if (entry.editorOnly) setMode('edit');
+    else if (!keepMode) setMode('read');
+    if (!entry.editorOnly) renderReader();
+    window.scrollTo(0, 0);
+  } catch (err) {
+    toast('Errore: ' + err.message, true);
+  } finally {
+    loading(false);
+  }
+}
+
+function renderReader() {
+  state.notes = [];
+  const html = latexToHtml(state.fileText, state.notes);
+  let out = html;
+  if (state.notes.length) {
+    out += '<div class="endnotes"><h4>Note</h4><ol>' +
+      state.notes.map(n => '<li>' + n + '</li>').join('') + '</ol></div>';
+  }
+  $('reader-content').innerHTML = out;
+  hydrateImages();
+  hydrateFootnotes();
+  updateNavButtons();
+}
+
+function hydrateImages() {
+  document.querySelectorAll('#reader-content img[data-imgpath]').forEach(async img => {
+    const slot = img.parentElement;
+    try {
+      const url = await imageUrl(img.dataset.imgpath);
+      img.src = url;
+      img.onload = () => { const l = slot.querySelector('.img-loading'); if (l) l.remove(); };
+    } catch (e) {
+      const l = slot.querySelector('.img-loading');
+      if (l) l.textContent = '⚠︎ ' + img.dataset.imgpath;
+      img.remove();
+    }
+  });
+}
+function hydrateFootnotes() {
+  document.querySelectorAll('#reader-content sup.fnref').forEach(sup => {
+    sup.onclick = () => {
+      $('fn-popup-text').innerHTML = '<b>' + (Number(sup.dataset.note) + 1) + '.</b> ' + state.notes[sup.dataset.note];
+      show($('fn-popup'));
+    };
+  });
+}
+function updateNavButtons() {
+  const readable = state.toc.filter(e => !e.editorOnly);
+  const i = readable.findIndex(e => e === state.current);
+  $('btn-prev').disabled = i <= 0;
+  $('btn-next').disabled = i < 0 || i >= readable.length - 1;
+  $('btn-prev').onclick = () => i > 0 && openChapter(readable[i - 1]);
+  $('btn-next').onclick = () => i < readable.length - 1 && openChapter(readable[i + 1]);
+}
+
+/* ---------------- Modalita' lettura / modifica ---------------- */
+function setMode(mode) {
+  if (mode === 'edit') {
+    hide($('reader')); show($('editor')); show($('btn-save'));
+    $('btn-mode').textContent = '📖'; // 📖
+    $('btn-mode').title = 'Torna alla lettura';
+  } else {
+    show($('reader')); hide($('editor'));
+    if (!state.dirty) hide($('btn-save'));
+    $('btn-mode').textContent = '✏️'; // ✏️
+    $('btn-mode').title = 'Modifica';
+  }
+}
+function currentMode() { return $('editor').classList.contains('hidden') ? 'read' : 'edit'; }
+
+async function saveFile() {
+  if (!state.current) return;
+  if (!state.token) { toast('Serve un token GitHub per salvare (Impostazioni)', true); return; }
+  const newText = $('editor-area').value;
+  loading(true, 'Salvo su GitHub…');
+  try {
+    const msg = 'Modifica ' + state.current.path + ' dalla web app';
+    let res;
+    try {
+      res = await ghPutFile(state.current.path, newText, state.fileSha, msg);
+    } catch (err) {
+      if (err.status === 409 || err.status === 422) {
+        // il file e' cambiato sul repo: riprova con lo sha aggiornato
+        const fresh = await ghJson(`${API}/repos/${state.repo}/contents/${state.current.path}?ref=${state.branch}`);
+        res = await ghPutFile(state.current.path, newText, fresh.sha, msg);
+        toast('Attenzione: il file era cambiato sul repo, ho sovrascritto con la tua versione', true);
+      } else throw err;
+    }
+    state.fileSha = res.content.sha;
+    state.fileText = newText;
+    state.dirty = false;
+    hide($('dirty-flag'));
+    try { localStorage.setItem(LS.fileCache + state.current.path, JSON.stringify({ sha: state.fileSha, text: newText })); } catch (e) {}
+    if (!state.current.editorOnly) renderReader();
+    if (state.current.path === 'main.tex') await buildToc(newText);
+    toast('✓ Salvato: ' + state.current.path);
+  } catch (err) {
+    toast('Errore nel salvataggio: ' + err.message, true);
+  } finally {
+    loading(false);
+  }
+}
+
+/* ---------------- Avvio ---------------- */
+async function buildToc(mainTexText) {
+  let text = mainTexText;
+  if (!text) text = (await ghGetFile('main.tex')).text;
+  state.toc = parseMainTex(text);
+  renderToc();
+}
+
+async function startApp() {
+  hide($('setup-screen'));
+  show($('app-screen'));
+  loading(true, 'Carico l’indice del libro…');
+  try {
+    await buildToc();
+    loadImagesIndex(); // prefetch in background
+    const last = localStorage.getItem(LS.lastPath);
+    const entry = state.toc.find(e => e.path === last) || state.toc.find(e => !e.editorOnly);
+    await openChapter(entry);
+  } catch (err) {
+    toast('Impossibile caricare il libro: ' + err.message, true);
+    hide($('app-screen'));
+    show($('setup-screen'));
+    $('setup-error').textContent = err.message;
+    show($('setup-error'));
+  } finally {
+    loading(false);
+  }
+}
+
+function initSetupScreen() {
+  $('cfg-repo').value = state.repo;
+  $('cfg-branch').value = state.branch;
+  $('cfg-token').value = state.token;
+  show($('setup-screen'));
+  $('btn-connect').onclick = async () => {
+    state.repo = $('cfg-repo').value.trim();
+    state.branch = $('cfg-branch').value.trim() || 'main';
+    state.token = $('cfg-token').value.trim();
+    localStorage.setItem(LS.repo, state.repo);
+    localStorage.setItem(LS.branch, state.branch);
+    localStorage.setItem(LS.token, state.token);
+    hide($('setup-error'));
+    startApp();
+  };
+}
+
+function initUi() {
+  $('btn-toc').onclick = openToc;
+  $('btn-toc-close').onclick = closeToc;
+  $('toc-backdrop').onclick = closeToc;
+  $('btn-mode').onclick = () => setMode(currentMode() === 'read' ? 'edit' : 'read');
+  $('btn-save').onclick = saveFile;
+  $('btn-refresh').onclick = async () => {
+    closeToc();
+    state.imagesIndex = null;
+    await buildToc();
+    if (state.current) openChapter(state.current, true);
+    toast('Indice ricaricato');
+  };
+  $('btn-logout').onclick = () => {
+    closeToc();
+    hide($('app-screen'));
+    initSetupScreen();
+  };
+  $('editor-area').addEventListener('input', () => {
+    state.dirty = $('editor-area').value !== state.fileText;
+    state.dirty ? show($('dirty-flag')) : hide($('dirty-flag'));
+    state.dirty ? show($('btn-save')) : null;
+  });
+  $('fn-popup-close').onclick = () => hide($('fn-popup'));
+  window.addEventListener('beforeunload', e => {
+    if (state.dirty) { e.preventDefault(); e.returnValue = ''; }
+  });
+  // Ctrl/Cmd+S per salvare
+  window.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); if (currentMode() === 'edit') saveFile(); }
+  });
+}
+
+/* ---------------- Service worker ---------------- */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+
+/* ---------------- Boot ---------------- */
+initUi();
+if (state.repo && (state.token || localStorage.getItem(LS.repo))) {
+  // gia' configurato in precedenza: entra direttamente
+  if (localStorage.getItem(LS.repo)) startApp(); else initSetupScreen();
+} else {
+  initSetupScreen();
+}
