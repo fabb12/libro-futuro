@@ -657,7 +657,11 @@ function currentMode() { return $('editor').classList.contains('hidden') ? 'read
 
 async function saveFile() {
   if (!state.current) return;
-  if (!state.token) { toast('Serve un token GitHub per salvare (Impostazioni)', true); return; }
+  if (!state.token) {
+    state.pendingSave = true;
+    initSetupScreen('Per salvare le modifiche sul repository serve un token GitHub: incollalo qui sotto e premi "Salva e continua".');
+    return;
+  }
   const newText = $('editor-area').value;
   loading(true, 'Salvo su GitHub…');
   try {
@@ -708,8 +712,7 @@ async function startApp() {
     await openChapter(entry);
   } catch (err) {
     toast('Impossibile caricare il libro: ' + err.message, true);
-    hide($('app-screen'));
-    show($('setup-screen'));
+    initSetupScreen('Non riesco a caricare il libro. Controlla repository e branch (se il repository è privato serve un token).');
     $('setup-error').textContent = err.message;
     show($('setup-error'));
   } finally {
@@ -717,12 +720,22 @@ async function startApp() {
   }
 }
 
-function initSetupScreen() {
+function initSetupScreen(hint) {
   $('cfg-repo').value = state.repo;
   $('cfg-branch').value = state.branch;
   $('cfg-token').value = state.token;
+  const h = $('setup-hint');
+  if (hint) { h.textContent = hint; show(h); } else hide(h);
+  hide($('app-screen'));
   show($('setup-screen'));
+  if (hint && /token/i.test(hint)) {
+    const d = document.querySelector('.token-help');
+    if (d) d.open = true;
+    $('cfg-token').focus();
+  }
   $('btn-connect').onclick = async () => {
+    const sameRepo = $('cfg-repo').value.trim() === state.repo &&
+      ($('cfg-branch').value.trim() || 'main') === state.branch;
     state.repo = $('cfg-repo').value.trim();
     state.branch = $('cfg-branch').value.trim() || 'main';
     state.token = $('cfg-token').value.trim();
@@ -730,7 +743,16 @@ function initSetupScreen() {
     localStorage.setItem(LS.branch, state.branch);
     localStorage.setItem(LS.token, state.token);
     hide($('setup-error'));
-    startApp();
+    if (sameRepo && state.current) {
+      // torna al libro senza ricaricare (preserva eventuali modifiche in corso)
+      hide($('setup-screen'));
+      show($('app-screen'));
+      if (state.pendingSave && state.token) { state.pendingSave = false; saveFile(); }
+      else if (state.token) toast('Token salvato ✓');
+    } else {
+      state.pendingSave = false;
+      startApp();
+    }
   };
 }
 
@@ -774,9 +796,6 @@ if ('serviceWorker' in navigator) {
 
 /* ---------------- Boot ---------------- */
 initUi();
-if (state.repo && (state.token || localStorage.getItem(LS.repo))) {
-  // gia' configurato in precedenza: entra direttamente
-  if (localStorage.getItem(LS.repo)) startApp(); else initSetupScreen();
-} else {
-  initSetupScreen();
-}
+// Il libro si apre subito (il repository e' pubblico, per leggere non serve nulla).
+// Le impostazioni/token compaiono solo per salvare o se il caricamento fallisce.
+startApp();
