@@ -686,7 +686,17 @@ async function saveFile() {
     if (state.current.path === 'main.tex') await buildToc(newText);
     toast('✓ Salvato: ' + state.current.path);
   } catch (err) {
-    toast('Errore nel salvataggio: ' + err.message, true);
+    if (err.status === 403 || err.status === 401) {
+      state.pendingSave = true;
+      initSetupScreen('Il token non ha i permessi per scrivere su questo repository. ' +
+        'Aprilo su GitHub (Settings → Developer settings → Fine-grained tokens): in "Repository access" scegli ' +
+        '"Only select repositories" con ' + state.repo + ' e in "Permissions" imposta Contents = Read and write. ' +
+        'Poi torna qui e premi "Salva e continua" (le tue modifiche non sono andate perse).');
+      $('setup-error').textContent = 'GitHub ha risposto: ' + err.message;
+      show($('setup-error'));
+    } else {
+      toast('Errore nel salvataggio: ' + err.message, true);
+    }
   } finally {
     loading(false);
   }
