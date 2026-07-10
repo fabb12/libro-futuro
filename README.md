@@ -13,19 +13,17 @@ Nella cartella [`docs/`](docs/) c'è una web app installabile su cellulare e tab
 
 ### Attivazione (una sola volta)
 
-1. Fai il merge di questo branch su `main`.
-2. Su GitHub vai in **Settings → Pages** e in *Build and deployment* scegli:
+1. Su GitHub vai in **Settings → Pages** e in *Build and deployment* scegli:
    - **Source**: Deploy from a branch
-   - **Branch**: `main`, cartella **`/docs`**
-3. Dopo qualche minuto l'app sarà online su `https://fabb12.github.io/libro-futuro/`.
+   - **Branch**: `main`, cartella **`/docs`** (funziona anche con la cartella `/ (root)`: c'è un reindirizzamento automatico)
+2. Dopo qualche minuto l'app sarà online su `https://fabb12.github.io/libro-futuro/`.
 
 ### Primo accesso
 
-1. Apri l'indirizzo qui sopra dal telefono o tablet.
-2. Crea un token GitHub per salvare le modifiche:
-   *github.com → Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token*, con accesso al solo repository `fabb12/libro-futuro` e permesso **Contents: Read and write**.
-3. Incolla il token nella schermata iniziale dell'app (resta salvato solo sul dispositivo).
-4. Per installarla come app: dal browser scegli **"Aggiungi a schermata Home"** (iPhone/iPad) o **"Installa app"** (Android/Chrome).
+1. Apri l'indirizzo qui sopra dal telefono o tablet: **il libro si apre subito**, senza configurare nulla.
+2. Il token GitHub serve solo quando **salvi** una modifica: al primo salvataggio l'app te lo chiede, con le istruzioni per crearlo
+   (*github.com → Settings → Developer settings → Personal access tokens → Fine-grained tokens*, accesso al solo repository `fabb12/libro-futuro`, permesso **Contents: Read and write**). Resta salvato solo sul dispositivo.
+3. Per installarla come app: dal browser scegli **"Aggiungi a schermata Home"** (iPhone/iPad) o **"Installa app"** (Android/Chrome).
 
 ### Uso quotidiano
 
