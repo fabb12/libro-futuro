@@ -17,8 +17,9 @@
   <!-- ===== Setup / login ===== -->
   <div id="setup-screen" class="screen hidden">
     <div class="setup-card">
-      <h1>📖 Il mio libro</h1>
-      <p class="setup-sub">Lettura e modifica del libro LaTeX direttamente dal repository GitHub.</p>
+      <h1>📖 Il mio libro — impostazioni</h1>
+      <p class="setup-sub">Per <b>leggere</b> il libro non serve nulla: si apre da solo. Il token GitHub serve solo per <b>salvare le modifiche</b> sul repository.</p>
+      <p id="setup-hint" class="hint hidden"></p>
 
       <label>Owner / Repository
         <input id="cfg-repo" type="text" value="fabb12/libro-futuro" autocapitalize="off" autocorrect="off">
@@ -26,7 +27,7 @@
       <label>Branch
         <input id="cfg-branch" type="text" value="main" autocapitalize="off" autocorrect="off">
       </label>
-      <label>Token GitHub (per salvare le modifiche)
+      <label>Token GitHub (solo per salvare le modifiche)
         <input id="cfg-token" type="password" placeholder="github_pat_… oppure ghp_…" autocapitalize="off">
       </label>
       <details class="token-help">
@@ -37,10 +38,10 @@
           <li>In <b>Permissions → Repository permissions</b> imposta <b>Contents: Read and write</b></li>
           <li>Genera e incolla qui il token. Resta salvato solo su questo dispositivo.</li>
         </ol>
-        <p>Senza token puoi comunque leggere il libro se il repository è pubblico, ma non salvare.</p>
+        <p>Senza token puoi comunque leggere tutto il libro, ma non salvare le modifiche.</p>
       </details>
 
-      <button id="btn-connect" class="btn primary">Apri il libro</button>
+      <button id="btn-connect" class="btn primary">Salva e continua</button>
       <p id="setup-error" class="error hidden"></p>
     </div>
   </div>

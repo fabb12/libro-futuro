@@ -51,6 +51,10 @@ button { font: inherit; cursor: pointer; }
 .token-help ol { padding-left: 20px; }
 #btn-connect { width: 100%; padding: 13px; font-size: 16px; }
 .error { color: #b00020; font-size: 14px; }
+.hint {
+  background: #fff6db; border: 1px solid #eadb9e; border-radius: 8px;
+  padding: 10px 12px; font-size: 14px; color: #6b5900; margin: 0 0 16px;
+}
 
 /* ===== Topbar ===== */
 #topbar {
