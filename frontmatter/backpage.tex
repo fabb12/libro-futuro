@@ -1,0 +1,74 @@
+% =============================================================================
+% Modern Back Cover - CORRETTA E OTTIMIZZATA PER 15x21cm
+% =============================================================================
+
+\pagestyle{empty}
+\cleardoublepage
+
+\begin{tikzpicture}[remember picture,overlay]
+	
+	% 1. SFONDO (Tutto nero/modernblack)
+	\fill[modernblack] (current page.south west) rectangle (current page.north east);
+	
+	% 2. CITAZIONE IN ALTO (Anchor: top center)
+	% Posizionata a 1.5cm dal bordo superiore per guadagnare spazio verticale
+	\node[name=topquote, anchor=north, text width=0.8\textwidth, align=center] 
+	at ([yshift=-1.5cm] current page.north) {%
+		\color{white}
+		{\sffamily\Large\textit{%
+				``Il futuro è già qui,\\
+				solo non è distribuito uniformemente.''
+		}}\\[0.5em]
+		{\sffamily\normalsize\textls[50]{WILLIAM GIBSON}}
+	};
+	
+	% 3. DESCRIZIONE CENTRALE
+	% Ancorata SOTTO la citazione (topquote.south) con 0.8cm di distacco.
+	% Usiamo \small per far stare tutto nel formato 15x21.
+	\node[anchor=north, text width=0.8\textwidth, align=justify] 
+	at ([yshift=-0.8cm] topquote.south) {%
+		\sffamily\small\color{white} % Font leggermente più piccolo e bianco
+		\setlength{\parskip}{0.8em}  % Spazio tra i paragrafi
+		
+		Viviamo nell'era dell'informazione con cervelli progettati per la savana. 
+		Questo libro esplora il paradosso fondamentale della condizione umana moderna: 
+		possediamo la tecnologia più avanzata della storia, ma la gestiamo con menti 
+		forgiate da milioni di anni di evoluzione per tutt'altri scopi.
+		
+		Dalle trappole cognitive dei social media alle decisioni irrazionali negli 
+		investimenti, dal sovraccarico informativo alla dipendenza da notifiche, 
+		\textit{\booktitle} svela i meccanismi nascosti che 
+		governano il nostro comportamento digitale quotidiano.
+		
+		Un viaggio illuminante attraverso neuroscienze, psicologia evolutiva e 
+		tecnologia che cambierà il modo in cui vedete voi stessi e il mondo 
+		digitale che vi circonda.
+	};
+	
+	% 4. ISBN / BARCODE (Angolo in basso a destra)
+	% Il box bianco per il codice a barre
+	\node[fill=white, minimum width=1.5in, minimum height=0.8in, anchor=south east] 
+	at ([xshift=-1cm, yshift=1cm] current page.south east) {%
+		\color{modernblack}\tiny
+		\begin{tabular}{c}
+			ISBN \isbn\\[0.2em]
+			% Scommenta la riga sotto quando avrai l'immagine del barcode
+			%\includegraphics[width=1.3in, height=0.5in]{barcode-placeholder.png}
+		\end{tabular}
+	};
+	
+	% 5. PREZZO (Angolo in basso a sinistra)
+	% Allineato verticalmente con il box del barcode
+	\node[white, anchor=south west] 
+	at ([xshift=1cm, yshift=1.2cm] current page.south west) {%
+		{\sffamily\small €\,18,00}
+	};
+	
+	% 6. TESTO SUL DORSO/LATO (Opzionale)
+	% Ruotato di 90 gradi
+	\node[white, rotate=90, anchor=south] 
+	at ([xshift=-0.5cm] current page.west) {%
+		{\sffamily\tiny\textls[100]{SAGGISTICA \textbullet{} NEUROSCIENZE}}
+	};
+	
+\end{tikzpicture}

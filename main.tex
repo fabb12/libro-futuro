@@ -1,0 +1,297 @@
+% =============================================================================
+% Professional Book Template - DRAFT-READY VERSION
+% =============================================================================
+% 
+% LISTA COMPLETA DEI CAPITOLI IN SEQUENZA:
+% =========================================
+% Prologo: Introduzione
+% Capitolo 1: L'architettura impossibile del cervello digitale
+% Capitolo 2: Il cervello: una storia lunga 500 milioni di anni
+% Capitolo 3: Quando la paura salvava la vita
+% Capitolo 4: Due cervelli in uno: quando il pilota automatico prende il controllo
+% Capitolo 5: La fabbrica delle emozioni
+% Capitolo 6: Memoria: l'archivista bugiardo
+% Capitolo 7: L'illusione di essere razionali
+% Capitolo 8: Quando il nemico è in casa: i bias più pericolosi
+% Capitolo 9: La continuità evolutiva dei bias: dal topo all'intelligenza collettiva
+% Capitolo 10: Dal Prezzo dell'Evoluzione all'Ecosistema Digitale Consapevole
+% Capitolo 11: Quando le Macchine Imparano i Nostri Pregiudizi
+% Capitolo 12: L'Apprendimento Impossibile
+% Capitolo 13: Mille Modi di Sbagliare
+% Capitolo 14: Il Casinò nella Testa
+% Capitolo 15: Dottori, Pazienti e l'Arte di Sbagliarsi
+% Capitolo 16: Il Piedistallo Cognitivo: Quando l'Ammirazione Acceca
+% Capitolo 17: L'Arte dell'Errore Creativo
+% Capitolo 18: Il Pianeta che Bolle
+% Capitolo 19: Echo Chamber e Rabbit Hole
+% Capitolo 20: Venere e Marte Hanno lo Stesso Cervello (Quasi)
+% Capitolo 21: La tirannia delle infinite possibilità
+% Capitolo 22: La Dissonanza Cognitiva: Il Mal di Testa dell'Anima
+% Capitolo 23: Il Partner di Danza Inconsapevole
+% Capitolo 24: La Fabbrica dei Sogni e dei Bias
+% Capitolo 25: Bias sui Bias
+% Capitolo 26: Epilogo: L'Esperimento Non Concluso
+% Capitolo 27: Co-evoluzione Uomo-AI: Dalla Teoria alla Pratica
+% Capitolo 28: Quando la Giustizia Sbaglia: I Bias Cognitivi in Tribunale
+% Capitolo 29: Il Bias di Ancoraggio sulla Propria Infanzia
+% Capitolo 30: Il Bias del Sopravvissuto
+% Capitolo 31: Le Etichette Nutrizionali Algoritmiche
+% Capitolo 32: L'IA come Impalcatura Socratica
+% Capitolo 33: Il Simulatore di Bias
+% Capitolo 34: Il Co-pilota per la Neurodiversità
+% Capitolo 35: Il bias dell'antropomorfizzazione
+% Capitolo 36: Il cervello si rinnova
+% =========================================
+
+% --- Modalità bozza / finale -------------------------------------------------
+% Imposta a \isdrafttrue per BOZZA (watermark + immagini non renderizzate)
+% Imposta a \isdraftfalse per la versione FINALE
+\newif\ifisdraft
+\isdraftfalse   % <<< CAMBIA QUI: true = BOZZA, false = FINALE
+
+% In bozza, non renderizzare le immagini (solo riquadri segnaposto)
+\ifisdraft
+  \PassOptionsToPackage{draft}{graphicx}
+\fi
+
+% (Opzionale) Se vuoi anche gli avvisi di overfull box della classe:
+% \documentclass[11pt,twoside,draft]{book}
+% Altrimenti la classe standard:
+\documentclass[11pt,twoside]{book}
+
+% Font encoding
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+% --- PACCHETTI PER COVER E TESTO BIANCO ---
+\usepackage{xcolor}                 % colori (usato anche negli header)
+\usepackage[outline]{contour}       % bordo attorno al testo bianco in titlepage
+\contourlength{1.1pt}               % spessore bordo (regolabile)
+\usepackage{comment}
+% --- Book metadata ---
+\newcommand{\authorname}{Fabio Fargnoli}
+\newcommand{\booktitle}{Memorie di un futuro anteriore}
+\newcommand{\subtitleA}{Dai bias ancestrali all'intelligenza artificiale:}
+\newcommand{\subtitleB}{come la nostra mente primitiva sta plasmando il futuro digitale}
+
+\newcommand{\publisher}{??Editore??}
+\newcommand{\editionyear}{2025}
+\newcommand{\isbn}{978-88-04-12345-6}
+
+% --- VERSION CONTROL ---
+\newcommand{\draftversion}{1.2}
+\newcommand{\draftdate}{\today}
+
+% Stile e opzioni del template
+\input{misc/options}
+\usepackage{graphicx}
+\usepackage{eso-pic}
+\usepackage{fancyhdr}
+\graphicspath{{images/}}
+
+\usepackage{ragged2e}
+\justifying
+
+% ----------------------------------------------------------------------------
+% Header / Paginazione e Watermark: differenziati per BOZZA vs FINALE
+% ----------------------------------------------------------------------------
+\ifisdraft
+  % --- Stile BOZZA ---
+  \usepackage{draftwatermark}
+  \SetWatermarkText{BOZZA v\draftversion}
+  \SetWatermarkScale{0.5}
+\SetWatermarkColor[gray]{0.95}
+  \SetWatermarkAngle{45}
+
+  \fancypagestyle{mainmatter}{%
+    \fancyhf{}
+    % Pari (Left Even): numero + titolo libro
+    \fancyhead[LE]{\sffamily\footnotesize\color{moderngray}\thepage\quad\textls[50]{\MakeUppercase{\chaptertitlename\ \thechapter}}}
+    % Dispari (Right Odd): titolo capitolo + numero + tag BOZZA
+    \fancyhead[RO]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{\leftmark}}\quad\thepage\quad\sffamily\tiny\color{modernred}[BOZZA~v\draftversion]}
+    % Riquadro fisso a destra con data/versione
+    \fancyhead[R]{\sffamily\tiny\color{modernred}BOZZA~v\draftversion\ --- \draftdate}
+    \renewcommand{\headrulewidth}{0pt}
+  }
+  \fancypagestyle{prologue}{%
+    \fancyhf{}
+    % Pari (Left Even): numero + Prologo
+    \fancyhead[LE]{\sffamily\footnotesize\color{moderngray}\thepage\quad\textls[50]{\MakeUppercase{Prologo}}}
+    % Dispari (Right Odd): Prologo + numero + tag BOZZA
+    \fancyhead[RO]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{Prologo}}\quad\thepage\quad\sffamily\tiny\color{modernred}[BOZZA~v\draftversion]}
+    % Riquadro fisso a destra con data/versione
+    \fancyhead[R]{\sffamily\tiny\color{modernred}BOZZA~v\draftversion\ --- \draftdate}
+    \renewcommand{\headrulewidth}{0pt}
+  }
+\else
+  % --- Stile FINALE ---
+  \fancypagestyle{mainmatter}{%
+    \fancyhf{}
+    % Pari (Left Even): numero + titolo libro
+    \fancyhead[LE]{\sffamily\footnotesize\color{moderngray}\thepage\quad\textls[50]{\MakeUppercase{\chaptertitlename\ \thechapter}}}
+    % Dispari (Right Odd): titolo capitolo + numero
+    \fancyhead[RO]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{\leftmark}}\quad\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+  }
+  \fancypagestyle{prologue}{%
+    \fancyhf{}
+    % Pari (Left Even): numero + Prologo
+    \fancyhead[LE]{\sffamily\footnotesize\color{moderngray}\thepage\quad\textls[50]{\MakeUppercase{Prologo}}}
+    % Dispari (Right Odd): Prologo + numero
+    \fancyhead[RO]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{Prologo}}\quad\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+  }
+\fi
+\usepackage{bookmark}
+\begin{document}
+
+% ===== FRONT MATTER =====
+\frontmatter
+\pagestyle{empty}
+
+% Title page (con cover e testo bianco con contorno)
+\input{frontmatter/titlepage}
+\cleardoublepage
+\cleardoublepage
+% Copyright page
+\thispagestyle{empty}
+\vspace*{\fill}
+
+\noindent
+Copyright \textcopyright\ \editionyear\ \authorname
+
+\vspace{0.5em}
+
+\noindent
+\small
+Tutti i diritti riservati. Nessuna parte di questa pubblicazione può essere 
+riprodotta, memorizzata in sistemi di recupero o trasmessa in qualsiasi forma 
+o con qualsiasi mezzo, elettronico, meccanico, fotocopie, registrazioni o altro, 
+senza il previo consenso scritto dell'editore.
+
+\normalsize
+
+\cleardoublepage
+
+% Indice
+\pagestyle{plain}
+\tableofcontents
+\cleardoublepage
+
+\input{frontmatter/preface}  % ok 
+
+% ===== MAIN CONTENT =====
+\mainmatter
+
+
+% Prologo
+\pagestyle{prologue}
+\input{content/prologo} % ok 
+\cleardoublepage
+\pagestyle{mainmatter}
+
+% ========================================
+% PARTE I: LA MENTE INASPETTATA
+% Viaggio alle origini dei nostri pensieri. 
+% Capire l'architettura mentale con cui siamo nati.
+% ========================================
+\input{parts/part1}
+
+\input{content/part1/chapter1}   % L'architettura impossibile del cervello digitale
+%\input{content/chapter3}   % Quando la paura salvava la vita
+\input{content/part1/chapter2}   % Il cervello: una storia lunga 500 milioni di anni
+%\input{content/chapter4}   % Due cervelli in uno: quando il pilota automatico prende il controllo
+%\input{content/chapter5}   % La fabbrica delle emozioni
+\input{content/part1/chapter6}   % Memoria: l'archivista bugiardo 
+\input{content/part1/chapter7}   % L'illusione di essere razionali
+\input{content/part1/chapter22}  % La Dissonanza Cognitiva: Il Mal di Testa dell'Anima
+\input{content/part1/chapter9}   % La continuità evolutiva dei bias: dal topo all'intelligenza collettiva
+%\input{content/part1/chapter36}  % Il cervello si rinnova
+
+% ========================================
+% PARTE II: LA MENTE FUORI POSTO
+% I nostri bias in azione nel mondo moderno. 
+% Casi di studio di una struttura cerebrale antica in un mondo nuovo.
+% ========================================
+\input{parts/part2}
+
+\input{content/part2/chapter11}  % Echo Chamber e Rabbit Hole
+%\input{content/part2/chapter19}  % Echo Chamber e Rabbit Hole
+\input{content/part2/chapter14}  % Il Casinò nella Testa (Finanza)
+\input{content/part2/chapter15}  % Dottori, Pazienti e l'Arte di Sbagliarsi (Medicina)
+\input{content/part2/chapter28}  % Quando la Giustizia Sbaglia: I Bias Cognitivi in Tribunale (Giustizia)
+\input{content/part2/chapter18}  % Il Pianeta che Bolle (Cambiamento Climatico)
+\input{content/part2/chapter16}  % Il Piedistallo Cognitivo: Quando l'Ammirazione Acceca (CORRETTO)
+\input{content/part2/chapter24}  % La Fabbrica dei Sogni e dei Bias (Cultura di massa)
+\input{content/part2/chapter20}  % Venere e Marte Hanno lo Stesso Cervello (Quasi) (Bias di genere)
+\input{content/part2/chapter13}  % Mille Modi di Sbagliare (Bias culturali)
+\input{content/part2/chapter12}  % L'Apprendimento Impossibile (Formazione dei bias)
+\input{content/part2/chapter29}  % Il Bias di Ancoraggio sulla Propria Infanzia (Genitorialità)
+\input{content/part2/chapter21}  % La tirannia delle infinite possibilità (Paradosso della scelta)
+\input{content/part2/chapter30}  % Il Bias del Sopravvissuto: Quando vediamo solo i successi
+
+% ========================================
+% PARTE III: LO SPECCHIO DIGITALE
+% Come l'Intelligenza Artificiale riflette, 
+% amplifica e cambia la nostra mente.
+% ========================================
+\input{parts/part3}
+
+\input{content/part3/chapter11}  % Quando le Macchine Imparano i Nostri Pregiudizi 
+\input{content/part3/chapter35}  % Il bias dell'antropomorfizzazione: quando proiettiamo umanità nelle macchine
+\input{content/part3/chapter37}  % La Macchina del Vuoto: Come l'IA Sostituisce la Connessione Umana
+\input{content/part3/chapter24} % thumos
+\input{content/part3/chapter23}  % Il Partner di Danza Inconsapevole
+\input{content/part3/chapter27}  % Co-evoluzione Uomo-AI: Dalla Teoria alla Pratica
+\input{content/part3/chapter38} % Sora 2
+
+
+% ========================================
+% PARTE IV: LA BUSSOLA DEL PENSIERO
+% Strategie, strumenti e riflessioni 
+% per un futuro più consapevole.
+% ========================================
+\input{parts/part4}
+
+\input{content/part4/chapter10}  % Dal Prezzo dell'Evoluzione all'Ecosistema Digitale Consapevole 
+\input{content/part4/chapter31}  % Le Etichette Nutrizionali Algoritmiche
+\input{content/part4/chapter32}  % L'IA come Impalcatura Socratica: Un Mentore, non un Oracolo
+\input{content/part4/chapter33}  % Il Simulatore di Bias: Quando l'IA Insegna all'Uomo a Non Sbagliare
+\input{content/part4/chapter34}  % Il Co-pilota per la Neurodiversità
+\input{content/part4/chapter17}  % L'Arte dell'Errore Creativo
+\input{content/part4/chapter8}   % Quando il nemico è in casa: i bias più pericolosi
+\input{content/part4/chapter39} % AI slop
+\input{content/part4/chapter40} % perche esiste la musica
+\input{content/part4/chapter25}  % Bias sui Bias
+\input{content/part4/chapter41}  % inganno 
+\input{content/part4/chapter26}  % Epilogo: L'Esperimento Non Concluso
+%\input{content/part4/chapter42}  % Epilogo: L'Esperimento Non Concluso
+
+% ===== BACK MATTER =====
+\backmatter
+
+% APPENDICE
+\appendix
+\pagestyle{mainmatter}  % Riattiva lo stile delle pagine
+\input{appendix/dialogue}
+
+% Torna allo stile vuoto per gli indici
+\pagestyle{empty}
+
+% Indice analitico principale
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Indice analitico}
+\printindex[main] 
+
+% Opzionale: Stampa l'indice dei bias cognitivi
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Indice dei bias cognitivi}
+\printindex[cognitive] 
+\cleardoublepage
+\input{frontmatter/backpage}
+
+
+
+\end{document}
