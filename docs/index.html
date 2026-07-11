@@ -41,6 +41,23 @@
         <p>Senza token puoi comunque leggere tutto il libro, ma non salvare le modifiche.</p>
       </details>
 
+      <details class="token-help notes-help">
+        <summary>Note condivise (avanzato)</summary>
+        <p>Di default le note che si aggiungono al testo restano <b>solo su questo dispositivo</b>. Per renderle <b>condivise con tutti i lettori</b> (chiunque scrive, tutti vedono) serve un progetto gratuito <b>Firebase</b>:</p>
+        <ol>
+          <li>Crea un progetto su <b>console.firebase.google.com</b> e attiva <b>Firestore Database</b>.</li>
+          <li>Nelle <b>Regole</b> consenti lettura/scrittura sulla raccolta <code>notes</code>.</li>
+          <li>In <b>Impostazioni progetto</b> copia <b>ID progetto</b> e <b>Chiave API Web</b> e incollali qui sotto.</li>
+        </ol>
+        <label>ID progetto Firebase
+          <input id="cfg-fb-project" type="text" autocapitalize="off" autocorrect="off" placeholder="es. libro-futuro-note">
+        </label>
+        <label>Chiave API Web
+          <input id="cfg-fb-key" type="text" autocapitalize="off" autocorrect="off" placeholder="AIza…">
+        </label>
+        <p>Per attivarle <b>per tutti</b> in modo permanente, gli stessi due valori vanno messi nel file <code>docs/notes-config.js</code> del repository.</p>
+      </details>
+
       <button id="btn-connect" class="btn primary">Salva e continua</button>
       <p id="setup-error" class="error hidden"></p>
     </div>
@@ -52,6 +69,7 @@
       <button id="btn-toc" class="iconbtn" title="Indice">☰</button>
       <div id="chapter-label">…</div>
       <div class="topbar-actions">
+        <button id="btn-notes" class="iconbtn" title="Note del capitolo">🗨️</button>
         <button id="btn-tts" class="iconbtn" title="Ascolta il capitolo">🔊</button>
         <button id="btn-mode" class="iconbtn" title="Modifica">✏️</button>
         <button id="btn-save" class="iconbtn hidden" title="Salva sul repository">💾</button>
@@ -112,8 +130,32 @@
       <div id="tts-hint">Tocca un paragrafo per iniziare a leggere da lì</div>
     </div>
 
+    <!-- Note al testo: pulsante flottante sulla selezione -->
+    <button id="note-add-btn" class="hidden">＋ Nota</button>
+
     <div id="toast" class="hidden"></div>
     <div id="loading" class="hidden"><div class="spinner"></div><span id="loading-msg">Caricamento…</span></div>
+  </div>
+
+  <!-- Sfondo condiviso per composer/popup delle note -->
+  <div id="note-backdrop" class="hidden"></div>
+
+  <!-- Composizione di una nuova nota -->
+  <div id="note-composer" class="hidden">
+    <div class="note-panel-head">Aggiungi una nota al testo</div>
+    <div id="note-quote" class="note-quote"></div>
+    <textarea id="note-text" placeholder="Scrivi qui la tua nota…"></textarea>
+    <input id="note-author" type="text" placeholder="Il tuo nome (facoltativo)" autocapitalize="words" autocorrect="off">
+    <div class="note-actions">
+      <button id="note-cancel" class="btn small ghost">Annulla</button>
+      <button id="note-save" class="btn small primary">Salva nota</button>
+    </div>
+  </div>
+
+  <!-- Elenco / lettura delle note -->
+  <div id="note-popup" class="hidden">
+    <div id="note-popup-text"></div>
+    <button id="note-popup-close" class="btn small">Chiudi</button>
   </div>
 
   <!-- Footnote popup -->
@@ -122,6 +164,7 @@
     <button id="fn-popup-close" class="btn small">Chiudi</button>
   </div>
 
+  <script src="notes-config.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
