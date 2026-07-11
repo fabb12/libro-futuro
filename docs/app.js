@@ -20,6 +20,7 @@ const state = {
   notes: [],          // footnotes del capitolo corrente
   imagesIndex: null,  // {name -> {sha,size}}
   imgUrls: {},        // sha -> objectURL
+  meta: null,         // {title, subtitleA, subtitleB, author} da main.tex
   titles: JSON.parse(localStorage.getItem(LS.titles) || '{}')
 };
 
@@ -490,8 +491,22 @@ function latexToHtml(src, notes) {
  * TOC: parsing di main.tex
  * ========================================================================= */
 const PART_TITLES = { part1: 'Parte I', part2: 'Parte II', part3: 'Parte III', part4: 'Parte IV' };
+function parseBookMeta(text) {
+  const get = name => {
+    const m = text.match(new RegExp('\\\\newcommand\\{\\\\' + name + '\\}\\{([^}]*)\\}'));
+    return m ? m[1].trim() : '';
+  };
+  return {
+    title: get('booktitle'),
+    subtitleA: get('subtitleA'),
+    subtitleB: get('subtitleB'),
+    author: get('authorname')
+  };
+}
 function parseMainTex(text) {
+  state.meta = parseBookMeta(text);
   const toc = [];
+  toc.push({ path: 'frontmatter/titlepage.tex', title: 'Copertina', part: 'Inizio', cover: true });
   toc.push({ path: 'frontmatter/preface.tex', title: 'Prefazione', part: 'Inizio' });
   let currentPart = 'Inizio';
   const partDesc = {}; // part1 -> "LA MENTE INASPETTATA"
@@ -595,13 +610,35 @@ async function openChapter(entry, keepMode) {
   }
 }
 
+function renderCover() {
+  const m = state.meta || {};
+  let html = '<div class="cover-page">' +
+    '<span class="cover-imgwrap"><img data-imgpath="Cover.png" alt="Copertina del libro">' +
+    '<span class="img-loading">Carico la copertina…</span></span>' +
+    '<div class="cover-overlay">' +
+    '<h1 class="cover-title">' + escHtml(m.title || 'Il mio libro') + '</h1>';
+  if (m.subtitleA || m.subtitleB) {
+    html += '<p class="cover-subtitle"><em>' + escHtml(m.subtitleA || '') +
+      (m.subtitleA && m.subtitleB ? '<br>' : '') + escHtml(m.subtitleB || '') + '</em></p>';
+  }
+  if (m.author) html += '<p class="cover-author">' + escHtml(m.author) + '</p>';
+  html += '</div></div>';
+  return html;
+}
+
 function renderReader() {
   state.notes = [];
-  const html = latexToHtml(state.fileText, state.notes);
-  let out = html;
-  if (state.notes.length) {
-    out += '<div class="endnotes"><h4>Note</h4><ol>' +
-      state.notes.map(n => '<li>' + n + '</li>').join('') + '</ol></div>';
+  let out;
+  if (state.current && state.current.cover) {
+    // La copertina si renderizza come pagina dedicata (il sorgente resta
+    // modificabile in modalita' editor: frontmatter/titlepage.tex)
+    out = renderCover();
+  } else {
+    out = latexToHtml(state.fileText, state.notes);
+    if (state.notes.length) {
+      out += '<div class="endnotes"><h4>Note</h4><ol>' +
+        state.notes.map(n => '<li>' + n + '</li>').join('') + '</ol></div>';
+    }
   }
   $('reader-content').innerHTML = out;
   hydrateImages();
@@ -860,7 +897,7 @@ function ttsPickedVoice() {
 function ttsBuildQueue() {
   const root = $('reader-content');
   tts.queue = [...root.querySelectorAll(TTS_SEL)].filter(el => {
-    if (el.closest('.endnotes') || el.closest('figure')) return false;
+    if (el.closest('.endnotes') || el.closest('figure') || el.closest('.cover-page')) return false;
     if (el.querySelector(TTS_SEL)) return false; // tieni solo i "blocchi foglia"
     return ttsTextOf(el).length > 0;
   });
