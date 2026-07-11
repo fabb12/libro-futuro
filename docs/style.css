@@ -316,9 +316,7 @@ body.tts-open #chapter-nav { padding-bottom: 150px; }
   box-shadow: 0 0 0 6px #fff3c4;
   transition: background .3s;
 }
-@media (prefers-color-scheme: dark) {
-  .tts-current { background: #3a3520 !important; box-shadow: 0 0 0 6px #3a3520; }
-}
+body.dark .tts-current { background: #3a3520 !important; box-shadow: 0 0 0 6px #3a3520; }
 
 /* ===== Note al testo ===== */
 mark.note-hl {
@@ -420,32 +418,33 @@ mark.note-hl.note-flash {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ===== Dark mode ===== */
-@media (prefers-color-scheme: dark) {
-  body { background: #17171d; color: #ddd; }
-  #reader-content blockquote { color: #aaa; border-left-color: #555; }
-  #reader-content figcaption, .endnotes { color: #999; }
-  .endnotes { border-top-color: #333; }
-  .img-loading { background: #26262e; color: #888; }
-  .msg.human { background: #26241e; border-color: #3a372e; }
-  .msg.ai { background: #1e2430; border-color: #2e3a50; }
-  #editor-area { background: #1b1b22; color: #ddd; }
-  #editor-bar { background: #22222a; border-bottom-color: #333; color: #999; }
-  #toc-drawer { background: #202028; color: #ddd; }
-  .toc-head { border-bottom-color: #333; }
-  .toc-item { color: #ddd; }
-  .toc-item.active { background: #2a2a45; }
-  .toc-foot { border-top-color: #333; }
-  .btn { background: #2a2a32; color: #ddd; border-color: #444; }
-  #fn-popup { background: #26262e; color: #ddd; }
-  .iconbtn { color: #ddd; }
-  mark.note-hl { background: #4a3d17; color: #f0e6cf; border-bottom-color: #b98a1f; }
-  mark.note-hl.note-flash { animation: noteFlashDark 1.4s ease; }
-  @keyframes noteFlashDark { 0%,100% { background: #4a3d17; } 30% { background: #7a641f; } }
-  #note-composer, #note-popup { background: #26262e; color: #ddd; }
-  #note-text, #note-author, .notes-help input { background: #1b1b22; color: #ddd; border-color: #444; }
-  .note-card { border-color: #333; }
-  .note-body { color: #ddd; }
-  .note-meta, .note-quote, .note-quote-ref, .note-empty { color: #aaa; }
-  .notes-help code { background: #333; }
-}
+/* ===== Lettura notturna (dark mode) =====
+   Attivata dalla classe body.dark, gestita da app.js.
+   Il valore iniziale segue la preferenza di sistema, ma l'utente
+   puo' forzarla con il pulsante 🌙 / ☀️ nella barra in alto. */
+body.dark { background: #17171d; color: #ddd; }
+body.dark #reader-content blockquote { color: #aaa; border-left-color: #555; }
+body.dark #reader-content figcaption, body.dark .endnotes { color: #999; }
+body.dark .endnotes { border-top-color: #333; }
+body.dark .img-loading { background: #26262e; color: #888; }
+body.dark .msg.human { background: #26241e; border-color: #3a372e; }
+body.dark .msg.ai { background: #1e2430; border-color: #2e3a50; }
+body.dark #editor-area { background: #1b1b22; color: #ddd; }
+body.dark #editor-bar { background: #22222a; border-bottom-color: #333; color: #999; }
+body.dark #toc-drawer { background: #202028; color: #ddd; }
+body.dark .toc-head { border-bottom-color: #333; }
+body.dark .toc-item { color: #ddd; }
+body.dark .toc-item.active { background: #2a2a45; }
+body.dark .toc-foot { border-top-color: #333; }
+body.dark .btn { background: #2a2a32; color: #ddd; border-color: #444; }
+body.dark #fn-popup { background: #26262e; color: #ddd; }
+body.dark .iconbtn { color: #ddd; }
+body.dark mark.note-hl { background: #4a3d17; color: #f0e6cf; border-bottom-color: #b98a1f; }
+body.dark mark.note-hl.note-flash { animation: noteFlashDark 1.4s ease; }
+@keyframes noteFlashDark { 0%,100% { background: #4a3d17; } 30% { background: #7a641f; } }
+body.dark #note-composer, body.dark #note-popup { background: #26262e; color: #ddd; }
+body.dark #note-text, body.dark #note-author, body.dark .notes-help input { background: #1b1b22; color: #ddd; border-color: #444; }
+body.dark .note-card { border-color: #333; }
+body.dark .note-body { color: #ddd; }
+body.dark .note-meta, body.dark .note-quote, body.dark .note-quote-ref, body.dark .note-empty { color: #aaa; }
+body.dark .notes-help code { background: #333; }
