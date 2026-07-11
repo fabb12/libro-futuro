@@ -6,7 +6,9 @@
 /* ---------------- Config & stato ---------------- */
 const LS = {
   repo: 'lf.repo', branch: 'lf.branch', token: 'lf.token',
-  titles: 'lf.titles', lastPath: 'lf.lastPath', fileCache: 'lf.file:'
+  titles: 'lf.titles', lastPath: 'lf.lastPath', fileCache: 'lf.file:',
+  fbProject: 'lf.fbProject', fbKey: 'lf.fbKey',
+  noteAuthor: 'lf.noteAuthor', myNotes: 'lf.myNotes', notesCache: 'lf.notes:'
 };
 const state = {
   repo: localStorage.getItem(LS.repo) || 'fabb12/libro-futuro',
@@ -21,7 +23,11 @@ const state = {
   imagesIndex: null,  // {name -> {sha,size}}
   imgUrls: {},        // sha -> objectURL
   meta: null,         // {title, subtitleA, subtitleB, author} da main.tex
-  titles: JSON.parse(localStorage.getItem(LS.titles) || '{}')
+  titles: JSON.parse(localStorage.getItem(LS.titles) || '{}'),
+  chapterNotes: [],   // note del capitolo corrente
+  pendingAnchor: null,// selezione in attesa di diventare nota
+  readScroll: 0,      // scroll salvato della lettura (per non perdere il punto)
+  editScroll: 0       // scroll salvato dell'editor
 };
 
 /* ---------------- Helpers DOM ---------------- */
@@ -599,10 +605,16 @@ async function openChapter(entry, keepMode) {
     $('editor-area').value = f.text;
     hide($('dirty-flag'));
 
+    hideNoteUi();
+    state.chapterNotes = [];
     if (entry.editorOnly) setMode('edit');
     else if (!keepMode) setMode('read');
     if (!entry.editorOnly) renderReader();
     window.scrollTo(0, 0);
+    $('editor-area').scrollTop = 0;
+    state.readScroll = 0; state.editScroll = 0;
+    if (!entry.editorOnly && !entry.cover) refreshNotes();
+    else updateNotesCount();
   } catch (err) {
     toast('Errore: ' + err.message, true);
   } finally {
@@ -643,6 +655,7 @@ function renderReader() {
   $('reader-content').innerHTML = out;
   hydrateImages();
   hydrateFootnotes();
+  anchorAll();
   updateNavButtons();
   // capitolo nuovo: ferma la lettura in corso e riprepara la coda
   if (typeof ttsStop === 'function') {
@@ -682,8 +695,370 @@ function updateNavButtons() {
   $('btn-next').onclick = () => i < readable.length - 1 && openChapter(readable[i + 1]);
 }
 
+/* =========================================================================
+ * Note al testo — chiunque puo' annotare, salvate in locale o condivise
+ * (Firestore). La configurazione condivisa sta in notes-config.js.
+ * ========================================================================= */
+const FS_BASE = 'https://firestore.googleapis.com/v1';
+
+function notesConfig() {
+  const base = (window.LF_NOTES_CONFIG && window.LF_NOTES_CONFIG.firestore) || {};
+  const projectId = (localStorage.getItem(LS.fbProject) || base.projectId || '').trim();
+  const apiKey = (localStorage.getItem(LS.fbKey) || base.apiKey || '').trim();
+  return { mode: (projectId && apiKey) ? 'firestore' : 'local', projectId, apiKey };
+}
+
+function markMine(id) {
+  const s = new Set(JSON.parse(localStorage.getItem(LS.myNotes) || '[]'));
+  s.add(id);
+  try { localStorage.setItem(LS.myNotes, JSON.stringify([...s])); } catch (e) {}
+}
+function isMine(id) {
+  return new Set(JSON.parse(localStorage.getItem(LS.myNotes) || '[]')).has(id);
+}
+function localNotes(chapter) {
+  return JSON.parse(localStorage.getItem(LS.notesCache + chapter) || '[]');
+}
+function saveLocalNotes(chapter, list) {
+  try { localStorage.setItem(LS.notesCache + chapter, JSON.stringify(list)); } catch (e) {}
+}
+
+function fsParse(fields) {
+  const o = {};
+  for (const k in fields) {
+    const v = fields[k];
+    o[k] = v.stringValue !== undefined ? v.stringValue
+      : v.integerValue !== undefined ? Number(v.integerValue)
+      : v.doubleValue !== undefined ? v.doubleValue
+      : v.booleanValue !== undefined ? v.booleanValue : '';
+  }
+  return o;
+}
+
+async function notesList(chapter) {
+  const cfg = notesConfig();
+  if (cfg.mode === 'local') return localNotes(chapter);
+  try {
+    const url = `${FS_BASE}/projects/${cfg.projectId}/databases/(default)/documents:runQuery?key=${cfg.apiKey}`;
+    const body = {
+      structuredQuery: {
+        from: [{ collectionId: 'notes' }],
+        where: { fieldFilter: { field: { fieldPath: 'chapter' }, op: 'EQUAL', value: { stringValue: chapter } } }
+      }
+    };
+    const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    if (!res.ok) throw new Error('Firestore ' + res.status);
+    const rows = await res.json();
+    const list = [];
+    for (const r of rows) {
+      if (!r.document) continue;
+      const d = fsParse(r.document.fields || {});
+      d.id = r.document.name.split('/').pop();
+      list.push(d);
+    }
+    list.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+    saveLocalNotes(chapter, list); // copia locale per l'offline
+    return list;
+  } catch (e) {
+    return localNotes(chapter); // offline / errore: ultima copia nota
+  }
+}
+
+async function notesAdd(note) {
+  const cfg = notesConfig();
+  note.createdAt = Date.now();
+  if (cfg.mode === 'local') {
+    note.id = 'loc-' + note.createdAt + '-' + Math.random().toString(36).slice(2, 7);
+    const list = localNotes(note.chapter); list.push(note); saveLocalNotes(note.chapter, list);
+    markMine(note.id);
+    return note;
+  }
+  const url = `${FS_BASE}/projects/${cfg.projectId}/databases/(default)/documents/notes?key=${cfg.apiKey}`;
+  const fields = {
+    book: { stringValue: 'libro-futuro' },
+    chapter: { stringValue: note.chapter },
+    quote: { stringValue: note.quote },
+    prefix: { stringValue: note.prefix || '' },
+    suffix: { stringValue: note.suffix || '' },
+    text: { stringValue: note.text },
+    author: { stringValue: note.author || '' },
+    createdAt: { integerValue: String(note.createdAt) }
+  };
+  const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fields }) });
+  if (!res.ok) {
+    let m = 'Firestore ' + res.status;
+    try { m += ': ' + (await res.json()).error.message; } catch (e) {}
+    throw new Error(m);
+  }
+  const doc = await res.json();
+  note.id = doc.name.split('/').pop();
+  markMine(note.id);
+  return note;
+}
+
+async function notesDelete(note) {
+  const cfg = notesConfig();
+  if (cfg.mode === 'local' || String(note.id).startsWith('loc-')) {
+    saveLocalNotes(note.chapter, localNotes(note.chapter).filter(n => n.id !== note.id));
+    return;
+  }
+  const url = `${FS_BASE}/projects/${cfg.projectId}/databases/(default)/documents/notes/${note.id}?key=${cfg.apiKey}`;
+  const res = await fetch(url, { method: 'DELETE' });
+  if (!res.ok) throw new Error('Firestore ' + res.status);
+}
+
+/* ---- ancoraggio delle note al testo renderizzato ---- */
+function readerTextNodes() {
+  const root = $('reader-content');
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(n) {
+      if (!n.nodeValue) return NodeFilter.FILTER_REJECT;
+      const p = n.parentElement;
+      if (!p || p.closest('.endnotes, figure, .cover-page, sup.fnref, .img-loading'))
+        return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nodes = [];
+  let n; while ((n = walker.nextNode())) nodes.push(n);
+  return nodes;
+}
+function readerTextIndex() {
+  const nodes = readerTextNodes();
+  let full = ''; const starts = new Map();
+  for (const n of nodes) { starts.set(n, full.length); full += n.nodeValue; }
+  return { nodes, full, starts };
+}
+function findQuoteRange(full, note) {
+  const q = note.quote;
+  if (!q) return null;
+  let from = 0, best = -1, bestScore = -1;
+  while (true) {
+    const idx = full.indexOf(q, from);
+    if (idx < 0) break;
+    let score = 0;
+    if (note.prefix) {
+      const before = full.slice(Math.max(0, idx - note.prefix.length), idx);
+      if (before.endsWith(note.prefix)) score += 2;
+      else if (before.slice(-8) && before.slice(-8) === note.prefix.slice(-8)) score += 1;
+    }
+    if (note.suffix) {
+      const after = full.slice(idx + q.length, idx + q.length + note.suffix.length);
+      if (after.startsWith(note.suffix)) score += 2;
+      else if (after.slice(0, 8) && after.slice(0, 8) === note.suffix.slice(0, 8)) score += 1;
+    }
+    if (score > bestScore) { bestScore = score; best = idx; }
+    from = idx + 1;
+  }
+  return best < 0 ? null : { start: best, end: best + q.length };
+}
+function wrapQuote(note) {
+  const { nodes, full, starts } = readerTextIndex();
+  const r = findQuoteRange(full, note);
+  if (!r) return false;
+  for (const node of nodes) {
+    const nodeStart = starts.get(node), nodeEnd = nodeStart + node.nodeValue.length;
+    const s = Math.max(r.start, nodeStart), e = Math.min(r.end, nodeEnd);
+    if (s >= e) continue;
+    let target = node;
+    const localStart = s - nodeStart, localEnd = e - nodeStart;
+    if (localEnd < target.nodeValue.length) target.splitText(localEnd);
+    if (localStart > 0) target = target.splitText(localStart);
+    const mark = document.createElement('mark');
+    mark.className = 'note-hl';
+    mark.dataset.noteId = note.id;
+    target.parentNode.replaceChild(mark, target);
+    mark.appendChild(target);
+  }
+  return true;
+}
+function anchorAll() {
+  const root = $('reader-content');
+  root.querySelectorAll('mark.note-hl').forEach(m => {
+    const p = m.parentNode;
+    while (m.firstChild) p.insertBefore(m.firstChild, m);
+    p.removeChild(m);
+  });
+  root.normalize();
+  for (const note of state.chapterNotes) wrapQuote(note);
+  updateNotesCount();
+}
+
+async function refreshNotes() {
+  state.chapterNotes = [];
+  updateNotesCount();
+  if (!state.current || state.current.editorOnly || state.current.cover) return;
+  const chapter = state.current.path;
+  const list = await notesList(chapter);
+  if (!state.current || state.current.path !== chapter) return; // capitolo cambiato nel frattempo
+  state.chapterNotes = list;
+  if (currentMode() === 'read') anchorAll(); else updateNotesCount();
+}
+
+function updateNotesCount() {
+  const btn = $('btn-notes');
+  if (!btn) return;
+  const n = state.chapterNotes.length;
+  btn.textContent = n ? '🗨️' + n : '🗨️';
+  btn.classList.toggle('has-notes', n > 0);
+}
+
+/* ---- selezione del testo -> nuova nota ---- */
+function selectionInfo() {
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || sel.rangeCount === 0) return null;
+  const range = sel.getRangeAt(0);
+  const root = $('reader-content');
+  if (!root.contains(range.startContainer) || !root.contains(range.endContainer)) return null;
+  const { full, starts } = readerTextIndex();
+  if (!starts.has(range.startContainer) || !starts.has(range.endContainer)) return null;
+  const start = starts.get(range.startContainer) + range.startOffset;
+  const end = starts.get(range.endContainer) + range.endOffset;
+  if (end <= start) return null;
+  const quote = full.slice(start, end);
+  if (!quote.trim() || quote.length > 1200) return null;
+  return {
+    quote,
+    prefix: full.slice(Math.max(0, start - 40), start),
+    suffix: full.slice(end, end + 40)
+  };
+}
+function selectionRect() {
+  const sel = window.getSelection();
+  if (!sel || sel.rangeCount === 0) return null;
+  const rects = sel.getRangeAt(0).getClientRects();
+  return rects.length ? rects[rects.length - 1] : null;
+}
+
+function openComposer(anchor) {
+  if (!anchor) return;
+  state.pendingAnchor = anchor;
+  $('note-quote').textContent = '“' + anchor.quote.trim() + '”';
+  $('note-text').value = '';
+  $('note-author').value = localStorage.getItem(LS.noteAuthor) || '';
+  show($('note-composer')); show($('note-backdrop'));
+  $('note-text').focus();
+}
+function closeComposer() {
+  hide($('note-composer')); hide($('note-backdrop'));
+  state.pendingAnchor = null;
+}
+async function submitNote() {
+  const text = $('note-text').value.trim();
+  if (!text) { toast('Scrivi il testo della nota', true); return; }
+  if (!state.current || !state.pendingAnchor) { closeComposer(); return; }
+  const author = $('note-author').value.trim();
+  try { localStorage.setItem(LS.noteAuthor, author); } catch (e) {}
+  const a = state.pendingAnchor;
+  const note = { chapter: state.current.path, quote: a.quote, prefix: a.prefix, suffix: a.suffix, text, author };
+  closeComposer();
+  loading(true, 'Salvo la nota…');
+  try {
+    const saved = await notesAdd(note);
+    state.chapterNotes.push(saved);
+    anchorAll();
+    const shared = notesConfig().mode === 'firestore';
+    toast(shared ? '✓ Nota condivisa con tutti' : '✓ Nota salvata (solo su questo dispositivo)');
+    window.getSelection().removeAllRanges();
+  } catch (e) {
+    toast('Nota non salvata: ' + e.message, true);
+  } finally { loading(false); }
+}
+
+/* ---- lettura / elenco delle note ---- */
+function noteCard(n, showQuote) {
+  const when = n.createdAt ? new Date(n.createdAt).toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+  const who = escHtml(n.author || 'Anonimo');
+  const q = (n.quote || '').trim();
+  const quote = showQuote
+    ? `<div class="note-quote-ref" data-jump="${n.id}">“${escHtml(q.slice(0, 80))}${q.length > 80 ? '…' : ''}”</div>` : '';
+  const del = (isMine(n.id) || String(n.id).startsWith('loc-'))
+    ? `<button class="btn small ghost" data-del="${n.id}">Elimina</button>` : '';
+  return `<div class="note-card">${quote}<div class="note-meta"><b>${who}</b>${when ? ' · ' + when : ''}</div>` +
+    `<div class="note-body">${escHtml(n.text).replace(/\n/g, '<br>')}</div>${del}</div>`;
+}
+function wireNotePopup() {
+  const box = $('note-popup-text');
+  box.querySelectorAll('[data-del]').forEach(b => b.onclick = async () => {
+    const note = state.chapterNotes.find(n => n.id === b.dataset.del);
+    if (!note || !confirm('Elimini questa nota?')) return;
+    try {
+      await notesDelete(note);
+      state.chapterNotes = state.chapterNotes.filter(n => n.id !== note.id);
+      closeNotePopup(); anchorAll(); toast('Nota eliminata');
+    } catch (e) { toast('Non eliminata: ' + e.message, true); }
+  });
+  box.querySelectorAll('[data-jump]').forEach(el => el.onclick = () => jumpToNote(el.dataset.jump));
+}
+function openNotePopup(id) {
+  const notes = state.chapterNotes.filter(n => n.id === id);
+  if (!notes.length) return;
+  $('note-popup-text').innerHTML = notes.map(n => noteCard(n, false)).join('');
+  wireNotePopup();
+  show($('note-popup')); show($('note-backdrop'));
+}
+function openNotesList() {
+  const box = $('note-popup-text');
+  if (!state.chapterNotes.length) {
+    box.innerHTML = '<p class="note-empty">Nessuna nota in questo capitolo. Seleziona una frase del testo per aggiungerne una.</p>';
+  } else {
+    box.innerHTML = state.chapterNotes.map(n => noteCard(n, true)).join('');
+  }
+  wireNotePopup();
+  show($('note-popup')); show($('note-backdrop'));
+}
+function closeNotePopup() { hide($('note-popup')); hide($('note-backdrop')); }
+function jumpToNote(id) {
+  closeNotePopup();
+  const mark = document.querySelector(`mark.note-hl[data-note-id="${id}"]`);
+  if (!mark) { toast('Il testo di questa nota non è più nel capitolo', true); return; }
+  mark.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  mark.classList.add('note-flash');
+  setTimeout(() => mark.classList.remove('note-flash'), 1500);
+}
+
+function hideNoteUi() {
+  hide($('note-add-btn'));
+  closeComposer();
+  closeNotePopup();
+}
+
+function initNotesUi() {
+  const addBtn = $('note-add-btn');
+  const updateAddBtn = () => {
+    if (currentMode() !== 'read') { hide(addBtn); return; }
+    const info = selectionInfo();
+    if (!info) { hide(addBtn); return; }
+    const rect = selectionRect();
+    if (!rect) { hide(addBtn); return; }
+    state.pendingAnchor = info;
+    addBtn.style.top = (window.scrollY + rect.top - 42) + 'px';
+    addBtn.style.left = (window.scrollX + rect.left) + 'px';
+    show(addBtn);
+  };
+  document.addEventListener('selectionchange', () => {
+    clearTimeout(state._selTimer);
+    state._selTimer = setTimeout(updateAddBtn, 150);
+  });
+  addBtn.addEventListener('mousedown', e => e.preventDefault()); // non perdere la selezione
+  addBtn.addEventListener('click', () => { const a = state.pendingAnchor; hide(addBtn); openComposer(a); });
+
+  $('note-save').onclick = submitNote;
+  $('note-cancel').onclick = closeComposer;
+  $('note-popup-close').onclick = closeNotePopup;
+  $('note-backdrop').onclick = () => { closeComposer(); closeNotePopup(); };
+  $('btn-notes').onclick = openNotesList;
+
+  // toccare un'evidenziazione apre la relativa nota
+  $('reader-content').addEventListener('click', e => {
+    const mark = e.target.closest('mark.note-hl');
+    if (mark) openNotePopup(mark.dataset.noteId);
+  });
+}
+
 /* ---------------- Modalita' lettura / modifica ---------------- */
 function setMode(mode) {
+  hideNoteUi();
   if (mode === 'edit') {
     if (typeof ttsCloseBar === 'function') ttsCloseBar();
     hide($('reader')); show($('editor')); show($('btn-save'));
@@ -694,6 +1069,20 @@ function setMode(mode) {
     if (!state.dirty) hide($('btn-save'));
     $('btn-mode').textContent = '✏️'; // ✏️
     $('btn-mode').title = 'Modifica';
+  }
+}
+// Cambio di modalita' voluto dall'utente: conserva il punto in cui stava
+// leggendo o modificando, così non lo perde passando da una all'altra.
+function switchMode(mode) {
+  const from = currentMode();
+  if (from === mode) return;
+  if (from === 'read') state.readScroll = window.scrollY;
+  else state.editScroll = $('editor-area').scrollTop;
+  setMode(mode);
+  if (mode === 'read') {
+    requestAnimationFrame(() => window.scrollTo(0, state.readScroll || 0));
+  } else {
+    requestAnimationFrame(() => { $('editor-area').scrollTop = state.editScroll || 0; });
   }
 }
 function currentMode() { return $('editor').classList.contains('hidden') ? 'read' : 'edit'; }
@@ -777,6 +1166,9 @@ function initSetupScreen(hint) {
   $('cfg-repo').value = state.repo;
   $('cfg-branch').value = state.branch;
   $('cfg-token').value = state.token;
+  const nc = (window.LF_NOTES_CONFIG && window.LF_NOTES_CONFIG.firestore) || {};
+  $('cfg-fb-project').value = localStorage.getItem(LS.fbProject) || nc.projectId || '';
+  $('cfg-fb-key').value = localStorage.getItem(LS.fbKey) || nc.apiKey || '';
   const h = $('setup-hint');
   if (hint) { h.textContent = hint; show(h); } else hide(h);
   hide($('app-screen'));
@@ -795,6 +1187,8 @@ function initSetupScreen(hint) {
     localStorage.setItem(LS.repo, state.repo);
     localStorage.setItem(LS.branch, state.branch);
     localStorage.setItem(LS.token, state.token);
+    localStorage.setItem(LS.fbProject, $('cfg-fb-project').value.trim());
+    localStorage.setItem(LS.fbKey, $('cfg-fb-key').value.trim());
     hide($('setup-error'));
     if (sameRepo && state.current) {
       // torna al libro senza ricaricare (preserva eventuali modifiche in corso)
@@ -813,7 +1207,7 @@ function initUi() {
   $('btn-toc').onclick = openToc;
   $('btn-toc-close').onclick = closeToc;
   $('toc-backdrop').onclick = closeToc;
-  $('btn-mode').onclick = () => setMode(currentMode() === 'read' ? 'edit' : 'read');
+  $('btn-mode').onclick = () => switchMode(currentMode() === 'read' ? 'edit' : 'read');
   $('btn-save').onclick = saveFile;
   $('btn-refresh').onclick = async () => {
     closeToc();
@@ -1060,7 +1454,7 @@ function initTts() {
   // toccando un paragrafo (con la barra aperta) la lettura parte da li'
   $('reader-content').addEventListener('click', e => {
     if ($('tts-bar').classList.contains('hidden')) return;
-    if (e.target.closest('sup.fnref')) return; // le note restano toccabili
+    if (e.target.closest('sup.fnref') || e.target.closest('mark.note-hl')) return; // note e annotazioni restano toccabili
     const el = e.target.closest(TTS_SEL);
     if (!el || el.closest('.endnotes')) return;
     const i = tts.queue.indexOf(el);
@@ -1079,6 +1473,7 @@ if ('serviceWorker' in navigator) {
 
 /* ---------------- Boot ---------------- */
 initUi();
+initNotesUi();
 initTts();
 // Il libro si apre subito (il repository e' pubblico, per leggere non serve nulla).
 // Le impostazioni/token compaiono solo per salvare o se il caricamento fallisce.
