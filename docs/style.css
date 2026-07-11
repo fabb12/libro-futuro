@@ -320,6 +320,84 @@ body.tts-open #chapter-nav { padding-bottom: 150px; }
   .tts-current { background: #3a3520 !important; box-shadow: 0 0 0 6px #3a3520; }
 }
 
+/* ===== Note al testo ===== */
+mark.note-hl {
+  background: #fde8b0; color: inherit;
+  border-bottom: 2px solid #e0a92e;
+  border-radius: 2px; padding: 0 1px; cursor: pointer;
+}
+mark.note-hl.note-flash {
+  animation: noteFlash 1.4s ease;
+}
+@keyframes noteFlash {
+  0%, 100% { background: #fde8b0; }
+  30% { background: #f7c948; }
+}
+
+#btn-notes.has-notes { position: relative; }
+#btn-notes {
+  font-size: 18px;
+  font-family: -apple-system, system-ui, sans-serif;
+}
+
+/* pulsante flottante "＋ Nota" sulla selezione */
+#note-add-btn {
+  position: absolute; z-index: 95;
+  background: #5b4bd6; color: #fff; border: none;
+  border-radius: 20px; padding: 7px 14px;
+  font-family: -apple-system, system-ui, sans-serif; font-size: 14px; font-weight: 600;
+  box-shadow: 0 4px 16px rgba(0,0,0,.3);
+}
+
+#note-backdrop { position: fixed; inset: 0; z-index: 110; background: rgba(0,0,0,.4); }
+
+/* composer + popup: pannello in basso, come fn-popup */
+#note-composer, #note-popup {
+  position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 120;
+  max-width: 640px; margin: 0 auto;
+  background: #fff; border-radius: 14px; padding: 16px;
+  box-shadow: 0 8px 40px rgba(0,0,0,.35);
+  font-family: -apple-system, system-ui, sans-serif;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+}
+.note-panel-head { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+.note-quote {
+  font-family: Georgia, serif; font-style: italic; color: #555;
+  border-left: 3px solid #e0a92e; padding: 2px 0 2px 10px; margin-bottom: 12px;
+  font-size: 15px; max-height: 5em; overflow: auto;
+}
+#note-text {
+  width: 100%; min-height: 90px; resize: vertical;
+  border: 1px solid #ccc; border-radius: 8px; padding: 10px 12px;
+  font: inherit; font-size: 15px; margin-bottom: 10px;
+}
+#note-author {
+  width: 100%; border: 1px solid #ccc; border-radius: 8px;
+  padding: 9px 12px; font: inherit; font-size: 14px; margin-bottom: 12px;
+}
+.note-actions { display: flex; justify-content: flex-end; gap: 8px; }
+
+#note-popup-text { margin-bottom: 10px; max-height: 60vh; overflow: auto; }
+.note-card {
+  border: 1px solid #eee; border-radius: 10px; padding: 10px 12px; margin-bottom: 10px;
+  font-size: 15px; line-height: 1.5;
+}
+.note-meta { font-size: 13px; color: #666; margin-bottom: 6px; }
+.note-body { color: #222; }
+.note-quote-ref {
+  font-family: Georgia, serif; font-style: italic; color: #777;
+  font-size: 13px; margin-bottom: 6px; cursor: pointer;
+}
+.note-quote-ref:hover { color: #5b4bd6; }
+.note-card [data-del] { margin-top: 8px; }
+.note-empty { color: #777; font-size: 14px; margin: 4px 0; }
+.notes-help label { display: block; margin-top: 10px; }
+.notes-help input {
+  display: block; width: 100%; margin-top: 4px;
+  padding: 8px 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 8px;
+}
+.notes-help code { background: #eee; padding: 1px 4px; border-radius: 4px; font-size: 12px; }
+
 /* ===== Toast / loading ===== */
 #toast {
   position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
@@ -361,4 +439,13 @@ body.tts-open #chapter-nav { padding-bottom: 150px; }
   .btn { background: #2a2a32; color: #ddd; border-color: #444; }
   #fn-popup { background: #26262e; color: #ddd; }
   .iconbtn { color: #ddd; }
+  mark.note-hl { background: #4a3d17; color: #f0e6cf; border-bottom-color: #b98a1f; }
+  mark.note-hl.note-flash { animation: noteFlashDark 1.4s ease; }
+  @keyframes noteFlashDark { 0%,100% { background: #4a3d17; } 30% { background: #7a641f; } }
+  #note-composer, #note-popup { background: #26262e; color: #ddd; }
+  #note-text, #note-author, .notes-help input { background: #1b1b22; color: #ddd; border-color: #444; }
+  .note-card { border-color: #333; }
+  .note-body { color: #ddd; }
+  .note-meta, .note-quote, .note-quote-ref, .note-empty { color: #aaa; }
+  .notes-help code { background: #333; }
 }
