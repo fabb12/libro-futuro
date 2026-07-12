@@ -1,0 +1,76 @@
+name: Genera PDF
+
+# Compila il libro LaTeX (main.tex) e pubblica il PDF come artifact scaricabile.
+# Si può avviare a mano dal tab "Actions" di GitHub oppure dal pulsante
+# "Genera PDF finale" nella web app (docs/), che usa questo stesso trigger.
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Versione da generare"
+        type: choice
+        default: finale
+        options:
+          - finale
+          - bozza
+
+# Evita build sovrapposte: se ne parte una nuova, annulla la precedente in coda.
+concurrency:
+  group: build-pdf
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repository
+        uses: actions/checkout@v4
+
+      - name: Imposta la modalità (${{ inputs.mode }})
+        run: |
+          if [ "${{ inputs.mode }}" = "bozza" ]; then
+            sed -i 's/\\isdraftfalse/\\isdrafttrue/' main.tex
+            echo "Modalità BOZZA (watermark, immagini come segnaposto)."
+          else
+            sed -i 's/\\isdrafttrue/\\isdraftfalse/' main.tex
+            echo "Modalità FINALE."
+          fi
+          grep -nE '\\isdraft(true|false)' main.tex | grep -v newif || true
+
+      - name: Compila con latexmk (pdflatex + xindy/texindy)
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          latexmk_shell_escape: true
+          # TeX Live "full" include latexmk, pdflatex e xindy/texindy,
+          # necessari per i due indici analitici (main + cognitive).
+
+      - name: Verifica che il PDF sia stato prodotto
+        run: |
+          if [ ! -f main.pdf ]; then
+            echo "::error::main.pdf non è stato generato. Vedi il log qui sotto."
+            tail -n 120 main.log || true
+            exit 1
+          fi
+          ls -lh main.pdf
+
+      - name: Pubblica il PDF come artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: libro-pdf-${{ inputs.mode }}
+          path: main.pdf
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Pubblica il log (utile se la compilazione fallisce)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: main.log
+          retention-days: 7
+          if-no-files-found: ignore
