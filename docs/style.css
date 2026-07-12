@@ -338,15 +338,6 @@ mark.note-hl.note-flash {
   font-family: -apple-system, system-ui, sans-serif;
 }
 
-/* pulsante flottante "＋ Nota" sulla selezione */
-#note-add-btn {
-  position: absolute; z-index: 95;
-  background: #5b4bd6; color: #fff; border: none;
-  border-radius: 20px; padding: 7px 14px;
-  font-family: -apple-system, system-ui, sans-serif; font-size: 14px; font-weight: 600;
-  box-shadow: 0 4px 16px rgba(0,0,0,.3);
-}
-
 #note-backdrop { position: fixed; inset: 0; z-index: 110; background: rgba(0,0,0,.4); }
 
 /* composer + popup: pannello in basso, come fn-popup */
