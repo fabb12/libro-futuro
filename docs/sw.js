@@ -1,5 +1,5 @@
 /* Service worker: cache dell'app shell + cache immagini (gestita da app.js) */
-const SHELL_CACHE = 'lf-shell-v2';
+const SHELL_CACHE = 'lf-shell-v3';
 const SHELL = ['./', 'index.html', 'style.css', 'app.js', 'notes-config.js', 'manifest.webmanifest',
   'icons/icon-192.png', 'icons/icon-512.png'];
 

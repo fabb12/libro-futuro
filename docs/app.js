@@ -8,7 +8,8 @@ const LS = {
   repo: 'lf.repo', branch: 'lf.branch', token: 'lf.token',
   titles: 'lf.titles', lastPath: 'lf.lastPath', fileCache: 'lf.file:',
   fbProject: 'lf.fbProject', fbKey: 'lf.fbKey',
-  noteAuthor: 'lf.noteAuthor', myNotes: 'lf.myNotes', notesCache: 'lf.notes:'
+  noteAuthor: 'lf.noteAuthor', myNotes: 'lf.myNotes', notesCache: 'lf.notes:',
+  theme: 'lf.theme'
 };
 const state = {
   repo: localStorage.getItem(LS.repo) || 'fabb12/libro-futuro',
@@ -1203,6 +1204,47 @@ function initSetupScreen(hint) {
   };
 }
 
+/* ---------------- Lettura notturna (tema chiaro/scuro) ---------------- */
+// Tema effettivo corrente: la scelta salvata dall'utente oppure, se assente,
+// la preferenza del sistema operativo.
+function currentTheme() {
+  const saved = localStorage.getItem(LS.theme);
+  if (saved === 'dark' || saved === 'light') return saved;
+  return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ? 'dark' : 'light';
+}
+
+function applyTheme(theme) {
+  const dark = theme === 'dark';
+  document.body.classList.toggle('dark', dark);
+  const btn = $('btn-theme');
+  if (btn) {
+    btn.textContent = dark ? '☀️' : '🌙';
+    btn.title = dark ? 'Lettura diurna' : 'Lettura notturna';
+    btn.setAttribute('aria-label', btn.title);
+  }
+  // Adegua il colore della barra di stato (PWA a schermo intero).
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', dark ? '#0e0e12' : '#1a1a2e');
+}
+
+function toggleTheme() {
+  const next = currentTheme() === 'dark' ? 'light' : 'dark';
+  try { localStorage.setItem(LS.theme, next); } catch (e) {}
+  applyTheme(next);
+}
+
+function initTheme() {
+  applyTheme(currentTheme());
+  $('btn-theme').onclick = toggleTheme;
+  // Se l'utente non ha ancora scelto, segui i cambi di tema del sistema.
+  if (window.matchMedia) {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const onChange = () => { if (!localStorage.getItem(LS.theme)) applyTheme(currentTheme()); };
+    mq.addEventListener ? mq.addEventListener('change', onChange) : mq.addListener(onChange);
+  }
+}
+
 function initUi() {
   $('btn-toc').onclick = openToc;
   $('btn-toc-close').onclick = closeToc;
@@ -1472,6 +1514,7 @@ if ('serviceWorker' in navigator) {
 }
 
 /* ---------------- Boot ---------------- */
+initTheme();
 initUi();
 initNotesUi();
 initTts();
