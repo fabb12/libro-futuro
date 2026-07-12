@@ -1041,6 +1041,7 @@ function openComposer(anchor) {
 function closeComposer() {
   hide($('note-composer')); hide($('note-backdrop'));
   state.pendingAnchor = null;
+  const s = window.getSelection(); if (s) s.removeAllRanges();
 }
 async function submitNote() {
   const text = $('note-text').value.trim();
@@ -1167,15 +1168,56 @@ function noteFromWord(x, y) {
 function initNotesUi() {
   const reader = $('reader-content');
 
-  // Desktop: il doppio click seleziona gia' la parola.
-  reader.addEventListener('dblclick', () => noteFromWord());
+  // Se al momento della pressione c'e' gia' una selezione (una o piu' parole)
+  // e si preme SOPRA di essa, memorizziamo la selezione PRIMA che il
+  // tocco/click la annulli, per poterla trasformare in nota al rilascio.
+  let tapInfo = null; // { info, x, y }
+  const captureSelectionTap = (px, py) => {
+    tapInfo = null;
+    if (currentMode() !== 'read') return;
+    const info = selectionInfo();
+    if (!info) return;
+    const sel = window.getSelection();
+    const rects = sel.rangeCount ? [...sel.getRangeAt(0).getClientRects()] : [];
+    const on = rects.some(r => px >= r.left - 6 && px <= r.right + 6 &&
+                               py >= r.top - 6 && py <= r.bottom + 6);
+    if (on) tapInfo = { info, x: px, y: py };
+  };
+  // Vale solo se il rilascio e' vicino alla pressione: cosi' un trascinamento
+  // (nuova selezione) o uno scorrimento non aprono il composer per sbaglio.
+  const releaseOnSelection = (x, y) => {
+    if (!tapInfo) return null;
+    const near = Math.abs(x - tapInfo.x) < 12 && Math.abs(y - tapInfo.y) < 12;
+    const info = tapInfo.info; tapInfo = null;
+    return near ? info : null;
+  };
 
-  // Touch: rilevamento manuale del doppio tocco (il dblclick nativo non e'
-  // affidabile e il doppio tap farebbe lo zoom).
+  reader.addEventListener('mousedown', e => captureSelectionTap(e.clientX, e.clientY));
+  reader.addEventListener('touchstart', e => {
+    if (e.touches.length === 1) captureSelectionTap(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: true });
+
+  // Desktop
+  reader.addEventListener('mouseup', e => {
+    const info = releaseOnSelection(e.clientX, e.clientY); // premuto su una selezione
+    if (info) openComposer(info);
+  });
+  // Il doppio click seleziona gia' la parola: la trasformiamo in nota.
+  reader.addEventListener('dblclick', () => { tapInfo = null; noteFromWord(); });
+
+  // Touch: doppio tocco su una parola (il dblclick nativo non e' affidabile e
+  // il doppio tap farebbe lo zoom) oppure tocco su una selezione esistente.
   let lastTap = 0, lastX = 0, lastY = 0;
   reader.addEventListener('touchend', e => {
     if (currentMode() !== 'read' || e.changedTouches.length !== 1) return;
     const t = e.changedTouches[0];
+    const info = releaseOnSelection(t.clientX, t.clientY);
+    if (info) { // premuto su una selezione di una o piu' parole
+      lastTap = 0;
+      e.preventDefault();
+      openComposer(info);
+      return;
+    }
     const now = Date.now();
     if (now - lastTap < 350 && Math.abs(t.clientX - lastX) < 30 && Math.abs(t.clientY - lastY) < 30) {
       lastTap = 0;
