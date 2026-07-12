@@ -1029,13 +1029,6 @@ function selectionInfo() {
     suffix: full.slice(end, end + 40)
   };
 }
-function selectionRect() {
-  const sel = window.getSelection();
-  if (!sel || sel.rangeCount === 0) return null;
-  const rects = sel.getRangeAt(0).getClientRects();
-  return rects.length ? rects[rects.length - 1] : null;
-}
-
 function openComposer(anchor) {
   if (!anchor) return;
   state.pendingAnchor = anchor;
@@ -1106,7 +1099,7 @@ function openNotePopup(id) {
 function openNotesList() {
   const box = $('note-popup-text');
   if (!state.chapterNotes.length) {
-    box.innerHTML = '<p class="note-empty">Nessuna nota in questo capitolo. Seleziona una frase del testo per aggiungerne una.</p>';
+    box.innerHTML = '<p class="note-empty">Nessuna nota in questo capitolo. Premi due volte su una parola del testo per aggiungerne una.</p>';
   } else {
     box.innerHTML = state.chapterNotes.map(n => noteCard(n, true)).join('');
   }
@@ -1124,30 +1117,74 @@ function jumpToNote(id) {
 }
 
 function hideNoteUi() {
-  hide($('note-add-btn'));
   closeComposer();
   closeNotePopup();
 }
 
+/* ---- doppio tocco/click su una parola -> seleziona la parola ---- */
+function selectWordAtPoint(x, y) {
+  const root = $('reader-content');
+  let node, offset;
+  if (document.caretRangeFromPoint) {
+    const r = document.caretRangeFromPoint(x, y);
+    if (!r) return false;
+    node = r.startContainer; offset = r.startOffset;
+  } else if (document.caretPositionFromPoint) {
+    const p = document.caretPositionFromPoint(x, y);
+    if (!p) return false;
+    node = p.offsetNode; offset = p.offset;
+  } else return false;
+  if (!node || node.nodeType !== Node.TEXT_NODE || !root.contains(node)) return false;
+  const text = node.nodeValue || '';
+  const isWord = c => !!c && /[\p{L}\p{N}'’\-]/u.test(c);
+  let start = offset, end = offset;
+  if (!isWord(text[start]) && isWord(text[start - 1])) { start--; end--; }
+  while (start > 0 && isWord(text[start - 1])) start--;
+  while (end < text.length && isWord(text[end])) end++;
+  if (end <= start) return false;
+  const range = document.createRange();
+  range.setStart(node, start); range.setEnd(node, end);
+  const sel = window.getSelection();
+  sel.removeAllRanges(); sel.addRange(range);
+  return true;
+}
+
+// Apre il composer per la parola su cui si e' premuto due volte.
+// Con coordinate (tocco) seleziona prima la parola; senza (dblclick del
+// mouse) usa la selezione che il browser ha gia' creato.
+function noteFromWord(x, y) {
+  if (currentMode() !== 'read') return;
+  const byPoint = typeof x === 'number' && typeof y === 'number';
+  if (byPoint && !selectWordAtPoint(x, y)) return;
+  const info = selectionInfo();
+  if (!info) {
+    if (byPoint) window.getSelection().removeAllRanges();
+    return;
+  }
+  openComposer(info);
+}
+
 function initNotesUi() {
-  const addBtn = $('note-add-btn');
-  const updateAddBtn = () => {
-    if (currentMode() !== 'read') { hide(addBtn); return; }
-    const info = selectionInfo();
-    if (!info) { hide(addBtn); return; }
-    const rect = selectionRect();
-    if (!rect) { hide(addBtn); return; }
-    state.pendingAnchor = info;
-    addBtn.style.top = (window.scrollY + rect.top - 42) + 'px';
-    addBtn.style.left = (window.scrollX + rect.left) + 'px';
-    show(addBtn);
-  };
-  document.addEventListener('selectionchange', () => {
-    clearTimeout(state._selTimer);
-    state._selTimer = setTimeout(updateAddBtn, 150);
-  });
-  addBtn.addEventListener('mousedown', e => e.preventDefault()); // non perdere la selezione
-  addBtn.addEventListener('click', () => { const a = state.pendingAnchor; hide(addBtn); openComposer(a); });
+  const reader = $('reader-content');
+
+  // Desktop: il doppio click seleziona gia' la parola.
+  reader.addEventListener('dblclick', () => noteFromWord());
+
+  // Touch: rilevamento manuale del doppio tocco (il dblclick nativo non e'
+  // affidabile e il doppio tap farebbe lo zoom).
+  let lastTap = 0, lastX = 0, lastY = 0;
+  reader.addEventListener('touchend', e => {
+    if (currentMode() !== 'read' || e.changedTouches.length !== 1) return;
+    const t = e.changedTouches[0];
+    const now = Date.now();
+    if (now - lastTap < 350 && Math.abs(t.clientX - lastX) < 30 && Math.abs(t.clientY - lastY) < 30) {
+      lastTap = 0;
+      e.preventDefault(); // evita zoom / avvio TTS sul doppio tocco
+      noteFromWord(t.clientX, t.clientY);
+    } else {
+      lastTap = now; lastX = t.clientX; lastY = t.clientY;
+    }
+  }, { passive: false });
 
   $('note-save').onclick = submitNote;
   $('note-cancel').onclick = closeComposer;
