@@ -31,3 +31,14 @@ Nella cartella [`docs/`](docs/) c'è una web app installabile su cellulare e tab
 - **✏️** passa alla modifica del sorgente LaTeX del capitolo; **💾** salva sul repository (un commit per ogni salvataggio).
 - Toccando i numeri delle **note** si apre il testo della nota; le note complete sono anche in fondo al capitolo.
 - La voce *"Struttura del libro (main.tex)"* in fondo all'indice permette di riordinare o attivare/disattivare i capitoli.
+
+## 📄 Generazione del PDF
+
+Il PDF viene compilato **su GitHub Actions** (non serve installare LaTeX in locale): il workflow [`.github/workflows/build-pdf.yml`](.github/workflows/build-pdf.yml) compila `main.tex` con `latexmk` (pdflatex + `texindy` per i due indici analitici) e pubblica il risultato come *artifact* scaricabile.
+
+Due modi per avviarlo:
+
+- **Da GitHub**: tab **Actions → Genera PDF → Run workflow**, scegliendo *finale* o *bozza*.
+- **Dalla web app**: pulsante **📄 Genera PDF finale** nell'indice (☰). Avvia il workflow e segue lo stato fino al link di download.
+
+> Il pulsante nell'app funziona solo quando il workflow è presente sul **branch predefinito** del repository, e richiede un token GitHub con permesso **Actions: Read and write** (oltre a *Contents*). Il tab Actions di GitHub funziona sempre.
