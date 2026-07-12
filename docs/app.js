@@ -102,6 +102,111 @@ async function ghPutFile(path, text, sha, message) {
   });
 }
 
+/* ---------------- Generazione PDF (GitHub Actions) ---------------- */
+const PDF_WORKFLOW = 'build-pdf.yml';
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+// Avvia il workflow (POST che restituisce 204 senza corpo)
+async function ghDispatchWorkflow(mode) {
+  const url = `${API}/repos/${state.repo}/actions/workflows/${PDF_WORKFLOW}/dispatches`;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: Object.assign(ghHeaders(), { 'Content-Type': 'application/json' }),
+    body: JSON.stringify({ ref: state.branch, inputs: { mode } })
+  });
+  if (!res.ok) {
+    let msg = res.status + ' ' + res.statusText;
+    try { msg += ': ' + (await res.json()).message; } catch (e) {}
+    const err = new Error(msg); err.status = res.status; throw err;
+  }
+}
+
+// Trova il run appena avviato (creato dopo `since`), ritentando finché appare
+async function ghFindNewRun(since) {
+  const url = `${API}/repos/${state.repo}/actions/workflows/${PDF_WORKFLOW}/runs?event=workflow_dispatch&per_page=10`;
+  for (let i = 0; i < 20; i++) {
+    const j = await ghJson(url);
+    const run = (j.workflow_runs || [])
+      .filter(r => new Date(r.created_at).getTime() >= since - 15000)
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
+    if (run) return run;
+    await sleep(3000);
+  }
+  return null;
+}
+
+function pdfSetStatus(msg, cls, spinning) {
+  const el = $('pdf-status');
+  el.className = cls || '';
+  el.innerHTML = (spinning ? '<span class="mini-spin"></span>' : '') +
+    '<span>' + escHtml(msg) + '</span>';
+}
+
+function closePdfPopup() { hide($('pdf-popup')); hide($('note-backdrop')); }
+
+async function runPdfGeneration() {
+  if (!state.token) {
+    pdfSetStatus('Serve il token GitHub per avviare la generazione. Aprilo da “Impostazioni / esci”.', 'err');
+    return;
+  }
+  const mode = $('pdf-mode').value;
+  const startBtn = $('pdf-start');
+  startBtn.disabled = true;
+  $('pdf-links').className = 'hidden';
+  $('pdf-links').innerHTML = '';
+
+  try {
+    const since = Date.now();
+    pdfSetStatus('Avvio della compilazione…', '', true);
+    await ghDispatchWorkflow(mode);
+
+    pdfSetStatus('Compilazione avviata, cerco il processo…', '', true);
+    const run = await ghFindNewRun(since);
+    if (!run) {
+      pdfSetStatus('Avviata, ma non riesco a seguirne lo stato. Controlla il tab Actions su GitHub.', 'err');
+      startBtn.disabled = false;
+      return;
+    }
+
+    // Segui lo stato fino al completamento (max ~15 min)
+    let current = run;
+    for (let i = 0; i < 150; i++) {
+      const label = current.status === 'queued' ? 'In coda…'
+                  : current.status === 'in_progress' ? 'Compilazione in corso…'
+                  : 'Completamento…';
+      pdfSetStatus(label + ' (il libro è lungo, servono alcuni minuti)', '', true);
+      if (current.status === 'completed') break;
+      await sleep(6000);
+      current = await ghJson(`${API}/repos/${state.repo}/actions/runs/${current.id}`);
+    }
+
+    const runUrl = current.html_url;
+    if (current.conclusion === 'success') {
+      pdfSetStatus('PDF pronto! Aprilo dalla pagina del processo e scarica l’artifact.', 'ok');
+      $('pdf-links').innerHTML =
+        `<a href="${runUrl}#artifacts" target="_blank" rel="noopener">⬇️ Apri e scarica il PDF</a>` +
+        `<a class="secondary" href="${runUrl}" target="_blank" rel="noopener">Dettagli del processo</a>`;
+      show($('pdf-links'));
+    } else if (current.status !== 'completed') {
+      pdfSetStatus('Ci sta mettendo più del previsto. Continua a seguirlo dalla pagina del processo.', 'err');
+      $('pdf-links').innerHTML = `<a class="secondary" href="${runUrl}" target="_blank" rel="noopener">Apri il processo su GitHub</a>`;
+      show($('pdf-links'));
+    } else {
+      pdfSetStatus('Compilazione fallita. Apri i dettagli per vedere il log dell’errore.', 'err');
+      $('pdf-links').innerHTML = `<a class="secondary" href="${runUrl}" target="_blank" rel="noopener">Apri il log dell’errore</a>`;
+      show($('pdf-links'));
+    }
+  } catch (e) {
+    let hint = e.message;
+    if (e.status === 403 || e.status === 404) {
+      hint = 'Permesso negato. Il token deve avere anche “Actions: Read and write” e il workflow deve essere presente sul branch predefinito. (' + e.message + ')';
+    }
+    pdfSetStatus(hint, 'err');
+  } finally {
+    startBtn.disabled = false;
+  }
+}
+
 /* ---------------- Immagini (via git blobs, con cache) ---------------- */
 async function loadImagesIndex() {
   if (state.imagesIndex) return state.imagesIndex;
@@ -1047,7 +1152,7 @@ function initNotesUi() {
   $('note-save').onclick = submitNote;
   $('note-cancel').onclick = closeComposer;
   $('note-popup-close').onclick = closeNotePopup;
-  $('note-backdrop').onclick = () => { closeComposer(); closeNotePopup(); };
+  $('note-backdrop').onclick = () => { closeComposer(); closeNotePopup(); closePdfPopup(); };
   $('btn-notes').onclick = openNotesList;
 
   // toccare un'evidenziazione apre la relativa nota
@@ -1251,6 +1356,16 @@ function initUi() {
   $('toc-backdrop').onclick = closeToc;
   $('btn-mode').onclick = () => switchMode(currentMode() === 'read' ? 'edit' : 'read');
   $('btn-save').onclick = saveFile;
+  $('btn-pdf').onclick = () => {
+    closeToc();
+    $('pdf-status').className = 'hidden';
+    $('pdf-links').className = 'hidden';
+    $('pdf-links').innerHTML = '';
+    $('pdf-start').disabled = false;
+    show($('note-backdrop')); show($('pdf-popup'));
+  };
+  $('pdf-close').onclick = closePdfPopup;
+  $('pdf-start').onclick = runPdfGeneration;
   $('btn-refresh').onclick = async () => {
     closeToc();
     state.imagesIndex = null;

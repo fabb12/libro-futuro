@@ -35,7 +35,7 @@
         <ol>
           <li>Vai su <b>github.com → Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token</b></li>
           <li>In <b>Repository access</b> seleziona solo <b>fabb12/libro-futuro</b></li>
-          <li>In <b>Permissions → Repository permissions</b> imposta <b>Contents: Read and write</b></li>
+          <li>In <b>Permissions → Repository permissions</b> imposta <b>Contents: Read and write</b> (per salvare le modifiche) e, se vuoi usare <b>Genera PDF</b>, anche <b>Actions: Read and write</b></li>
           <li>Genera e incolla qui il token. Resta salvato solo su questo dispositivo.</li>
         </ol>
         <p>Senza token puoi comunque leggere tutto il libro, ma non salvare le modifiche.</p>
@@ -85,6 +85,7 @@
       </div>
       <div id="toc-list"></div>
       <div class="toc-foot">
+        <button id="btn-pdf" class="btn small">📄 Genera PDF finale</button>
         <button id="btn-refresh" class="btn small">↻ Ricarica dal repo</button>
         <button id="btn-logout" class="btn small ghost">Impostazioni / esci</button>
       </div>
@@ -157,6 +158,26 @@
   <div id="note-popup" class="hidden">
     <div id="note-popup-text"></div>
     <button id="note-popup-close" class="btn small">Chiudi</button>
+  </div>
+
+  <!-- Generazione PDF -->
+  <div id="pdf-popup" class="hidden">
+    <div class="note-panel-head">Genera PDF del libro</div>
+    <div id="pdf-body">
+      <p class="pdf-hint">La compilazione avviene su GitHub (Actions) e richiede qualche minuto. Al termine trovi il PDF pronto da scaricare.</p>
+      <label class="pdf-mode">Versione
+        <select id="pdf-mode">
+          <option value="finale" selected>Finale (senza watermark)</option>
+          <option value="bozza">Bozza (con watermark)</option>
+        </select>
+      </label>
+      <div id="pdf-status" class="hidden"></div>
+      <div id="pdf-links" class="hidden"></div>
+    </div>
+    <div class="note-actions">
+      <button id="pdf-close" class="btn small ghost">Chiudi</button>
+      <button id="pdf-start" class="btn small primary">Avvia generazione</button>
+    </div>
   </div>
 
   <!-- Footnote popup -->
