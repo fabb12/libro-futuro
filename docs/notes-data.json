@@ -1,3 +1,15 @@
 {
-  "notes": []
+  "notes": [
+    {
+      "id": "n-1783964999315-fqugg",
+      "book": "libro-futuro",
+      "chapter": "frontmatter/preface.tex",
+      "quote": "sicuro del",
+      "prefix": " di tre cose: il reattore RBMK è il più ",
+      "suffix": " mondo, i computer sbagliano, e lui sa m",
+      "text": "Test",
+      "author": "Fabio",
+      "createdAt": 1783964999315
+    }
+  ]
 }
