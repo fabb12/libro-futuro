@@ -835,32 +835,40 @@ function saveLocalNotes(chapter, list) {
 
 /* ---- note condivise nel repository (docs/notes-data.json) ---- */
 const NOTES_PATH = 'docs/notes-data.json';
-let repoNotes = { sha: null, list: [] };
+let repoNotes = { sha: null, list: [], loaded: false };
 
 async function repoNotesLoad() {
   try {
-    const j = await ghJson(`${API}/repos/${state.repo}/contents/${NOTES_PATH}?ref=${state.branch}`);
+    // cache: 'no-store' bypassa la cache del browser: l'API GitHub tiene le
+    // risposte per 60s, e rileggere una versione vecchia del file (sha
+    // superato) faceva fallire con 409 il salvataggio successivo
+    const j = await ghJson(`${API}/repos/${state.repo}/contents/${NOTES_PATH}?ref=${state.branch}`, { cache: 'no-store' });
     let list = [];
     try { list = JSON.parse(b64ToText(j.content)).notes || []; } catch (e) {}
-    repoNotes = { sha: j.sha, list };
+    repoNotes = { sha: j.sha, list, loaded: true };
   } catch (err) {
     if (err.status !== 404) throw err;
-    repoNotes = { sha: null, list: [] }; // il file non esiste ancora
+    repoNotes = { sha: null, list: [], loaded: true }; // il file non esiste ancora
   }
   return repoNotes;
 }
 
 async function repoNotesMutate(mutate, message) {
-  // rileggi -> applica la modifica -> salva; se qualcun altro ha salvato nel
-  // frattempo (sha cambiato) GitHub risponde 409/422 e si riprova da capo
+  // applica la modifica alla copia in memoria (aggiornata dall'ultimo
+  // salvataggio o dall'ultima lettura) e salva; se qualcun altro ha salvato
+  // nel frattempo (sha cambiato) GitHub risponde 409/422: si ricarica il
+  // file, con una piccola attesa crescente, e si riprova da capo
   let lastErr = null;
-  for (let attempt = 0; attempt < 3; attempt++) {
-    await repoNotesLoad();
+  for (let attempt = 0; attempt < 4; attempt++) {
+    if (attempt > 0 || !repoNotes.loaded) {
+      if (attempt > 0) await sleep(700 * attempt);
+      await repoNotesLoad();
+    }
     const list = mutate(repoNotes.list.slice());
     const text = JSON.stringify({ notes: list }, null, 2) + '\n';
     try {
       const res = await ghPutFile(NOTES_PATH, text, repoNotes.sha || undefined, message);
-      repoNotes = { sha: res.content.sha, list };
+      repoNotes = { sha: res.content.sha, list, loaded: true };
       return list;
     } catch (err) {
       lastErr = err;
