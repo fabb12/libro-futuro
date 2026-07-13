@@ -802,8 +802,12 @@ function updateNavButtons() {
 }
 
 /* =========================================================================
- * Note al testo — chiunque puo' annotare, salvate in locale o condivise
- * (Firestore). La configurazione condivisa sta in notes-config.js.
+ * Note al testo — chiunque puo' annotare. Di default le note sono CONDIVISE:
+ * vengono salvate in un file JSON del repository (docs/notes-data.json) e
+ * chiunque apre la pagina le vede. Per scriverle serve il token GitHub (lo
+ * stesso usato per salvare i capitoli); senza token la nota resta salvata
+ * solo sul dispositivo. In alternativa si puo' usare Firestore (vedi
+ * notes-config.js), utile se i lettori non hanno un token.
  * ========================================================================= */
 const FS_BASE = 'https://firestore.googleapis.com/v1';
 
@@ -811,7 +815,7 @@ function notesConfig() {
   const base = (window.LF_NOTES_CONFIG && window.LF_NOTES_CONFIG.firestore) || {};
   const projectId = (localStorage.getItem(LS.fbProject) || base.projectId || '').trim();
   const apiKey = (localStorage.getItem(LS.fbKey) || base.apiKey || '').trim();
-  return { mode: (projectId && apiKey) ? 'firestore' : 'local', projectId, apiKey };
+  return { mode: (projectId && apiKey) ? 'firestore' : 'repo', projectId, apiKey };
 }
 
 function markMine(id) {
@@ -829,6 +833,43 @@ function saveLocalNotes(chapter, list) {
   try { localStorage.setItem(LS.notesCache + chapter, JSON.stringify(list)); } catch (e) {}
 }
 
+/* ---- note condivise nel repository (docs/notes-data.json) ---- */
+const NOTES_PATH = 'docs/notes-data.json';
+let repoNotes = { sha: null, list: [] };
+
+async function repoNotesLoad() {
+  try {
+    const j = await ghJson(`${API}/repos/${state.repo}/contents/${NOTES_PATH}?ref=${state.branch}`);
+    let list = [];
+    try { list = JSON.parse(b64ToText(j.content)).notes || []; } catch (e) {}
+    repoNotes = { sha: j.sha, list };
+  } catch (err) {
+    if (err.status !== 404) throw err;
+    repoNotes = { sha: null, list: [] }; // il file non esiste ancora
+  }
+  return repoNotes;
+}
+
+async function repoNotesMutate(mutate, message) {
+  // rileggi -> applica la modifica -> salva; se qualcun altro ha salvato nel
+  // frattempo (sha cambiato) GitHub risponde 409/422 e si riprova da capo
+  let lastErr = null;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    await repoNotesLoad();
+    const list = mutate(repoNotes.list.slice());
+    const text = JSON.stringify({ notes: list }, null, 2) + '\n';
+    try {
+      const res = await ghPutFile(NOTES_PATH, text, repoNotes.sha || undefined, message);
+      repoNotes = { sha: res.content.sha, list };
+      return list;
+    } catch (err) {
+      lastErr = err;
+      if (err.status !== 409 && err.status !== 422) throw err;
+    }
+  }
+  throw lastErr;
+}
+
 function fsParse(fields) {
   const o = {};
   for (const k in fields) {
@@ -843,7 +884,20 @@ function fsParse(fields) {
 
 async function notesList(chapter) {
   const cfg = notesConfig();
-  if (cfg.mode === 'local') return localNotes(chapter);
+  if (cfg.mode === 'repo') {
+    try {
+      const { list } = await repoNotesLoad();
+      const shared = list.filter(n => n.chapter === chapter);
+      // le note create senza token restano solo su questo dispositivo (id "loc-")
+      const localOnly = localNotes(chapter).filter(n => String(n.id).startsWith('loc-'));
+      const all = shared.concat(localOnly);
+      all.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+      saveLocalNotes(chapter, all); // copia locale per l'offline
+      return all;
+    } catch (e) {
+      return localNotes(chapter); // offline / errore: ultima copia nota
+    }
+  }
   try {
     const url = `${FS_BASE}/projects/${cfg.projectId}/databases/(default)/documents:runQuery?key=${cfg.apiKey}`;
     const body = {
@@ -873,7 +927,26 @@ async function notesList(chapter) {
 async function notesAdd(note) {
   const cfg = notesConfig();
   note.createdAt = Date.now();
-  if (cfg.mode === 'local') {
+  if (cfg.mode === 'repo' && state.token) {
+    const stored = {
+      id: 'n-' + note.createdAt + '-' + Math.random().toString(36).slice(2, 7),
+      book: 'libro-futuro',
+      chapter: note.chapter,
+      quote: note.quote,
+      prefix: note.prefix || '',
+      suffix: note.suffix || '',
+      text: note.text,
+      author: note.author || '',
+      createdAt: note.createdAt
+    };
+    await repoNotesMutate(list => { list.push(stored); return list; },
+      'Nota di ' + (stored.author || 'Anonimo') + ' su ' + stored.chapter);
+    markMine(stored.id);
+    const list = localNotes(stored.chapter); list.push(stored); saveLocalNotes(stored.chapter, list);
+    return stored;
+  }
+  if (cfg.mode !== 'firestore') {
+    // niente token: la nota resta salvata solo su questo dispositivo
     note.id = 'loc-' + note.createdAt + '-' + Math.random().toString(36).slice(2, 7);
     const list = localNotes(note.chapter); list.push(note); saveLocalNotes(note.chapter, list);
     markMine(note.id);
@@ -904,7 +977,14 @@ async function notesAdd(note) {
 
 async function notesDelete(note) {
   const cfg = notesConfig();
-  if (cfg.mode === 'local' || String(note.id).startsWith('loc-')) {
+  if (String(note.id).startsWith('loc-')) {
+    saveLocalNotes(note.chapter, localNotes(note.chapter).filter(n => n.id !== note.id));
+    return;
+  }
+  if (cfg.mode === 'repo') {
+    if (!state.token) throw new Error('serve il token GitHub per eliminare una nota condivisa');
+    await repoNotesMutate(list => list.filter(n => n.id !== note.id),
+      'Eliminata una nota da ' + note.chapter);
     saveLocalNotes(note.chapter, localNotes(note.chapter).filter(n => n.id !== note.id));
     return;
   }
@@ -1057,8 +1137,9 @@ async function submitNote() {
     const saved = await notesAdd(note);
     state.chapterNotes.push(saved);
     anchorAll();
-    const shared = notesConfig().mode === 'firestore';
-    toast(shared ? '✓ Nota condivisa con tutti' : '✓ Nota salvata (solo su questo dispositivo)');
+    const shared = !String(saved.id).startsWith('loc-');
+    toast(shared ? '✓ Nota condivisa: la vedranno tutti i lettori'
+                 : '✓ Nota salvata solo su questo dispositivo (per condividerla aggiungi il token GitHub nelle impostazioni)');
     window.getSelection().removeAllRanges();
   } catch (e) {
     toast('Nota non salvata: ' + e.message, true);
