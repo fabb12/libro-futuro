@@ -43,7 +43,8 @@
 
       <details class="token-help notes-help">
         <summary>Note condivise (avanzato)</summary>
-        <p>Di default le note che si aggiungono al testo restano <b>solo su questo dispositivo</b>. Per renderle <b>condivise con tutti i lettori</b> (chiunque scrive, tutti vedono) serve un progetto gratuito <b>Firebase</b>:</p>
+        <p>Le note aggiunte al testo sono <b>condivise</b>: vengono salvate nel repository (file <code>docs/notes-data.json</code>) e <b>tutti i lettori le vedono</b>. Per salvarne di nuove serve il <b>token GitHub</b> qui sopra; senza token la nota resta solo su questo dispositivo.</p>
+        <p>In alternativa, se vuoi che anche lettori <b>senza token</b> possano scrivere note condivise, puoi usare un progetto gratuito <b>Firebase</b>:</p>
         <ol>
           <li>Crea un progetto su <b>console.firebase.google.com</b> e attiva <b>Firestore Database</b>.</li>
           <li>Nelle <b>Regole</b> consenti lettura/scrittura sulla raccolta <code>notes</code>.</li>
