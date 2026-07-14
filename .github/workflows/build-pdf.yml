@@ -1,6 +1,10 @@
 name: Genera PDF
 
-# Compila il libro LaTeX (main.tex) e pubblica il PDF come artifact scaricabile.
+# Compila il libro LaTeX (main.tex) e pubblica il PDF in due modi:
+#  1. su una release fissa ("pdf-finale" o "pdf-bozza"), che offre un LINK
+#     DIRETTO e stabile al file .pdf — un click e il download parte, senza
+#     zip e senza passare dal tab Actions;
+#  2. come artifact del run (copia di riserva, scade dopo 30 giorni).
 # Si può avviare a mano dal tab "Actions" di GitHub oppure dal pulsante
 # "Genera PDF finale" nella web app (docs/), che usa questo stesso trigger.
 
@@ -20,8 +24,9 @@ concurrency:
   group: build-pdf
   cancel-in-progress: true
 
+# contents: write serve per aggiornare la release con il PDF
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -58,7 +63,24 @@ jobs:
           fi
           ls -lh main.pdf
 
-      - name: Pubblica il PDF come artifact
+      - name: Prepara il file con un nome stabile
+        run: |
+          cp main.pdf "libro-${{ inputs.mode }}.pdf"
+          echo "DATA=$(TZ=Europe/Rome date +'%d/%m/%Y %H:%M')" >> "$GITHUB_ENV"
+
+      - name: Pubblica il PDF sulla release con link diretto
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: pdf-${{ inputs.mode }}
+          name: PDF ${{ inputs.mode }} (aggiornato automaticamente)
+          body: |
+            Ultimo PDF in versione **${{ inputs.mode }}**, generato il ${{ env.DATA }} dal workflow *Genera PDF*.
+            Scarica il file qui sotto: il link resta sempre lo stesso, il contenuto viene sostituito a ogni nuova compilazione.
+          files: libro-${{ inputs.mode }}.pdf
+          make_latest: "false"
+          prerelease: ${{ inputs.mode == 'bozza' }}
+
+      - name: Pubblica il PDF anche come artifact (copia di riserva)
         uses: actions/upload-artifact@v4
         with:
           name: libro-pdf-${{ inputs.mode }}
