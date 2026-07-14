@@ -135,6 +135,47 @@ async function ghFindNewRun(since) {
   return null;
 }
 
+// URL diretto del PDF pubblicato dal workflow sulla release "pdf-<modalità>":
+// punta sempre all'ultima versione generata, senza zip né tab Actions.
+function pdfDirectUrl(mode) {
+  return `https://github.com/${state.repo}/releases/download/pdf-${mode}/libro-${mode}.pdf`;
+}
+
+// Fa partire il download del PDF senza cambiare pagina (GitHub risponde
+// con Content-Disposition: attachment, quindi il browser salva il file).
+function pdfTriggerDownload(mode) {
+  const a = document.createElement('a');
+  a.href = pdfDirectUrl(mode);
+  a.rel = 'noopener';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => a.remove(), 2000);
+}
+
+// Mostra nel popup i link agli ultimi PDF già generati (finale e bozza),
+// con la data dell'ultima compilazione, così si recuperano in un click
+// anche senza rilanciare la generazione.
+async function pdfShowLast() {
+  const box = $('pdf-last');
+  box.className = 'hidden';
+  box.innerHTML = '';
+  const rows = await Promise.all(['finale', 'bozza'].map(async mode => {
+    try {
+      const rel = await ghJson(`${API}/repos/${state.repo}/releases/tags/pdf-${mode}`, { cache: 'no-store' });
+      const asset = (rel.assets || []).find(a => /\.pdf$/i.test(a.name));
+      if (!asset) return null;
+      const when = new Date(asset.updated_at).toLocaleDateString('it-IT',
+        { day: 'numeric', month: 'short', year: 'numeric' });
+      return `<a class="secondary" href="${pdfDirectUrl(mode)}" rel="noopener">⬇️ Ultimo PDF ${mode} (${when})</a>`;
+    } catch (e) { return null; } // nessun PDF ancora pubblicato per questa modalità
+  }));
+  const items = rows.filter(Boolean);
+  if (items.length) {
+    box.innerHTML = '<div class="pdf-last-label">PDF già generati:</div>' + items.join('');
+    box.className = '';
+  }
+}
+
 function pdfSetStatus(msg, cls, spinning) {
   const el = $('pdf-status');
   el.className = cls || '';
@@ -182,11 +223,13 @@ async function runPdfGeneration() {
 
     const runUrl = current.html_url;
     if (current.conclusion === 'success') {
-      pdfSetStatus('PDF pronto! Aprilo dalla pagina del processo e scarica l’artifact.', 'ok');
+      pdfSetStatus('✓ PDF pronto: il download parte da solo. Se non parte, usa il pulsante qui sotto.', 'ok');
       $('pdf-links').innerHTML =
-        `<a href="${runUrl}#artifacts" target="_blank" rel="noopener">⬇️ Apri e scarica il PDF</a>` +
+        `<a href="${pdfDirectUrl(mode)}" rel="noopener">⬇️ Scarica il PDF (${mode})</a>` +
         `<a class="secondary" href="${runUrl}" target="_blank" rel="noopener">Dettagli del processo</a>`;
       show($('pdf-links'));
+      pdfTriggerDownload(mode);
+      pdfShowLast(); // aggiorna anche la lista "PDF già generati"
     } else if (current.status !== 'completed') {
       pdfSetStatus('Ci sta mettendo più del previsto. Continua a seguirlo dalla pagina del processo.', 'err');
       $('pdf-links').innerHTML = `<a class="secondary" href="${runUrl}" target="_blank" rel="noopener">Apri il processo su GitHub</a>`;
@@ -1531,6 +1574,7 @@ function initUi() {
     $('pdf-links').innerHTML = '';
     $('pdf-start').disabled = false;
     show($('note-backdrop')); show($('pdf-popup'));
+    pdfShowLast(); // in sottofondo: link agli ultimi PDF già generati
   };
   $('pdf-close').onclick = closePdfPopup;
   $('pdf-start').onclick = runPdfGeneration;

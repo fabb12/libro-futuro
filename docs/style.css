@@ -391,13 +391,14 @@ mark.note-hl.note-flash {
   width: 14px; height: 14px; border: 2px solid #bbb; border-top-color: #555;
   border-radius: 50%; animation: spin .8s linear infinite; flex: 0 0 auto;
 }
-#pdf-links { margin-bottom: 10px; }
-#pdf-links a {
+#pdf-links, #pdf-last { margin-bottom: 10px; }
+#pdf-links a, #pdf-last a {
   display: block; text-align: center; text-decoration: none;
   background: #1a1a2e; color: #fff; border-radius: 8px; padding: 11px 12px;
   font-size: 15px; font-weight: 600; margin-bottom: 8px;
 }
-#pdf-links a.secondary { background: transparent; color: #1a1a2e; border: 1px solid #ccc; font-weight: 500; }
+#pdf-links a.secondary, #pdf-last a.secondary { background: transparent; color: #1a1a2e; border: 1px solid #ccc; font-weight: 500; }
+.pdf-last-label { font-size: 13px; color: #666; margin: 2px 0 6px; }
 
 #note-popup-text { margin-bottom: 10px; max-height: 60vh; overflow: auto; }
 .note-card {
@@ -470,8 +471,9 @@ body.dark #note-composer, body.dark #note-popup { background: #26262e; color: #d
 body.dark #pdf-popup { background: #26262e; color: #ddd; }
 body.dark .pdf-hint, body.dark .pdf-mode { color: #aaa; }
 body.dark #pdf-status { background: #33333d; color: #ddd; }
-body.dark #pdf-links a { background: #4a4a6a; }
-body.dark #pdf-links a.secondary { background: transparent; color: #ddd; border-color: #555; }
+body.dark #pdf-links a, body.dark #pdf-last a { background: #4a4a6a; }
+body.dark #pdf-links a.secondary, body.dark #pdf-last a.secondary { background: transparent; color: #ddd; border-color: #555; }
+body.dark .pdf-last-label { color: #aaa; }
 body.dark #note-text, body.dark #note-author, body.dark .notes-help input { background: #1b1b22; color: #ddd; border-color: #444; }
 body.dark .note-card { border-color: #333; }
 body.dark .note-body { color: #ddd; }

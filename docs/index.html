@@ -164,7 +164,7 @@
   <div id="pdf-popup" class="hidden">
     <div class="note-panel-head">Genera PDF del libro</div>
     <div id="pdf-body">
-      <p class="pdf-hint">La compilazione avviene su GitHub (Actions) e richiede qualche minuto. Al termine trovi il PDF pronto da scaricare.</p>
+      <p class="pdf-hint">La compilazione avviene su GitHub (Actions) e richiede qualche minuto. Al termine il PDF si scarica da solo su questo dispositivo.</p>
       <label class="pdf-mode">Versione
         <select id="pdf-mode">
           <option value="finale" selected>Finale (senza watermark)</option>
@@ -173,6 +173,7 @@
       </label>
       <div id="pdf-status" class="hidden"></div>
       <div id="pdf-links" class="hidden"></div>
+      <div id="pdf-last" class="hidden"></div>
     </div>
     <div class="note-actions">
       <button id="pdf-close" class="btn small ghost">Chiudi</button>
