@@ -34,11 +34,18 @@ Nella cartella [`docs/`](docs/) c'è una web app installabile su cellulare e tab
 
 ## 📄 Generazione del PDF
 
-Il PDF viene compilato **su GitHub Actions** (non serve installare LaTeX in locale): il workflow [`.github/workflows/build-pdf.yml`](.github/workflows/build-pdf.yml) compila `main.tex` con `latexmk` (pdflatex + `texindy` per i due indici analitici) e pubblica il risultato come *artifact* scaricabile.
+Il PDF viene compilato **su GitHub Actions** (non serve installare LaTeX in locale): il workflow [`.github/workflows/build-pdf.yml`](.github/workflows/build-pdf.yml) compila `main.tex` con `latexmk` (pdflatex + `texindy` per i due indici analitici) e pubblica il risultato su una **release con link diretto** (oltre che come *artifact* di riserva del run).
 
-Due modi per avviarlo:
+### ⬇️ Scaricare il PDF (link diretti, sempre aggiornati)
+
+- **Versione finale**: <https://github.com/fabb12/libro-futuro/releases/download/pdf-finale/libro-finale.pdf>
+- **Versione bozza**: <https://github.com/fabb12/libro-futuro/releases/download/pdf-bozza/libro-bozza.pdf>
+
+I link puntano sempre all'**ultima compilazione** di ciascuna versione: un click e il download parte, senza zip e senza cercare il run giusto nel tab Actions. (Funzionano dopo la prima compilazione con il workflow aggiornato.)
+
+Due modi per avviare la compilazione:
 
 - **Da GitHub**: tab **Actions → Genera PDF → Run workflow**, scegliendo *finale* o *bozza*.
-- **Dalla web app**: pulsante **📄 Genera PDF finale** nell'indice (☰). Avvia il workflow e segue lo stato fino al link di download.
+- **Dalla web app**: pulsante **📄 Genera PDF finale** nell'indice (☰). Avvia il workflow, segue lo stato e **a fine compilazione il download del PDF parte da solo**; nel riquadro trovi anche i link agli ultimi PDF già generati.
 
 > Il pulsante nell'app funziona solo quando il workflow è presente sul **branch predefinito** del repository, e richiede un token GitHub con permesso **Actions: Read and write** (oltre a *Contents*). Il tab Actions di GitHub funziona sempre.
