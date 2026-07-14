@@ -121,15 +121,18 @@ async function ghDispatchWorkflow(mode) {
   }
 }
 
-// Trova il run appena avviato (creato dopo `since`), ritentando finché appare
+// Trova il run appena avviato (creato dopo `since`), ritentando finché appare.
+// Gli errori di rete passeggeri non interrompono la ricerca: si riprova.
 async function ghFindNewRun(since) {
   const url = `${API}/repos/${state.repo}/actions/workflows/${PDF_WORKFLOW}/runs?event=workflow_dispatch&per_page=10`;
   for (let i = 0; i < 20; i++) {
-    const j = await ghJson(url);
-    const run = (j.workflow_runs || [])
-      .filter(r => new Date(r.created_at).getTime() >= since - 15000)
-      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
-    if (run) return run;
+    try {
+      const j = await ghJson(url);
+      const run = (j.workflow_runs || [])
+        .filter(r => new Date(r.created_at).getTime() >= since - 15000)
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
+      if (run) return run;
+    } catch (e) { /* rete assente per un momento: nuovo tentativo tra poco */ }
     await sleep(3000);
   }
   return null;
@@ -195,11 +198,13 @@ async function runPdfGeneration() {
   startBtn.disabled = true;
   $('pdf-links').className = 'hidden';
   $('pdf-links').innerHTML = '';
+  let dispatched = false; // la compilazione è partita su GitHub?
 
   try {
     const since = Date.now();
     pdfSetStatus('Avvio della compilazione…', '', true);
     await ghDispatchWorkflow(mode);
+    dispatched = true;
 
     pdfSetStatus('Compilazione avviata, cerco il processo…', '', true);
     const run = await ghFindNewRun(since);
@@ -209,8 +214,12 @@ async function runPdfGeneration() {
       return;
     }
 
-    // Segui lo stato fino al completamento (max ~15 min)
+    // Segui lo stato fino al completamento (max ~15 min). Un errore di rete
+    // isolato (schermo bloccato, cambio Wi-Fi/4G, connessione instabile) non
+    // deve interrompere il monitoraggio: si riprova al giro successivo, e si
+    // rinuncia solo dopo molti errori consecutivi.
     let current = run;
+    let netErrors = 0;
     for (let i = 0; i < 150; i++) {
       const label = current.status === 'queued' ? 'In coda…'
                   : current.status === 'in_progress' ? 'Compilazione in corso…'
@@ -218,7 +227,13 @@ async function runPdfGeneration() {
       pdfSetStatus(label + ' (il libro è lungo, servono alcuni minuti)', '', true);
       if (current.status === 'completed') break;
       await sleep(6000);
-      current = await ghJson(`${API}/repos/${state.repo}/actions/runs/${current.id}`);
+      try {
+        current = await ghJson(`${API}/repos/${state.repo}/actions/runs/${current.id}`, { cache: 'no-store' });
+        netErrors = 0;
+      } catch (e) {
+        netErrors++;
+        if (netErrors >= 10) throw e; // ~1 minuto senza rete: mostra i link di ripiego
+      }
     }
 
     const runUrl = current.html_url;
@@ -240,11 +255,25 @@ async function runPdfGeneration() {
       show($('pdf-links'));
     }
   } catch (e) {
-    let hint = e.message;
-    if (e.status === 403 || e.status === 404) {
-      hint = 'Permesso negato. Il token deve avere anche “Actions: Read and write” e il workflow deve essere presente sul branch predefinito. (' + e.message + ')';
+    if (dispatched) {
+      // La compilazione ormai è partita su GitHub e arriverà comunque al
+      // link diretto: anche se abbiamo perso il collegamento, offri il
+      // download invece di un errore secco ("Failed to fetch").
+      pdfSetStatus('Connessione persa mentre seguivo la compilazione, che però continua su GitHub. ' +
+        'Attendi qualche minuto e scarica il PDF dal pulsante qui sotto.', 'err');
+      $('pdf-links').innerHTML =
+        `<a href="${pdfDirectUrl(mode)}" rel="noopener">⬇️ Scarica il PDF (${mode})</a>` +
+        `<a class="secondary" href="https://github.com/${state.repo}/actions" target="_blank" rel="noopener">Stato della compilazione su GitHub</a>`;
+      show($('pdf-links'));
+    } else {
+      let hint = e.message;
+      if (e.status === 403 || e.status === 404) {
+        hint = 'Permesso negato. Il token deve avere anche “Actions: Read and write” e il workflow deve essere presente sul branch predefinito. (' + e.message + ')';
+      } else if (!e.status) {
+        hint = 'Rete non raggiungibile: controlla la connessione e riprova.';
+      }
+      pdfSetStatus(hint, 'err');
     }
-    pdfSetStatus(hint, 'err');
   } finally {
     startBtn.disabled = false;
   }
