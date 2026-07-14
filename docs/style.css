@@ -118,9 +118,9 @@ button { font: inherit; cursor: pointer; }
 #reader-content {
   max-width: 680px; margin: 0 auto;
   padding: 24px 20px 20px;
-  font-size: 18px; line-height: 1.65;
+  font-size: 19px; line-height: 1.65;
 }
-@media (min-width: 800px) { #reader-content { font-size: 19px; } }
+@media (min-width: 800px) { #reader-content { font-size: 20px; } }
 
 #reader-content h1 {
   font-size: 30px; line-height: 1.25; margin: 10px 0 24px;
