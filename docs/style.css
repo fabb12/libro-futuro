@@ -403,6 +403,13 @@ mark.note-hl.note-flash {
 /* inserimento immagine */
 #editor-bar .img-btn { margin-left: auto; font-size: 19px; padding: 2px 8px; }
 .img-file-label { display: inline-block; margin-bottom: 12px; }
+/* input file tenuto fuori schermo ma NON display:none: su iOS/Safari un
+   input nascosto con display:none non apre la galleria fotografica */
+.file-input-offscreen {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; border: 0; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
 #img-preview-wrap { text-align: center; margin: 0 0 12px; }
 #img-preview {
   max-width: 100%; max-height: 160px;

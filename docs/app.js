@@ -398,6 +398,50 @@ function sanitizeImageName(name, mime) {
   return ext ? base + '.' + ext : base;
 }
 
+// Legge i byte di un file/blob. File.arrayBuffer() manca sui Safari meno
+// recenti (iPhone/iPad non aggiornati): in quel caso si usa FileReader.
+function readFileBytes(file) {
+  if (typeof file.arrayBuffer === 'function')
+    return file.arrayBuffer().then(b => new Uint8Array(b));
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(new Uint8Array(r.result));
+    r.onerror = () => reject(r.error || new Error('lettura del file fallita'));
+    r.readAsArrayBuffer(file);
+  });
+}
+
+// Prepara il file per il libro: PNG e JPG passano cosi' come sono; gli altri
+// formati (HEIC delle foto iPhone, WebP, GIF...) non sono gestiti da LaTeX,
+// quindi si prova a convertirli in PNG con un canvas.
+async function imgPrepareUpload(file) {
+  const type = (file.type || '').toLowerCase();
+  if (type === 'image/png') return { bytes: await readFileBytes(file), ext: 'png' };
+  if (type === 'image/jpeg' || type === 'image/jpg')
+    return { bytes: await readFileBytes(file), ext: 'jpg' };
+  const url = URL.createObjectURL(file);
+  try {
+    const im = await new Promise((resolve, reject) => {
+      const i = new Image();
+      i.onload = () => resolve(i);
+      i.onerror = () => reject(new Error('immagine non leggibile'));
+      i.src = url;
+    });
+    const canvas = document.createElement('canvas');
+    canvas.width = im.naturalWidth; canvas.height = im.naturalHeight;
+    canvas.getContext('2d').drawImage(im, 0, 0);
+    const blob = await new Promise(resolve =>
+      canvas.toBlob ? canvas.toBlob(resolve, 'image/png') : resolve(null));
+    if (!blob) throw new Error('conversione fallita');
+    return { bytes: await readFileBytes(blob), ext: 'png', converted: true };
+  } catch (e) {
+    throw new Error('Formato immagine non supportato dal libro (' + (type || 'sconosciuto') +
+      '): scegli una foto PNG o JPG.');
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
 function imgLatexSnippet(fileName, width, caption) {
   const w = String(parseFloat(width) || 0.8).replace(/^0?\./, '0.');
   const lines = [
@@ -506,13 +550,20 @@ async function submitImage() {
       imgSetStatus('Per caricare l\'immagine sul repository serve il token GitHub: aggiungilo da "Impostazioni / esci".', 'err');
       return;
     }
+
+    imgSetStatus('Preparo l\'immagine…', '', true);
+    const prepared = await imgPrepareUpload(imgInsert.file);
+    // la conversione (es. HEIC/WebP -> PNG) puo' cambiare l'estensione
+    name = name.replace(/\.[a-zA-Z0-9]+$/, '') + '.' + prepared.ext;
+
     const existing = idx[name.toLowerCase()];
     if (existing && !confirm(`In images/ esiste già "${name}". Vuoi sovrascriverla?\n(Annulla per cambiare nome)`)) {
+      $('img-status').className = 'hidden';
       return;
     }
 
     imgSetStatus('Carico l\'immagine su GitHub…', '', true);
-    const bytes = new Uint8Array(await imgInsert.file.arrayBuffer());
+    const bytes = prepared.bytes;
     const res = await ghPutB64('images/' + name, bytesToB64(bytes),
       existing ? existing.sha : undefined,
       (existing ? 'Aggiornata immagine ' : 'Aggiunta immagine ') + name + ' dalla web app');
@@ -548,6 +599,9 @@ function initImgUi() {
   $('img-cancel').onclick = closeImgPopup;
   $('img-insert').onclick = submitImage;
   $('img-file').onchange = onImgFileChosen;
+  // .click() programmatico: l'etichetta <label for> su un input nascosto
+  // non apre la galleria su alcuni Safari/iOS, il click diretto si'
+  $('img-choose').onclick = () => $('img-file').click();
 }
 
 /* =========================================================================
