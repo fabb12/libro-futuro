@@ -9,7 +9,7 @@ const LS = {
   titles: 'lf.titles', lastPath: 'lf.lastPath', fileCache: 'lf.file:',
   fbProject: 'lf.fbProject', fbKey: 'lf.fbKey',
   noteAuthor: 'lf.noteAuthor', myNotes: 'lf.myNotes', notesCache: 'lf.notes:',
-  theme: 'lf.theme', fontSize: 'lf.fontSize'
+  theme: 'lf.theme', fontSize: 'lf.fontSize', fontFamily: 'lf.fontFamily'
 };
 
 /* ---------------- localStorage: cache auto-pulente ----------------
@@ -1557,6 +1557,13 @@ function initSetupScreen(hint) {
     lsSet(LS.fontSize, v);
     applyFontScale(v);
   };
+  // Anche il carattere si applica e si salva subito
+  $('cfg-fontfamily').value = localStorage.getItem(LS.fontFamily) || 'serif';
+  $('cfg-fontfamily').onchange = () => {
+    const v = $('cfg-fontfamily').value;
+    lsSet(LS.fontFamily, v);
+    applyFontFamily(v);
+  };
   const h = $('setup-hint');
   if (hint) { h.textContent = hint; show(h); } else hide(h);
   hide($('app-screen'));
@@ -1600,6 +1607,16 @@ function applyFontScale(v) {
 }
 function initFontScale() {
   applyFontScale(localStorage.getItem(LS.fontSize) || '1');
+}
+
+/* ---------------- Carattere del testo (serif / sans serif) ---------------- */
+// Scelta nelle impostazioni: 'serif' (default) o 'sans'. Il CSS applica la
+// famiglia corrispondente tramite l'attributo data-font sull'elemento <html>.
+function applyFontFamily(v) {
+  document.documentElement.setAttribute('data-font', v === 'sans' ? 'sans' : 'serif');
+}
+function initFontFamily() {
+  applyFontFamily(localStorage.getItem(LS.fontFamily) || 'serif');
 }
 
 /* ---------------- Lettura notturna (tema chiaro/scuro) ---------------- */
@@ -1934,6 +1951,7 @@ if ('serviceWorker' in navigator) {
   if (changed) lsSet(LS.titles, JSON.stringify(state.titles));
 })();
 initFontScale();
+initFontFamily();
 initTheme();
 initUi();
 initNotesUi();
