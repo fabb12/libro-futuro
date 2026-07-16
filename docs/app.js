@@ -9,7 +9,7 @@ const LS = {
   titles: 'lf.titles', lastPath: 'lf.lastPath', fileCache: 'lf.file:',
   fbProject: 'lf.fbProject', fbKey: 'lf.fbKey',
   noteAuthor: 'lf.noteAuthor', myNotes: 'lf.myNotes', notesCache: 'lf.notes:',
-  theme: 'lf.theme'
+  theme: 'lf.theme', fontSize: 'lf.fontSize'
 };
 const state = {
   repo: localStorage.getItem(LS.repo) || 'fabb12/libro-futuro',
@@ -345,6 +345,12 @@ const ACCENTS = {
 function escHtml(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
+// Converte gli accenti LaTeX (\`{a}, \`a, \'e, ...) in caratteri Unicode.
+// Serve per i titoli mostrati fuori dal renderer (barra in alto, indice).
+function latexAccentsToText(s) {
+  return String(s).replace(/\\([`'^"~])\{?([a-zA-Z])\}?/g,
+    (m, acc, ch) => (ACCENTS[acc] && ACCENTS[acc][ch]) || ch);
+}
 
 function latexToHtml(src, notes) {
   // --- pulizia preliminare ---
@@ -678,7 +684,7 @@ const PART_TITLES = { part1: 'Parte I', part2: 'Parte II', part3: 'Parte III', p
 function parseBookMeta(text) {
   const get = name => {
     const m = text.match(new RegExp('\\\\newcommand\\{\\\\' + name + '\\}\\{([^}]*)\\}'));
-    return m ? m[1].trim() : '';
+    return m ? latexAccentsToText(m[1].trim()) : '';
   };
   return {
     title: get('booktitle'),
@@ -706,7 +712,7 @@ function parseMainTex(text) {
     if (!m) continue;
     let p = m[1];
     if (!/\.tex$/.test(p)) p += '.tex';
-    const comment = (m[2] || '').trim();
+    const comment = latexAccentsToText((m[2] || '').trim());
     const partMatch = p.match(/^parts\/(part\d)\.tex$/);
     if (partMatch) {
       const key = partMatch[1];
@@ -771,7 +777,7 @@ async function openChapter(entry, keepMode) {
         else if (f.text[i] === '}') { depth--; if (!depth) break; }
         t += f.text[i]; i++;
       }
-      const plain = t.replace(/\\[a-zA-Z]+\*?(\[[^\]]*\])?/g, '').replace(/[{}]/g, '').trim();
+      const plain = latexAccentsToText(t).replace(/\\[a-zA-Z]+\*?(\[[^\]]*\])?/g, '').replace(/[{}]/g, '').trim();
       if (plain) {
         entry.title = plain;
         state.titles[entry.path] = plain;
@@ -1515,6 +1521,13 @@ function initSetupScreen(hint) {
   const nc = (window.LF_NOTES_CONFIG && window.LF_NOTES_CONFIG.firestore) || {};
   $('cfg-fb-project').value = localStorage.getItem(LS.fbProject) || nc.projectId || '';
   $('cfg-fb-key').value = localStorage.getItem(LS.fbKey) || nc.apiKey || '';
+  // La dimensione del testo si applica e si salva subito, senza "Salva e continua"
+  $('cfg-fontsize').value = localStorage.getItem(LS.fontSize) || '1';
+  $('cfg-fontsize').onchange = () => {
+    const v = $('cfg-fontsize').value;
+    try { localStorage.setItem(LS.fontSize, v); } catch (e) {}
+    applyFontScale(v);
+  };
   const h = $('setup-hint');
   if (hint) { h.textContent = hint; show(h); } else hide(h);
   hide($('app-screen'));
@@ -1547,6 +1560,17 @@ function initSetupScreen(hint) {
       startApp();
     }
   };
+}
+
+/* ---------------- Dimensione del testo di lettura ---------------- */
+// Scala scelta nelle impostazioni (0.85, 1, 1.15, 1.3): moltiplica la
+// dimensione base del testo di lettura tramite la variabile CSS --font-scale.
+function applyFontScale(v) {
+  const scale = parseFloat(v) || 1;
+  document.documentElement.style.setProperty('--font-scale', scale);
+}
+function initFontScale() {
+  applyFontScale(localStorage.getItem(LS.fontSize) || '1');
 }
 
 /* ---------------- Lettura notturna (tema chiaro/scuro) ---------------- */
@@ -1870,6 +1894,17 @@ if ('serviceWorker' in navigator) {
 }
 
 /* ---------------- Boot ---------------- */
+// Ripara i titoli salvati in passato con gli accenti LaTeX non convertiti
+// (es. "continuit\`a" -> "continuità"), così indice e barra tornano leggibili.
+(function fixCachedTitles() {
+  let changed = false;
+  for (const k in state.titles) {
+    const fixed = latexAccentsToText(state.titles[k]);
+    if (fixed !== state.titles[k]) { state.titles[k] = fixed; changed = true; }
+  }
+  if (changed) { try { localStorage.setItem(LS.titles, JSON.stringify(state.titles)); } catch (e) {} }
+})();
+initFontScale();
 initTheme();
 initUi();
 initNotesUi();
