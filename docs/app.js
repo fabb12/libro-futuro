@@ -100,12 +100,14 @@ function b64ToText(b64) {
   for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
   return new TextDecoder('utf-8').decode(bytes);
 }
-function textToB64(text) {
-  const bytes = new TextEncoder().encode(text);
+function bytesToB64(bytes) {
   let bin = '';
   for (let i = 0; i < bytes.length; i += 0x8000)
     bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
   return btoa(bin);
+}
+function textToB64(text) {
+  return bytesToB64(new TextEncoder().encode(text));
 }
 async function ghGetFile(path) {
   try {
@@ -125,9 +127,12 @@ async function ghGetFile(path) {
   }
 }
 async function ghPutFile(path, text, sha, message) {
+  return ghPutB64(path, textToB64(text), sha, message);
+}
+async function ghPutB64(path, contentB64, sha, message) {
   return ghJson(`${API}/repos/${state.repo}/contents/${encodeURIComponent(path).replace(/%2F/g, '/')}`, {
     method: 'PUT',
-    body: JSON.stringify({ message, content: textToB64(text), sha, branch: state.branch })
+    body: JSON.stringify({ message, content: contentB64, sha, branch: state.branch })
   });
 }
 
@@ -359,6 +364,190 @@ async function imageUrl(texPath) {
   const url = URL.createObjectURL(blob);
   state.imgUrls[entry.sha] = url;
   return url;
+}
+
+/* =========================================================================
+ * Inserimento di un'immagine nel capitolo (dalla modalita' modifica)
+ * -------------------------------------------------------------------------
+ * Il pulsante 🖼️ nella barra dell'editor apre un pannello che:
+ *  - carica l'immagine scelta nella cartella images/ del repository
+ *    (via API GitHub, serve il token con Contents: Read and write);
+ *  - genera il blocco \begin{figure}...\end{figure} con la larghezza
+ *    scelta e l'eventuale didascalia;
+ *  - lo inserisce nel punto in cui era il cursore nell'editor.
+ * Se si scrive solo il nome di un'immagine gia' presente in images/
+ * (senza scegliere un file) viene inserito solo il codice LaTeX.
+ * ========================================================================= */
+const imgInsert = { file: null, cursor: 0, previewUrl: null };
+
+const IMG_MIME_EXT = {
+  'image/jpeg': 'jpg', 'image/png': 'png', 'image/gif': 'gif',
+  'image/webp': 'webp', 'image/svg+xml': 'svg'
+};
+
+// Nome sicuro per LaTeX e per l'URL: niente spazi, accenti o parentesi
+// (i file con spazi/underscore "strani" rompono \includegraphics).
+function sanitizeImageName(name, mime) {
+  let ext = '';
+  const m = name.match(/\.([a-zA-Z0-9]+)$/);
+  if (m) { ext = m[1].toLowerCase(); name = name.slice(0, -(m[1].length + 1)); }
+  if (ext === 'jpeg') ext = 'jpg';
+  if (!/^(png|jpg|gif|webp|svg)$/.test(ext)) ext = IMG_MIME_EXT[mime] || '';
+  const base = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9_-]+/g, '_').replace(/^_+|_+$/g, '') || 'immagine';
+  return ext ? base + '.' + ext : base;
+}
+
+function imgLatexSnippet(fileName, width, caption) {
+  const w = String(parseFloat(width) || 0.8).replace(/^0?\./, '0.');
+  const lines = [
+    '\\begin{figure}[htbp]',
+    '    \\centering',
+    `    \\includegraphics[width=${w}\\textwidth]{images/${fileName}}`
+  ];
+  if (caption) {
+    const safe = caption.replace(/([%&#_])/g, '\\$1');
+    lines.push(`    \\caption{${safe}}`);
+    lines.push(`    \\label{fig:${fileName.replace(/\.[^.]+$/, '')}}`);
+  }
+  lines.push('\\end{figure}');
+  return lines.join('\n');
+}
+
+// Inserisce il blocco nel punto salvato del cursore, isolato da righe
+// vuote (in LaTeX una figure "attaccata" al paragrafo cambia l'impaginazione).
+function imgInsertAtCursor(snippet) {
+  const ta = $('editor-area');
+  const pos = Math.min(imgInsert.cursor, ta.value.length);
+  const before = ta.value.slice(0, pos), after = ta.value.slice(pos);
+  const pre = !before.trim() ? '' : /\n\s*\n$/.test(before) ? '' : /\n$/.test(before) ? '\n' : '\n\n';
+  const post = !after.trim() ? '\n' : /^\s*\n/.test(after) ? '' : '\n\n';
+  const block = pre + snippet + post;
+  ta.value = before + block + after;
+  ta.dispatchEvent(new Event('input')); // aggiorna dirty flag e pulsante salva
+  const newPos = pos + block.length;
+  ta.focus();
+  try { ta.setSelectionRange(newPos, newPos); } catch (e) {}
+}
+
+function imgSetStatus(msg, cls, spinning) {
+  const el = $('img-status');
+  el.className = cls || '';
+  el.innerHTML = (spinning ? '<span class="mini-spin"></span>' : '') +
+    '<span>' + escHtml(msg) + '</span>';
+}
+
+function openImgPopup() {
+  if (!state.current) return;
+  const ta = $('editor-area');
+  imgInsert.cursor = typeof ta.selectionStart === 'number' ? ta.selectionStart : ta.value.length;
+  imgInsert.file = null;
+  $('img-file').value = '';
+  $('img-name').value = '';
+  $('img-caption').value = '';
+  $('img-status').className = 'hidden';
+  $('img-insert').disabled = false;
+  if (imgInsert.previewUrl) { URL.revokeObjectURL(imgInsert.previewUrl); imgInsert.previewUrl = null; }
+  hide($('img-preview-wrap'));
+  show($('note-backdrop')); show($('img-popup'));
+  loadImagesIndex(); // prefetch: servira' per il controllo dei nomi duplicati
+}
+function closeImgPopup() {
+  hide($('img-popup')); hide($('note-backdrop'));
+  if (imgInsert.previewUrl) { URL.revokeObjectURL(imgInsert.previewUrl); imgInsert.previewUrl = null; }
+  imgInsert.file = null;
+}
+
+function onImgFileChosen() {
+  const f = $('img-file').files[0];
+  if (!f) return;
+  imgInsert.file = f;
+  $('img-name').value = sanitizeImageName(f.name, f.type);
+  if (imgInsert.previewUrl) URL.revokeObjectURL(imgInsert.previewUrl);
+  imgInsert.previewUrl = URL.createObjectURL(f);
+  $('img-preview').src = imgInsert.previewUrl;
+  show($('img-preview-wrap'));
+  $('img-status').className = 'hidden';
+}
+
+async function submitImage() {
+  const btn = $('img-insert');
+  const width = $('img-width').value;
+  const caption = $('img-caption').value.trim();
+  let name = sanitizeImageName($('img-name').value.trim(),
+    imgInsert.file ? imgInsert.file.type : '');
+  if (!$('img-name').value.trim()) {
+    imgSetStatus('Scegli un\'immagine o scrivi il nome di una già presente in images/.', 'err');
+    return;
+  }
+  btn.disabled = true;
+  try {
+    const idx = await loadImagesIndex();
+
+    if (!imgInsert.file) {
+      // solo inserimento: l'immagine deve gia' esistere nel repository
+      let found = idx[name.toLowerCase()] ? name : null;
+      if (!found && !/\.[a-z0-9]+$/i.test(name)) {
+        for (const ext of ['.png', '.jpg', '.jpeg', '.gif', '.webp']) {
+          if (idx[(name + ext).toLowerCase()]) { found = name + ext; break; }
+        }
+      }
+      if (!found) {
+        imgSetStatus(`Nessuna immagine chiamata "${name}" in images/. Scegli un file da caricare oppure controlla il nome.`, 'err');
+        return;
+      }
+      imgInsertAtCursor(imgLatexSnippet(found, width, caption));
+      closeImgPopup();
+      toast('✓ Codice LaTeX inserito. Ricorda di salvare il capitolo (💾)');
+      return;
+    }
+
+    if (!state.token) {
+      imgSetStatus('Per caricare l\'immagine sul repository serve il token GitHub: aggiungilo da "Impostazioni / esci".', 'err');
+      return;
+    }
+    const existing = idx[name.toLowerCase()];
+    if (existing && !confirm(`In images/ esiste già "${name}". Vuoi sovrascriverla?\n(Annulla per cambiare nome)`)) {
+      return;
+    }
+
+    imgSetStatus('Carico l\'immagine su GitHub…', '', true);
+    const bytes = new Uint8Array(await imgInsert.file.arrayBuffer());
+    const res = await ghPutB64('images/' + name, bytesToB64(bytes),
+      existing ? existing.sha : undefined,
+      (existing ? 'Aggiornata immagine ' : 'Aggiunta immagine ') + name + ' dalla web app');
+
+    // aggiorna gli indici locali, cosi' la lettura mostra subito l'immagine
+    if (!state.imagesIndex) state.imagesIndex = {};
+    const newSha = res.content && res.content.sha;
+    state.imagesIndex[name.toLowerCase()] = { sha: newSha };
+    if (newSha) {
+      try {
+        state.imgUrls[newSha] = URL.createObjectURL(new Blob([bytes], { type: mimeFor(name) }));
+      } catch (e) {}
+    }
+
+    imgInsertAtCursor(imgLatexSnippet(name, width, caption));
+    closeImgPopup();
+    toast('✓ Immagine caricata in images/ e codice inserito. Ricorda di salvare il capitolo (💾)');
+  } catch (err) {
+    let msg = err.message;
+    if (err.status === 401 || err.status === 403) {
+      msg = 'Il token non ha i permessi per scrivere su questo repository (serve Contents: Read and write). ' + err.message;
+    } else if (!err.status) {
+      msg = 'Rete non raggiungibile: controlla la connessione e riprova. ' + err.message;
+    }
+    imgSetStatus('Immagine non caricata: ' + msg, 'err');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function initImgUi() {
+  $('btn-img').onclick = openImgPopup;
+  $('img-cancel').onclick = closeImgPopup;
+  $('img-insert').onclick = submitImage;
+  $('img-file').onchange = onImgFileChosen;
 }
 
 /* =========================================================================
@@ -1316,6 +1505,7 @@ function jumpToNote(id) {
 function hideNoteUi() {
   closeComposer();
   closeNotePopup();
+  if (typeof closeImgPopup === 'function') closeImgPopup();
 }
 
 /* ---- doppio tocco/click su una parola -> seleziona la parola ---- */
@@ -1427,7 +1617,7 @@ function initNotesUi() {
   $('note-save').onclick = submitNote;
   $('note-cancel').onclick = closeComposer;
   $('note-popup-close').onclick = closeNotePopup;
-  $('note-backdrop').onclick = () => { closeComposer(); closeNotePopup(); closePdfPopup(); };
+  $('note-backdrop').onclick = () => { closeComposer(); closeNotePopup(); closePdfPopup(); closeImgPopup(); };
   $('btn-notes').onclick = openNotesList;
 
   // toccare un'evidenziazione apre la relativa nota
@@ -1955,6 +2145,7 @@ initFontFamily();
 initTheme();
 initUi();
 initNotesUi();
+initImgUi();
 initTts();
 // Il libro si apre subito (il repository e' pubblico, per leggere non serve nulla).
 // Le impostazioni/token compaiono solo per salvare o se il caricamento fallisce.
