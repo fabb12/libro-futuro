@@ -1633,8 +1633,29 @@ function initNotesUi() {
   };
 
   reader.addEventListener('mousedown', e => captureSelectionTap(e.clientX, e.clientY));
+
+  // Touch: un doppio tocco apre la nota SOLO se entrambi i tocchi sono "tap"
+  // veri: dito fermo, pressione breve e pagina non in movimento. Scorrendo
+  // veloce (due flick ravvicinati, o un tocco che ferma l'inerzia) il
+  // conteggio del doppio tap si azzera e la nota non si apre piu' per sbaglio.
+  const TAP_MAX_MS = 300;      // durata massima di un tap
+  const TAP_MAX_MOVE = 10;     // movimento massimo del dito durante il tap (px)
+  const DOUBLE_TAP_MS = 350;   // tempo massimo tra i due tap
+  const DOUBLE_TAP_DIST = 30;  // distanza massima tra i due tap (px)
+  const SCROLL_QUIET_MS = 150; // la pagina deve essere ferma da almeno tanto cosi'
+
+  let lastScrollAt = 0;
+  window.addEventListener('scroll', () => { lastScrollAt = Date.now(); }, { passive: true });
+
+  let touchStart = null; // dati del tocco in corso {x, y, t, scrollY, scrolling}
   reader.addEventListener('touchstart', e => {
-    if (e.touches.length === 1) captureSelectionTap(e.touches[0].clientX, e.touches[0].clientY);
+    if (e.touches.length !== 1) { touchStart = null; return; }
+    const t = e.touches[0];
+    touchStart = {
+      x: t.clientX, y: t.clientY, t: Date.now(), scrollY: window.scrollY,
+      scrolling: Date.now() - lastScrollAt < SCROLL_QUIET_MS // tocco che ferma l'inerzia
+    };
+    captureSelectionTap(t.clientX, t.clientY);
   }, { passive: true });
 
   // Desktop
@@ -1651,6 +1672,13 @@ function initNotesUi() {
   reader.addEventListener('touchend', e => {
     if (currentMode() !== 'read' || e.changedTouches.length !== 1) return;
     const t = e.changedTouches[0];
+    const start = touchStart; touchStart = null;
+    const isTap = start && !start.scrolling &&
+      Date.now() - start.t <= TAP_MAX_MS &&
+      Math.abs(t.clientX - start.x) <= TAP_MAX_MOVE &&
+      Math.abs(t.clientY - start.y) <= TAP_MAX_MOVE &&
+      Math.abs(window.scrollY - start.scrollY) < 3;
+    if (!isTap) { lastTap = 0; tapInfo = null; return; } // flick / scorrimento: non conta
     const info = releaseOnSelection(t.clientX, t.clientY);
     if (info) { // premuto su una selezione di una o piu' parole
       lastTap = 0;
@@ -1659,7 +1687,9 @@ function initNotesUi() {
       return;
     }
     const now = Date.now();
-    if (now - lastTap < 350 && Math.abs(t.clientX - lastX) < 30 && Math.abs(t.clientY - lastY) < 30) {
+    if (now - lastTap < DOUBLE_TAP_MS &&
+        Math.abs(t.clientX - lastX) < DOUBLE_TAP_DIST &&
+        Math.abs(t.clientY - lastY) < DOUBLE_TAP_DIST) {
       lastTap = 0;
       e.preventDefault(); // evita zoom / avvio TTS sul doppio tocco
       noteFromWord(t.clientX, t.clientY);
@@ -1696,21 +1726,227 @@ function setMode(mode) {
     $('btn-mode').title = 'Modifica';
   }
 }
+/* ---- sincronizzazione della posizione tra lettura e modifica ----
+ * Passando da una modalita' all'altra si resta sullo stesso punto del testo:
+ * si prendono le prime parole visibili nella modalita' di partenza e si
+ * cercano nel testo dell'altra. Se la ricerca fallisce (copertina, main.tex,
+ * testo cambiato) si ripristina l'ultimo scroll salvato di quella modalita'. */
+const normText = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+// Cerca una sequenza di parole in un testo normalizzato, tollerando fino a
+// maxGap caratteri qualsiasi tra una parola e l'altra (comandi LaTeX ecc.).
+function findWordsIndex(hay, words, maxGap) {
+  for (let n = Math.min(6, words.length); n >= 2; n--) {
+    try {
+      const re = new RegExp(words.slice(0, n).join('[\\s\\S]{0,' + maxGap + '}?'), 'u');
+      const m = re.exec(hay);
+      if (m) return m.index;
+    } catch (e) {}
+  }
+  const w = words.find(w => w.length >= 6);
+  return w ? hay.indexOf(w) : -1;
+}
+
+// Prime parole di testo visibili nella lettura, sondando i punti appena
+// sotto la barra in alto (gestisce anche un paragrafo lungo a meta' schermo).
+function readerVisibleWords() {
+  try {
+    const { full, starts } = readerTextIndex();
+    const probe = (x, y) => {
+      let node, off;
+      if (document.caretRangeFromPoint) {
+        const r = document.caretRangeFromPoint(x, y);
+        if (!r) return null;
+        node = r.startContainer; off = r.startOffset;
+      } else if (document.caretPositionFromPoint) {
+        const p = document.caretPositionFromPoint(x, y);
+        if (!p) return null;
+        node = p.offsetNode; off = p.offset;
+      } else return null;
+      if (!node || node.nodeType !== Node.TEXT_NODE || !starts.has(node)) return null;
+      return starts.get(node) + off;
+    };
+    const rect = $('reader-content').getBoundingClientRect();
+    const xs = [rect.left + rect.width / 2, rect.left + 24, rect.left + rect.width - 24];
+    for (let y = 64; y < Math.min(window.innerHeight, 480); y += 32) {
+      for (const x of xs) {
+        const off = probe(x, y);
+        if (off != null) {
+          const words = normText(full.slice(off, off + 300)).match(/[\p{L}\p{N}]{3,}/gu);
+          if (words && words.length >= 2) return words;
+        }
+      }
+    }
+  } catch (e) {}
+  return null;
+}
+
+// Porta la lettura sul punto del capitolo che contiene le parole date.
+function readerScrollToWords(words) {
+  try {
+    const { nodes, full, starts } = readerTextIndex();
+    const off = findWordsIndex(normText(full), words, 40);
+    if (off < 0) return false;
+    for (const node of nodes) {
+      const s = starts.get(node);
+      if (off >= s && off < s + node.nodeValue.length) {
+        const range = document.createRange();
+        range.setStart(node, off - s);
+        range.setEnd(node, Math.min(off - s + 1, node.nodeValue.length));
+        const r = range.getBoundingClientRect();
+        const top = (r && (r.top || r.height)) ? r.top
+          : node.parentElement.getBoundingClientRect().top;
+        window.scrollTo(0, Math.max(0, window.scrollY + top - 80));
+        return true;
+      }
+    }
+  } catch (e) {}
+  return false;
+}
+
+// Copia invisibile dell'editor con gli stessi stili: serve a convertire
+// indice nel testo <-> posizione verticale tenendo conto dell'a-capo
+// automatico del textarea (le righe "logiche" non bastano).
+function editorMirror(ta) {
+  const cs = getComputedStyle(ta);
+  const div = document.createElement('div');
+  for (const p of ['fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing',
+                   'paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight', 'boxSizing'])
+    div.style[p] = cs[p];
+  div.style.position = 'absolute';
+  div.style.visibility = 'hidden';
+  div.style.left = '-9999px';
+  div.style.top = '0';
+  div.style.width = ta.clientWidth + 'px';
+  div.style.whiteSpace = 'pre-wrap';
+  div.style.overflowWrap = 'break-word';
+  document.body.appendChild(div);
+  return div;
+}
+
+// Indice del primo carattere visibile in cima all'editor (ricerca binaria
+// sull'altezza del testo misurata nella copia invisibile).
+function editorTopIndex() {
+  const ta = $('editor-area');
+  if (!ta.scrollTop) return 0;
+  if (!ta.clientWidth) return -1; // editor non visibile: impossibile misurare
+  const div = editorMirror(ta);
+  const target = ta.scrollTop;
+  let lo = 0, hi = ta.value.length;
+  while (hi - lo > 32) {
+    const mid = (lo + hi) >> 1;
+    div.textContent = ta.value.slice(0, mid);
+    if (div.offsetHeight <= target) lo = mid; else hi = mid;
+  }
+  div.remove();
+  return hi;
+}
+
+// Scorre l'editor fino a mostrare il carattere all'indice dato.
+function editorScrollToIndex(idx) {
+  const ta = $('editor-area');
+  if (!ta.clientWidth) return;
+  const div = editorMirror(ta);
+  div.textContent = ta.value.slice(0, Math.max(1, idx));
+  const y = div.offsetHeight;
+  div.remove();
+  const line = parseFloat(getComputedStyle(ta).lineHeight) || 22;
+  ta.scrollTop = Math.max(0, y - 2 * line);
+}
+
+// Prime parole "di prosa" (senza comandi LaTeX) dalla cima dell'editor:
+// serviranno a ritrovare lo stesso punto nella lettura.
+function editorVisibleWords() {
+  const idx = editorTopIndex();
+  if (idx < 0) return null;
+  const snippet = $('editor-area').value.slice(idx, idx + 800)
+    .replace(/\\(begin|end|label|index|ref|pageref|cite|includegraphics|input|vspace|hspace)\*?(\[[^\]]*\])?\{[^}]*\}/g, ' ')
+    .replace(/%[^\n]*/g, ' ')
+    .replace(/\\[a-zA-Z]+\*?/g, ' ')
+    .replace(/[{}\[\]~]/g, ' ');
+  const words = normText(snippet).match(/[\p{L}\p{N}]{3,}/gu);
+  return words && words.length >= 2 ? words : null;
+}
+
 // Cambio di modalita' voluto dall'utente: conserva il punto in cui stava
 // leggendo o modificando, così non lo perde passando da una all'altra.
 function switchMode(mode) {
   const from = currentMode();
   if (from === mode) return;
-  if (from === 'read') state.readScroll = window.scrollY;
-  else state.editScroll = $('editor-area').scrollTop;
-  setMode(mode);
-  if (mode === 'read') {
-    requestAnimationFrame(() => window.scrollTo(0, state.readScroll || 0));
+  let words = null;
+  if (from === 'read') {
+    state.readScroll = window.scrollY;
+    if (window.scrollY <= 40) { // inizio del capitolo: si va all'inizio del sorgente
+      setMode(mode);
+      $('editor-area').scrollTop = 0;
+      return;
+    }
+    words = readerVisibleWords();
   } else {
-    requestAnimationFrame(() => { $('editor-area').scrollTop = state.editScroll || 0; });
+    state.editScroll = $('editor-area').scrollTop;
+    if (state.editScroll <= 20) { // inizio del sorgente: si va in cima alla lettura
+      setMode(mode);
+      window.scrollTo(0, 0);
+      return;
+    }
+    words = editorVisibleWords(); // da chiamare PRIMA di nascondere l'editor
+  }
+  setMode(mode);
+  if (mode === 'edit') {
+    requestAnimationFrame(() => {
+      const idx = words ? findWordsIndex(normText($('editor-area').value), words, 200) : -1;
+      if (idx >= 0) editorScrollToIndex(idx);
+      else $('editor-area').scrollTop = state.editScroll || 0;
+    });
+  } else {
+    requestAnimationFrame(() => {
+      if (!words || !readerScrollToWords(words)) window.scrollTo(0, state.readScroll || 0);
+    });
   }
 }
 function currentMode() { return $('editor').classList.contains('hidden') ? 'read' : 'edit'; }
+
+/* ---- comandi di formattazione nell'editor (grassetto / corsivo) ----
+ * Avvolge la selezione in \textbf{...} o \textit{...}. Se la selezione e'
+ * gia' dentro al comando (o lo contiene per intero) lo toglie, cosi' i
+ * pulsanti funzionano da interruttore. Senza selezione inserisce il comando
+ * vuoto e lascia il cursore tra le graffe, pronto per scrivere. */
+function editorWrapSelection(cmd) {
+  if (currentMode() !== 'edit') return;
+  const ta = $('editor-area');
+  const start = ta.selectionStart, end = ta.selectionEnd;
+  const sel = ta.value.slice(start, end);
+  const open = '\\' + cmd + '{';
+  const before = ta.value.slice(Math.max(0, start - open.length), start);
+  if (before === open && ta.value[end] === '}') {
+    // selezione gia' avvolta nel comando: lo rimuove
+    ta.value = ta.value.slice(0, start - open.length) + sel + ta.value.slice(end + 1);
+    ta.setSelectionRange(start - open.length, end - open.length);
+  } else if (sel.startsWith(open) && sel.endsWith('}')) {
+    // comando incluso per intero nella selezione: lo rimuove
+    const inner = sel.slice(open.length, -1);
+    ta.value = ta.value.slice(0, start) + inner + ta.value.slice(end);
+    ta.setSelectionRange(start, start + inner.length);
+  } else {
+    ta.value = ta.value.slice(0, start) + open + sel + '}' + ta.value.slice(end);
+    ta.setSelectionRange(start + open.length, start + open.length + sel.length);
+  }
+  ta.dispatchEvent(new Event('input')); // aggiorna dirty flag e pulsante salva
+  ta.focus();
+}
+
+function initFormatUi() {
+  const bind = (id, cmd) => {
+    const b = $(id);
+    // mousedown/touchend con preventDefault: premere il pulsante non deve
+    // togliere il focus (e quindi la selezione) al textarea dell'editor
+    b.addEventListener('mousedown', e => e.preventDefault());
+    b.addEventListener('touchend', e => { e.preventDefault(); editorWrapSelection(cmd); });
+    b.addEventListener('click', () => editorWrapSelection(cmd));
+  };
+  bind('btn-bold', 'textbf');
+  bind('btn-italic', 'textit');
+}
 
 async function saveFile() {
   if (!state.current) return;
@@ -1942,9 +2178,13 @@ function initUi() {
   window.addEventListener('beforeunload', e => {
     if (state.dirty) { e.preventDefault(); e.returnValue = ''; }
   });
-  // Ctrl/Cmd+S per salvare
+  // Ctrl/Cmd+S per salvare; Ctrl/Cmd+B e Ctrl/Cmd+I per grassetto e corsivo
   window.addEventListener('keydown', e => {
-    if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); if (currentMode() === 'edit') saveFile(); }
+    if (!(e.ctrlKey || e.metaKey) || e.altKey) return;
+    const k = e.key.toLowerCase();
+    if (k === 's') { e.preventDefault(); if (currentMode() === 'edit') saveFile(); }
+    else if (k === 'b' && currentMode() === 'edit') { e.preventDefault(); editorWrapSelection('textbf'); }
+    else if (k === 'i' && currentMode() === 'edit') { e.preventDefault(); editorWrapSelection('textit'); }
   });
 }
 
@@ -2200,6 +2440,7 @@ initTheme();
 initUi();
 initNotesUi();
 initImgUi();
+initFormatUi();
 initTts();
 // Il libro si apre subito (il repository e' pubblico, per leggere non serve nulla).
 // Le impostazioni/token compaiono solo per salvare o se il caricamento fallisce.

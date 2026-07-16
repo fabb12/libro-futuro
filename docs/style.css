@@ -401,7 +401,13 @@ mark.note-hl.note-flash {
   border-radius: 50%; animation: spin .8s linear infinite; flex: 0 0 auto;
 }
 /* inserimento immagine */
-#editor-bar .img-btn { margin-left: auto; font-size: 19px; padding: 2px 8px; }
+#editor-bar .fmt-btn {
+  font-family: Georgia, 'Times New Roman', serif; font-size: 16px;
+  line-height: 1.2; padding: 2px 9px; color: #444;
+}
+#editor-bar #btn-bold { margin-left: auto; }
+#editor-bar .img-btn { font-size: 19px; padding: 2px 8px; }
+body.dark #editor-bar .fmt-btn { color: #ddd; }
 .img-file-label { display: inline-block; margin-bottom: 12px; }
 /* input file tenuto fuori schermo ma NON display:none: su iOS/Safari un
    input nascosto con display:none non apre la galleria fotografica */
