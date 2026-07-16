@@ -11,6 +11,35 @@ const LS = {
   noteAuthor: 'lf.noteAuthor', myNotes: 'lf.myNotes', notesCache: 'lf.notes:',
   theme: 'lf.theme', fontSize: 'lf.fontSize'
 };
+
+/* ---------------- localStorage: cache auto-pulente ----------------
+ * Le copie locali dei capitoli (lf.file:*) e delle note (lf.notes:*)
+ * possono saturare la quota (~5 MB) e far fallire anche le scritture
+ * piccole (es. lf.titles). Rimedi:
+ *  - purgeLocalCache() elimina solo le chiavi di cache, mai config/token;
+ *  - lsSet() riprova la scrittura dopo una pulizia se la quota è piena;
+ *  - una pulizia una-tantum all'avvio libera lo spazio già saturo. */
+function purgeLocalCache() {
+  for (const k of Object.keys(localStorage)) {
+    if (k.startsWith(LS.fileCache) || k.startsWith(LS.notesCache)) {
+      try { localStorage.removeItem(k); } catch (e) {}
+    }
+  }
+}
+function lsSet(key, value) {
+  try { localStorage.setItem(key, value); return true; }
+  catch (e) {
+    try { purgeLocalCache(); localStorage.setItem(key, value); return true; }
+    catch (e2) { return false; }
+  }
+}
+try {
+  if (!localStorage.getItem('lf.cachePurged.v1')) {
+    purgeLocalCache();
+    localStorage.setItem('lf.cachePurged.v1', '1');
+  }
+} catch (e) {}
+
 const state = {
   repo: localStorage.getItem(LS.repo) || 'fabb12/libro-futuro',
   branch: localStorage.getItem(LS.branch) || 'main',
@@ -82,7 +111,7 @@ async function ghGetFile(path) {
   try {
     const j = await ghJson(`${API}/repos/${state.repo}/contents/${encodeURIComponent(path).replace(/%2F/g, '/')}?ref=${state.branch}`);
     const text = b64ToText(j.content);
-    try { localStorage.setItem(LS.fileCache + path, JSON.stringify({ sha: j.sha, text })); } catch (e) {}
+    lsSet(LS.fileCache + path, JSON.stringify({ sha: j.sha, text }));
     return { text, sha: j.sha };
   } catch (err) {
     // offline / errore: prova la copia locale
@@ -765,7 +794,7 @@ async function openChapter(entry, keepMode) {
     state.fileSha = f.sha;
     state.fileText = f.text;
     state.dirty = false;
-    localStorage.setItem(LS.lastPath, entry.path);
+    lsSet(LS.lastPath, entry.path);
 
     // aggiorna titolo dal \chapter{...}
     const tm = f.text.match(/\\chapter\*?\s*\{/);
@@ -781,7 +810,7 @@ async function openChapter(entry, keepMode) {
       if (plain) {
         entry.title = plain;
         state.titles[entry.path] = plain;
-        localStorage.setItem(LS.titles, JSON.stringify(state.titles));
+        lsSet(LS.titles, JSON.stringify(state.titles));
       }
     }
     $('chapter-label').textContent = entry.title;
@@ -899,7 +928,7 @@ function notesConfig() {
 function markMine(id) {
   const s = new Set(JSON.parse(localStorage.getItem(LS.myNotes) || '[]'));
   s.add(id);
-  try { localStorage.setItem(LS.myNotes, JSON.stringify([...s])); } catch (e) {}
+  lsSet(LS.myNotes, JSON.stringify([...s]));
 }
 function isMine(id) {
   return new Set(JSON.parse(localStorage.getItem(LS.myNotes) || '[]')).has(id);
@@ -908,7 +937,7 @@ function localNotes(chapter) {
   return JSON.parse(localStorage.getItem(LS.notesCache + chapter) || '[]');
 }
 function saveLocalNotes(chapter, list) {
-  try { localStorage.setItem(LS.notesCache + chapter, JSON.stringify(list)); } catch (e) {}
+  lsSet(LS.notesCache + chapter, JSON.stringify(list));
 }
 
 /* ---- note condivise nel repository (docs/notes-data.json) ---- */
@@ -1214,7 +1243,7 @@ async function submitNote() {
   if (!text) { toast('Scrivi il testo della nota', true); return; }
   if (!state.current || !state.pendingAnchor) { closeComposer(); return; }
   const author = $('note-author').value.trim();
-  try { localStorage.setItem(LS.noteAuthor, author); } catch (e) {}
+  lsSet(LS.noteAuthor, author);
   const a = state.pendingAnchor;
   const note = { chapter: state.current.path, quote: a.quote, prefix: a.prefix, suffix: a.suffix, text, author };
   closeComposer();
@@ -1465,7 +1494,7 @@ async function saveFile() {
     state.fileText = newText;
     state.dirty = false;
     hide($('dirty-flag'));
-    try { localStorage.setItem(LS.fileCache + state.current.path, JSON.stringify({ sha: state.fileSha, text: newText })); } catch (e) {}
+    lsSet(LS.fileCache + state.current.path, JSON.stringify({ sha: state.fileSha, text: newText }));
     if (!state.current.editorOnly) renderReader();
     if (state.current.path === 'main.tex') await buildToc(newText);
     toast('✓ Salvato: ' + state.current.path);
@@ -1525,7 +1554,7 @@ function initSetupScreen(hint) {
   $('cfg-fontsize').value = localStorage.getItem(LS.fontSize) || '1';
   $('cfg-fontsize').onchange = () => {
     const v = $('cfg-fontsize').value;
-    try { localStorage.setItem(LS.fontSize, v); } catch (e) {}
+    lsSet(LS.fontSize, v);
     applyFontScale(v);
   };
   const h = $('setup-hint');
@@ -1543,11 +1572,11 @@ function initSetupScreen(hint) {
     state.repo = $('cfg-repo').value.trim();
     state.branch = $('cfg-branch').value.trim() || 'main';
     state.token = $('cfg-token').value.trim();
-    localStorage.setItem(LS.repo, state.repo);
-    localStorage.setItem(LS.branch, state.branch);
-    localStorage.setItem(LS.token, state.token);
-    localStorage.setItem(LS.fbProject, $('cfg-fb-project').value.trim());
-    localStorage.setItem(LS.fbKey, $('cfg-fb-key').value.trim());
+    lsSet(LS.repo, state.repo);
+    lsSet(LS.branch, state.branch);
+    lsSet(LS.token, state.token);
+    lsSet(LS.fbProject, $('cfg-fb-project').value.trim());
+    lsSet(LS.fbKey, $('cfg-fb-key').value.trim());
     hide($('setup-error'));
     if (sameRepo && state.current) {
       // torna al libro senza ricaricare (preserva eventuali modifiche in corso)
@@ -1599,7 +1628,7 @@ function applyTheme(theme) {
 
 function toggleTheme() {
   const next = currentTheme() === 'dark' ? 'light' : 'dark';
-  try { localStorage.setItem(LS.theme, next); } catch (e) {}
+  lsSet(LS.theme, next);
   applyTheme(next);
 }
 
@@ -1866,11 +1895,11 @@ function initTts() {
   $('tts-prev').onclick = () => ttsSkip(-1);
   $('tts-next').onclick = () => ttsSkip(1);
   $('tts-rate').onchange = () => {
-    localStorage.setItem(TTS_LS.rate, $('tts-rate').value);
+    lsSet(TTS_LS.rate, $('tts-rate').value);
     if (tts.playing) { tts.gen++; speechSynthesis.cancel(); ttsSpeakChunk(); }
   };
   $('tts-voice').onchange = () => {
-    localStorage.setItem(TTS_LS.voice, $('tts-voice').value);
+    lsSet(TTS_LS.voice, $('tts-voice').value);
     if (tts.playing) { tts.gen++; speechSynthesis.cancel(); ttsSpeakChunk(); }
   };
   // toccando un paragrafo (con la barra aperta) la lettura parte da li'
@@ -1902,7 +1931,7 @@ if ('serviceWorker' in navigator) {
     const fixed = latexAccentsToText(state.titles[k]);
     if (fixed !== state.titles[k]) { state.titles[k] = fixed; changed = true; }
   }
-  if (changed) { try { localStorage.setItem(LS.titles, JSON.stringify(state.titles)); } catch (e) {} }
+  if (changed) lsSet(LS.titles, JSON.stringify(state.titles));
 })();
 initFontScale();
 initTheme();
