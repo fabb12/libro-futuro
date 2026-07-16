@@ -81,6 +81,36 @@ button { font: inherit; cursor: pointer; }
 }
 .topbar-actions { display: flex; }
 
+/* ===== Barra di ricerca nel capitolo ===== */
+#search-bar {
+  position: sticky; z-index: 29;
+  top: calc(env(safe-area-inset-top) + 40px);
+  display: flex; align-items: center; gap: 4px;
+  background: #f3f0e8; border-bottom: 1px solid #ddd;
+  padding: 6px 8px;
+  font-family: -apple-system, system-ui, sans-serif;
+}
+#search-bar.hidden { display: none; }
+#search-input {
+  flex: 1; min-width: 0;
+  border: 1px solid #ccc; border-radius: 8px;
+  padding: 8px 12px; font-size: 15px;
+  background: #fff; color: #222;
+}
+#search-input:focus { outline: none; border-color: #5b4bd6; }
+#search-count {
+  font-size: 13px; color: #666; min-width: 42px; text-align: center;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+#search-bar .iconbtn { font-size: 16px; padding: 6px 8px; color: #444; }
+mark.search-hl {
+  background: #ffe082; color: inherit; border-radius: 2px;
+}
+mark.search-hl.search-current {
+  background: #ff9800; color: #1a1a1a;
+  box-shadow: 0 0 0 2px rgba(255,152,0,.4);
+}
+
 /* ===== TOC drawer ===== */
 #toc-drawer {
   position: fixed; top: 0; left: 0; bottom: 0; z-index: 50;
@@ -497,6 +527,12 @@ body.dark .endnotes { border-top-color: #333; }
 body.dark .img-loading { background: #26262e; color: #888; }
 body.dark .msg.human { background: #26241e; border-color: #3a372e; }
 body.dark .msg.ai { background: #1e2430; border-color: #2e3a50; }
+body.dark #search-bar { background: #22222a; border-bottom-color: #333; }
+body.dark #search-input { background: #1b1b22; color: #ddd; border-color: #444; }
+body.dark #search-count { color: #aaa; }
+body.dark #search-bar .iconbtn { color: #ccc; }
+body.dark mark.search-hl { background: #6b5510; color: #f0e6cf; }
+body.dark mark.search-hl.search-current { background: #b8791c; color: #fff; }
 body.dark #editor-area { background: #1b1b22; color: #ddd; }
 body.dark #editor-bar { background: #22222a; border-bottom-color: #333; color: #999; }
 body.dark #toc-drawer { background: #202028; color: #ddd; }
