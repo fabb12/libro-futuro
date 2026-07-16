@@ -1,6 +1,6 @@
 /* Service worker: cache dell'app shell + cache immagini (gestita da app.js) */
-const SHELL_CACHE = 'lf-shell-v4';
-const SHELL = ['./', 'index.html', 'style.css', 'app.js', 'notes-config.js', 'manifest.webmanifest',
+const SHELL_CACHE = 'lf-shell-v5';
+const SHELL = ['./', 'index.html', 'style.css?v=5', 'app.js?v=5', 'notes-config.js', 'manifest.webmanifest',
   'icons/icon-192.png', 'icons/icon-512.png'];
 
 self.addEventListener('install', e => {
