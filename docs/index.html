@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=Source+Sans+3:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=5">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -205,9 +205,9 @@
   <div id="img-popup" class="hidden">
     <div class="note-panel-head">Inserisci un'immagine</div>
     <div id="img-body">
-      <p class="pdf-hint">L'immagine viene caricata nella cartella <code>images/</code> del repository e il codice LaTeX viene inserito nel punto in cui hai lasciato il cursore. Puoi anche inserire un'immagine già presente scrivendone solo il nome, senza scegliere un file.</p>
-      <label class="btn small img-file-label" for="img-file">📷 Scegli o scatta un'immagine…</label>
-      <input id="img-file" type="file" accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml" class="hidden">
+      <p class="pdf-hint">L'immagine (PNG o JPG) viene caricata nella cartella <code>images/</code> del repository e il codice LaTeX viene inserito nel punto in cui hai lasciato il cursore. Puoi anche inserire un'immagine già presente scrivendone solo il nome, senza scegliere un file.</p>
+      <button id="img-choose" type="button" class="btn small img-file-label">📷 Scegli o scatta un'immagine…</button>
+      <input id="img-file" type="file" accept="image/png,image/jpeg,image/gif,image/webp" class="file-input-offscreen">
       <div id="img-preview-wrap" class="hidden"><img id="img-preview" alt="Anteprima dell'immagine"></div>
       <label class="img-field">Nome del file nella cartella images/
         <input id="img-name" type="text" autocapitalize="off" autocorrect="off" placeholder="es. mia_figura.png">
@@ -242,6 +242,6 @@
   </div>
 
   <script src="notes-config.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=5"></script>
 </body>
 </html>
