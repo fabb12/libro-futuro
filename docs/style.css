@@ -374,8 +374,8 @@ mark.note-hl.note-flash {
 }
 .note-actions { display: flex; justify-content: flex-end; gap: 8px; }
 
-/* pannello generazione PDF: stesso stile dei popup nota */
-#pdf-popup {
+/* pannelli generazione PDF e inserimento immagine: stesso stile dei popup nota */
+#pdf-popup, #img-popup {
   position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 120;
   max-width: 640px; margin: 0 auto;
   background: #fff; border-radius: 14px; padding: 16px;
@@ -383,6 +383,7 @@ mark.note-hl.note-flash {
   font-family: -apple-system, system-ui, sans-serif;
   padding-bottom: calc(16px + env(safe-area-inset-bottom));
 }
+#img-popup { max-height: calc(100dvh - 32px); overflow-y: auto; }
 .pdf-hint { font-size: 13px; color: #666; margin: 0 0 12px; line-height: 1.4; }
 .pdf-mode { display: block; font-size: 13px; color: #444; margin-bottom: 12px; }
 .pdf-mode select {
@@ -395,10 +396,31 @@ mark.note-hl.note-flash {
 }
 #pdf-status.err { background: #fbe6e6; color: #a11; }
 #pdf-status.ok { background: #e7f5ea; color: #1a7a33; }
-#pdf-status .mini-spin {
+#pdf-status .mini-spin, #img-status .mini-spin {
   width: 14px; height: 14px; border: 2px solid #bbb; border-top-color: #555;
   border-radius: 50%; animation: spin .8s linear infinite; flex: 0 0 auto;
 }
+/* inserimento immagine */
+#editor-bar .img-btn { margin-left: auto; font-size: 19px; padding: 2px 8px; }
+.img-file-label { display: inline-block; margin-bottom: 12px; }
+#img-preview-wrap { text-align: center; margin: 0 0 12px; }
+#img-preview {
+  max-width: 100%; max-height: 160px;
+  border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,.2);
+}
+.img-field { display: block; font-size: 13px; color: #444; margin-bottom: 12px; }
+.img-field input, .img-field select {
+  display: block; width: 100%; margin-top: 4px;
+  border: 1px solid #ccc; border-radius: 8px; padding: 9px 12px;
+  font: inherit; background: #fff; color: #222;
+}
+#img-status {
+  font-size: 14px; padding: 10px 12px; border-radius: 8px;
+  background: #f0f0f4; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+}
+#img-status.err { background: #fbe6e6; color: #a11; }
+#img-popup code { background: #eee; padding: 1px 4px; border-radius: 4px; font-size: 12px; }
+
 #pdf-links, #pdf-last { margin-bottom: 10px; }
 #pdf-links a, #pdf-last a {
   display: block; text-align: center; text-decoration: none;
@@ -476,7 +498,12 @@ body.dark mark.note-hl { background: #4a3d17; color: #f0e6cf; border-bottom-colo
 body.dark mark.note-hl.note-flash { animation: noteFlashDark 1.4s ease; }
 @keyframes noteFlashDark { 0%,100% { background: #4a3d17; } 30% { background: #7a641f; } }
 body.dark #note-composer, body.dark #note-popup { background: #26262e; color: #ddd; }
-body.dark #pdf-popup { background: #26262e; color: #ddd; }
+body.dark #pdf-popup, body.dark #img-popup { background: #26262e; color: #ddd; }
+body.dark .img-field { color: #aaa; }
+body.dark .img-field input, body.dark .img-field select { background: #1b1b22; color: #ddd; border-color: #444; }
+body.dark #img-status { background: #33333d; color: #ddd; }
+body.dark #img-status.err { background: #4a2026; color: #f2b8bf; }
+body.dark #img-popup code { background: #333; }
 body.dark .pdf-hint, body.dark .pdf-mode { color: #aaa; }
 body.dark #pdf-status { background: #33333d; color: #ddd; }
 body.dark #pdf-links a, body.dark #pdf-last a { background: #4a4a6a; }

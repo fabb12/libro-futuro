@@ -126,6 +126,7 @@
       <div id="editor-bar">
         <span id="editor-path"></span>
         <span id="dirty-flag" class="hidden">● non salvato</span>
+        <button id="btn-img" class="iconbtn img-btn" title="Inserisci un'immagine nel punto del cursore">🖼️</button>
       </div>
       <textarea id="editor-area" spellcheck="false" autocapitalize="off" autocorrect="off"></textarea>
     </main>
@@ -197,6 +198,40 @@
     <div class="note-actions">
       <button id="pdf-close" class="btn small ghost">Chiudi</button>
       <button id="pdf-start" class="btn small primary">Avvia generazione</button>
+    </div>
+  </div>
+
+  <!-- Inserimento di un'immagine nel capitolo -->
+  <div id="img-popup" class="hidden">
+    <div class="note-panel-head">Inserisci un'immagine</div>
+    <div id="img-body">
+      <p class="pdf-hint">L'immagine viene caricata nella cartella <code>images/</code> del repository e il codice LaTeX viene inserito nel punto in cui hai lasciato il cursore. Puoi anche inserire un'immagine già presente scrivendone solo il nome, senza scegliere un file.</p>
+      <label class="btn small img-file-label" for="img-file">📷 Scegli o scatta un'immagine…</label>
+      <input id="img-file" type="file" accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml" class="hidden">
+      <div id="img-preview-wrap" class="hidden"><img id="img-preview" alt="Anteprima dell'immagine"></div>
+      <label class="img-field">Nome del file nella cartella images/
+        <input id="img-name" type="text" autocapitalize="off" autocorrect="off" placeholder="es. mia_figura.png">
+      </label>
+      <label class="img-field">Dimensione (larghezza rispetto alla pagina)
+        <select id="img-width">
+          <option value="0.3">Piccola — 30%</option>
+          <option value="0.4">40%</option>
+          <option value="0.5">Media — 50%</option>
+          <option value="0.6">60%</option>
+          <option value="0.7">70%</option>
+          <option value="0.8" selected>Grande — 80%</option>
+          <option value="0.9">90%</option>
+          <option value="1">Tutta la pagina — 100%</option>
+        </select>
+      </label>
+      <label class="img-field">Didascalia (facoltativa)
+        <input id="img-caption" type="text" placeholder="es. Il gap tra emozione e ragione">
+      </label>
+      <div id="img-status" class="hidden"></div>
+    </div>
+    <div class="note-actions">
+      <button id="img-cancel" class="btn small ghost">Annulla</button>
+      <button id="img-insert" class="btn small primary">Carica e inserisci</button>
     </div>
   </div>
 
