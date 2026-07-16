@@ -9,7 +9,8 @@ const LS = {
   titles: 'lf.titles', lastPath: 'lf.lastPath', fileCache: 'lf.file:',
   fbProject: 'lf.fbProject', fbKey: 'lf.fbKey',
   noteAuthor: 'lf.noteAuthor', myNotes: 'lf.myNotes', notesCache: 'lf.notes:',
-  theme: 'lf.theme', fontSize: 'lf.fontSize', fontFamily: 'lf.fontFamily'
+  theme: 'lf.theme', fontSize: 'lf.fontSize', fontFamily: 'lf.fontFamily',
+  bookmark: 'lf.bookmark'
 };
 
 /* ---------------- localStorage: cache auto-pulente ----------------
@@ -1069,6 +1070,7 @@ async function openChapter(entry, keepMode) {
     window.scrollTo(0, 0);
     $('editor-area').scrollTop = 0;
     state.readScroll = 0; state.editScroll = 0;
+    saveBookmark(); // nuovo capitolo: il segnalibro riparte dalla sua cima
     if (!entry.editorOnly && !entry.cover) refreshNotes();
     else updateNotesCount();
   } catch (err) {
@@ -1906,6 +1908,70 @@ function switchMode(mode) {
 }
 function currentMode() { return $('editor').classList.contains('hidden') ? 'read' : 'edit'; }
 
+/* ---------------- Segnalibro automatico ----------------
+ * Alla riapertura l'app riparte esattamente da dove si era rimasti:
+ * capitolo, modalita' (lettura o modifica) e punto del testo. Il punto si
+ * salva come prime parole visibili (ritrovabili anche se le immagini
+ * caricate dopo spostano l'impaginazione) piu' lo scroll grezzo come
+ * ripiego. Si aggiorna mentre si scorre e quando si lascia l'app
+ * (cambio di app o scheda, blocco dello schermo, chiusura). */
+function saveBookmark() {
+  if (!state.current) return;
+  const mode = currentMode();
+  const bm = { path: state.current.path, mode };
+  if (mode === 'edit') {
+    bm.editScroll = $('editor-area').scrollTop;
+  } else {
+    bm.scrollY = window.scrollY;
+    if (window.scrollY > 40) {
+      const words = readerVisibleWords();
+      if (words) bm.words = words.slice(0, 6);
+    }
+  }
+  lsSet(LS.bookmark, JSON.stringify(bm));
+}
+
+function loadBookmark() {
+  try { return JSON.parse(localStorage.getItem(LS.bookmark) || 'null'); }
+  catch (e) { return null; }
+}
+
+// Riporta l'app al punto salvato; da chiamare a capitolo appena aperto.
+function restoreBookmark(bm) {
+  if (!bm || !state.current || state.current.path !== bm.path) return;
+  if (bm.mode === 'edit') {
+    if (currentMode() !== 'edit') setMode('edit');
+    requestAnimationFrame(() => { $('editor-area').scrollTop = bm.editScroll || 0; });
+    return;
+  }
+  if (state.current.editorOnly || !(bm.words || bm.scrollY)) return;
+  // Le immagini arrivano dopo il testo e lo spostano: si ri-ancora alle
+  // parole salvate anche piu' tardi, ma solo finche' il lettore non ha
+  // gia' ripreso a scorrere per conto suo.
+  let anchoredY = null;
+  const apply = () => {
+    if (!state.current || state.current.path !== bm.path || currentMode() !== 'read') return;
+    if (anchoredY !== null && Math.abs(window.scrollY - anchoredY) > 4) return;
+    if (bm.words && readerScrollToWords(bm.words)) anchoredY = window.scrollY;
+    else if (anchoredY === null && bm.scrollY) { window.scrollTo(0, bm.scrollY); anchoredY = window.scrollY; }
+  };
+  requestAnimationFrame(apply);
+  if (bm.words) { setTimeout(apply, 700); setTimeout(apply, 2000); }
+}
+
+function initBookmark() {
+  let t = null;
+  const later = () => { clearTimeout(t); t = setTimeout(saveBookmark, 400); };
+  window.addEventListener('scroll', later, { passive: true });
+  $('editor-area').addEventListener('scroll', later, { passive: true });
+  // Momento decisivo: quando l'app va in secondo piano (o si chiude) la
+  // posizione va scritta subito, senza aspettare il timer.
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') { clearTimeout(t); saveBookmark(); }
+  });
+  window.addEventListener('pagehide', () => { clearTimeout(t); saveBookmark(); });
+}
+
 /* ---- comandi di formattazione nell'editor (grassetto / corsivo) ----
  * Avvolge la selezione in \textbf{...} o \textit{...}. Se la selezione e'
  * gia' dentro al comando (o lo contiene per intero) lo toglie, cosi' i
@@ -2011,8 +2077,10 @@ async function startApp() {
     await buildToc();
     loadImagesIndex(); // prefetch in background
     const last = localStorage.getItem(LS.lastPath);
+    const bm = loadBookmark(); // da leggere PRIMA di aprire (openChapter lo azzera)
     const entry = state.toc.find(e => e.path === last) || state.toc.find(e => !e.editorOnly);
     await openChapter(entry);
+    restoreBookmark(bm); // riparte dal punto in cui si era rimasti
   } catch (err) {
     toast('Impossibile caricare il libro: ' + err.message, true);
     initSetupScreen('Non riesco a caricare il libro. Controlla repository e branch (se il repository è privato serve un token).');
@@ -2438,6 +2506,7 @@ initFontScale();
 initFontFamily();
 initTheme();
 initUi();
+initBookmark();
 initNotesUi();
 initImgUi();
 initFormatUi();
