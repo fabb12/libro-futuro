@@ -1115,6 +1115,9 @@ function renderReader() {
   hydrateFootnotes();
   anchorAll();
   updateNavButtons();
+  // ricerca aperta: ri-evidenzia le occorrenze sul testo appena renderizzato
+  search.groups = []; search.idx = -1;
+  if (!$('search-bar').classList.contains('hidden')) searchApply();
   // capitolo nuovo: ferma la lettura in corso e riprepara la coda
   if (typeof ttsStop === 'function') {
     ttsStop();
@@ -1718,6 +1721,7 @@ function setMode(mode) {
   hideNoteUi();
   if (mode === 'edit') {
     if (typeof ttsCloseBar === 'function') ttsCloseBar();
+    if (typeof searchCloseBar === 'function') searchCloseBar();
     hide($('reader')); show($('editor')); show($('btn-save'));
     $('btn-mode').textContent = '📖'; // 📖
     $('btn-mode').title = 'Torna alla lettura';
@@ -1749,35 +1753,36 @@ function findWordsIndex(hay, words, maxGap) {
   return w ? hay.indexOf(w) : -1;
 }
 
-// Prime parole di testo visibili nella lettura, sondando i punti appena
-// sotto la barra in alto (gestisce anche un paragrafo lungo a meta' schermo).
+// Prime parole di testo visibili nella lettura: si scorrono i nodi di testo
+// nell'ordine del documento e si prende il primo che sporge sotto la barra
+// in alto (misurato con i rettangoli dei Range, affidabile ovunque; il vecchio
+// caretRangeFromPoint dava risultati diversi da browser a browser).
 function readerVisibleWords() {
   try {
-    const { full, starts } = readerTextIndex();
-    const probe = (x, y) => {
-      let node, off;
-      if (document.caretRangeFromPoint) {
-        const r = document.caretRangeFromPoint(x, y);
-        if (!r) return null;
-        node = r.startContainer; off = r.startOffset;
-      } else if (document.caretPositionFromPoint) {
-        const p = document.caretPositionFromPoint(x, y);
-        if (!p) return null;
-        node = p.offsetNode; off = p.offset;
-      } else return null;
-      if (!node || node.nodeType !== Node.TEXT_NODE || !starts.has(node)) return null;
-      return starts.get(node) + off;
-    };
-    const rect = $('reader-content').getBoundingClientRect();
-    const xs = [rect.left + rect.width / 2, rect.left + 24, rect.left + rect.width - 24];
-    for (let y = 64; y < Math.min(window.innerHeight, 480); y += 32) {
-      for (const x of xs) {
-        const off = probe(x, y);
-        if (off != null) {
-          const words = normText(full.slice(off, off + 300)).match(/[\p{L}\p{N}]{3,}/gu);
-          if (words && words.length >= 2) return words;
+    const { nodes, full, starts } = readerTextIndex();
+    const bar = $('topbar');
+    const topY = (bar ? bar.getBoundingClientRect().bottom : 56) + 4;
+    const range = document.createRange();
+    for (const node of nodes) {
+      range.selectNodeContents(node);
+      const rect = range.getBoundingClientRect();
+      if (!rect || (!rect.height && !rect.width)) continue; // nodo non visibile
+      if (rect.bottom <= topY) continue;                    // tutto sopra la barra
+      let off = starts.get(node);
+      if (rect.top < topY && node.nodeValue.length > 1) {
+        // il nodo inizia sopra la barra: primo carattere visibile (ric. binaria)
+        let lo = 0, hi = node.nodeValue.length - 1;
+        while (lo < hi) {
+          const mid = (lo + hi) >> 1;
+          range.setStart(node, mid); range.setEnd(node, mid + 1);
+          if (range.getBoundingClientRect().bottom <= topY) lo = mid + 1; else hi = mid;
         }
+        off += lo;
       }
+      // full e' la concatenazione di tutti i nodi: 300 caratteri bastano
+      // anche se il nodo trovato e' corto (si prosegue nei successivi)
+      const words = normText(full.slice(off, off + 300)).match(/[\p{L}\p{N}]{3,}/gu);
+      if (words && words.length >= 2) return words;
     }
   } catch (e) {}
   return null;
@@ -1845,15 +1850,18 @@ function editorTopIndex() {
 }
 
 // Scorre l'editor fino a mostrare il carattere all'indice dato.
+// Restituisce lo scroll di destinazione (per poterlo ri-applicare dopo).
 function editorScrollToIndex(idx) {
   const ta = $('editor-area');
-  if (!ta.clientWidth) return;
+  if (!ta.clientWidth) return 0;
   const div = editorMirror(ta);
   div.textContent = ta.value.slice(0, Math.max(1, idx));
   const y = div.offsetHeight;
   div.remove();
   const line = parseFloat(getComputedStyle(ta).lineHeight) || 22;
-  ta.scrollTop = Math.max(0, y - 2 * line);
+  const top = Math.max(0, y - 2 * line);
+  ta.scrollTop = top;
+  return top;
 }
 
 // Prime parole "di prosa" (senza comandi LaTeX) dalla cima dell'editor:
@@ -1894,15 +1902,27 @@ function switchMode(mode) {
     words = editorVisibleWords(); // da chiamare PRIMA di nascondere l'editor
   }
   setMode(mode);
+  // Lo scroll va applicato DOPO che la nuova vista e' visibile; su alcuni
+  // browser (soprattutto su telefono) viene azzerato subito dopo il cambio,
+  // quindi poco piu' tardi si ricontrolla e, se serve, si ri-applica.
   if (mode === 'edit') {
+    const ta = $('editor-area');
     requestAnimationFrame(() => {
-      const idx = words ? findWordsIndex(normText($('editor-area').value), words, 200) : -1;
-      if (idx >= 0) editorScrollToIndex(idx);
-      else $('editor-area').scrollTop = state.editScroll || 0;
+      const idx = words ? findWordsIndex(normText(ta.value), words, 300) : -1;
+      const top = idx >= 0 ? editorScrollToIndex(idx) : (state.editScroll || 0);
+      if (idx < 0) ta.scrollTop = top;
+      setTimeout(() => {
+        if (Math.abs(ta.scrollTop - top) > 40) ta.scrollTop = top;
+      }, 250);
     });
   } else {
     requestAnimationFrame(() => {
       if (!words || !readerScrollToWords(words)) window.scrollTo(0, state.readScroll || 0);
+      const applied = window.scrollY;
+      setTimeout(() => {
+        if (Math.abs(window.scrollY - applied) > 4) return; // l'utente si e' gia' mosso
+        if (!words || !readerScrollToWords(words)) window.scrollTo(0, state.readScroll || 0);
+      }, 250);
     });
   }
 }
@@ -1957,6 +1977,162 @@ function restoreBookmark(bm) {
   };
   requestAnimationFrame(apply);
   if (bm.words) { setTimeout(apply, 700); setTimeout(apply, 2000); }
+}
+
+/* ---------------- Ricerca nel capitolo (modalita' lettura) ----------------
+ * Il pulsante 🔍 apre una riga di ricerca sotto la barra: mentre si scrive
+ * vengono evidenziate tutte le occorrenze nel capitolo (ignorando maiuscole
+ * e accenti) con il conteggio e i pulsanti ▲/▼ per saltare tra i risultati.
+ * Efficienza: il testo del capitolo viene indicizzato una sola volta per
+ * ricerca e le occorrenze si avvolgono dall'ultima alla prima, cosi' gli
+ * indici calcolati restano validi mentre i nodi vengono spezzati. */
+const search = { groups: [], idx: -1, capped: false };
+const SEARCH_MAX = 400; // limite di occorrenze evidenziate
+
+function searchClear() {
+  const root = $('reader-content');
+  root.querySelectorAll('mark.search-hl').forEach(m => {
+    const p = m.parentNode;
+    while (m.firstChild) p.insertBefore(m.firstChild, m);
+    p.removeChild(m);
+  });
+  root.normalize();
+  search.groups = []; search.idx = -1; search.capped = false;
+  searchUpdateCount();
+}
+
+function searchUpdateCount() {
+  const el = $('search-count');
+  if (!el) return;
+  const q = $('search-input').value.trim();
+  if (q.length < 2) { el.textContent = ''; return; }
+  const n = search.groups.length;
+  if (!n) { el.textContent = '0'; return; }
+  const tot = n + (search.capped ? '+' : '');
+  el.textContent = (search.idx >= 0 ? (search.idx + 1) + '/' : '') + tot;
+}
+
+function searchApply() {
+  searchClear();
+  const q = normText($('search-input').value.trim());
+  if (q.length < 2 || currentMode() !== 'read') { searchUpdateCount(); return; }
+  const { nodes, full, starts } = readerTextIndex();
+  // normalizza carattere per carattere tenendo la mappa verso gli indici
+  // originali (togliere gli accenti puo' cambiare la lunghezza)
+  let norm = ''; const map = [];
+  for (let i = 0; i < full.length; i++) {
+    const c = normText(full[i]);
+    for (let j = 0; j < c.length; j++) map.push(i);
+    norm += c;
+  }
+  // tutte le occorrenze, non sovrapposte
+  const ranges = [];
+  let from = 0;
+  while (ranges.length < SEARCH_MAX) {
+    const at = norm.indexOf(q, from);
+    if (at < 0) break;
+    ranges.push({ start: map[at], end: map[at + q.length - 1] + 1 });
+    from = at + q.length;
+  }
+  search.capped = ranges.length >= SEARCH_MAX;
+  if (!ranges.length) { searchUpdateCount(); return; }
+  // estremi originali dei nodi, per trovare con una ricerca binaria il nodo
+  // in cui inizia ogni occorrenza
+  const bounds = nodes.map(n => ({ node: n, start: starts.get(n), end: starts.get(n) + n.nodeValue.length }));
+  // dall'ultima occorrenza alla prima: gli splitText accorciano i nodi solo
+  // in coda, quindi gli indici delle occorrenze precedenti restano validi
+  const groups = [];
+  for (let k = ranges.length - 1; k >= 0; k--) {
+    const r = ranges[k];
+    const marks = [];
+    let lo = 0, hi = bounds.length - 1, first = bounds.length;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (bounds[mid].end > r.start) { first = mid; hi = mid - 1; } else lo = mid + 1;
+    }
+    for (let bi = first; bi < bounds.length && bounds[bi].start < r.end; bi++) {
+      const node = bounds[bi].node, ns = bounds[bi].start;
+      const s = Math.max(r.start, ns), e = Math.min(r.end, ns + node.nodeValue.length);
+      if (s >= e) continue;
+      let target = node;
+      if (e - ns < target.nodeValue.length) target.splitText(e - ns);
+      if (s - ns > 0) target = target.splitText(s - ns);
+      const mark = document.createElement('mark');
+      mark.className = 'search-hl';
+      target.parentNode.replaceChild(mark, target);
+      mark.appendChild(target);
+      marks.push(mark);
+    }
+    if (marks.length) groups.unshift(marks); // un'occorrenza puo' occupare piu' nodi
+  }
+  search.groups = groups;
+  searchUpdateCount();
+}
+
+function searchSetCurrent(i) {
+  document.querySelectorAll('mark.search-hl.search-current')
+    .forEach(m => m.classList.remove('search-current'));
+  search.idx = i;
+  const g = search.groups[i];
+  if (g) {
+    g.forEach(m => m.classList.add('search-current'));
+    g[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  searchUpdateCount();
+}
+
+function searchJump(delta) {
+  const n = search.groups.length;
+  if (!n) return;
+  const base = search.idx < 0 ? (delta > 0 ? -1 : 0) : search.idx;
+  searchSetCurrent((base + delta + n) % n);
+}
+
+// Dopo una nuova ricerca: va alla prima occorrenza da qui in giu'
+// (o alla prima del capitolo se sono tutte piu' in alto).
+function searchJumpNearest() {
+  if (!search.groups.length) return;
+  const bar = $('topbar');
+  const topY = bar ? bar.getBoundingClientRect().bottom : 56;
+  let i = search.groups.findIndex(g => g[0].getBoundingClientRect().top >= topY);
+  if (i < 0) i = 0;
+  searchSetCurrent(i);
+}
+
+function searchOpenBar() {
+  if (currentMode() === 'edit') switchMode('read');
+  show($('search-bar'));
+  const inp = $('search-input');
+  inp.focus();
+  try { inp.select(); } catch (e) {}
+  if (inp.value.trim().length >= 2) { searchApply(); searchJumpNearest(); }
+}
+
+function searchCloseBar() {
+  hide($('search-bar'));
+  searchClear();
+}
+
+function initSearchUi() {
+  const inp = $('search-input');
+  let t = null;
+  $('btn-search').onclick = () =>
+    $('search-bar').classList.contains('hidden') ? searchOpenBar() : searchCloseBar();
+  $('search-close').onclick = searchCloseBar;
+  $('search-prev').onclick = () => searchJump(-1);
+  $('search-next').onclick = () => searchJump(1);
+  inp.addEventListener('input', () => {
+    clearTimeout(t);
+    t = setTimeout(() => { searchApply(); searchJumpNearest(); }, 250);
+  });
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      clearTimeout(t);
+      if (!search.groups.length) { searchApply(); searchJumpNearest(); }
+      else searchJump(e.shiftKey ? -1 : 1);
+    } else if (e.key === 'Escape') searchCloseBar();
+  });
 }
 
 function initBookmark() {
@@ -2507,6 +2683,7 @@ initFontFamily();
 initTheme();
 initUi();
 initBookmark();
+initSearchUi();
 initNotesUi();
 initImgUi();
 initFormatUi();
