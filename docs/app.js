@@ -10,7 +10,8 @@ const LS = {
   fbProject: 'lf.fbProject', fbKey: 'lf.fbKey',
   noteAuthor: 'lf.noteAuthor', myNotes: 'lf.myNotes', notesCache: 'lf.notes:',
   theme: 'lf.theme', fontSize: 'lf.fontSize', fontFamily: 'lf.fontFamily',
-  bookmark: 'lf.bookmark'
+  bookmark: 'lf.bookmark',
+  ink: 'lf.ink:', penColor: 'lf.penColor', penWidth: 'lf.penWidth'
 };
 
 /* ---------------- localStorage: cache auto-pulente ----------------
@@ -1110,10 +1111,13 @@ function renderReader() {
         state.notes.map(n => '<li>' + n + '</li>').join('') + '</ol></div>';
     }
   }
+  // la copertina occupa tutta la pagina: il contenitore perde margini e limiti
+  $('reader-content').classList.toggle('is-cover', !!(state.current && state.current.cover));
   $('reader-content').innerHTML = out;
   hydrateImages();
   hydrateFootnotes();
   anchorAll();
+  inkMountLayer(); // livello delle annotazioni a penna sopra al testo
   updateNavButtons();
   // ricerca aperta: ri-evidenzia le occorrenze sul testo appena renderizzato
   search.groups = []; search.idx = -1;
@@ -1722,6 +1726,7 @@ function setMode(mode) {
   if (mode === 'edit') {
     if (typeof ttsCloseBar === 'function') ttsCloseBar();
     if (typeof searchCloseBar === 'function') searchCloseBar();
+    if (ink.active) inkSetActive(false); // la penna esiste solo in lettura
     hide($('reader')); show($('editor')); show($('btn-save'));
     $('btn-mode').textContent = '📖'; // 📖
     $('btn-mode').title = 'Torna alla lettura';
@@ -2245,9 +2250,18 @@ async function buildToc(mainTexText) {
   renderToc();
 }
 
+// Altezza reale della barra in alto, usata dal CSS per far occupare alla
+// copertina tutto lo schermo rimanente (varia con il safe-area dei telefoni).
+function setTopbarHeightVar() {
+  const h = $('topbar').offsetHeight;
+  if (h) document.documentElement.style.setProperty('--topbar-h', h + 'px');
+}
+window.addEventListener('resize', setTopbarHeightVar);
+
 async function startApp() {
   hide($('setup-screen'));
   show($('app-screen'));
+  setTopbarHeightVar();
   loading(true, 'Carico l’indice del libro…');
   try {
     await buildToc();
@@ -2611,6 +2625,7 @@ function ttsSkip(delta) {
 }
 
 function ttsOpenBar() {
+  if (ink.active) inkSetActive(false); // le due barre in basso non convivono
   ttsBuildQueue();
   ttsCollectVoices();
   show($('tts-bar'));
@@ -2662,6 +2677,301 @@ function initTts() {
   });
 }
 
+/* =========================================================================
+ * Penna: annotazioni a mano libera (solo in modalita' lettura)
+ * -------------------------------------------------------------------------
+ * Il pulsante 🖊️ attiva un livello SVG trasparente sopra al testo del
+ * capitolo: si puo' sottolineare, evidenziare o scrivere come su un foglio
+ * vero, scegliendo colore e spessore del tratto. La gomma cancella il
+ * tratto toccato, ↩️ annulla l'ultimo, 🗑️ pulisce il capitolo.
+ * I tratti si salvano sul dispositivo (localStorage, un elenco di punti per
+ * capitolo) e si riagganciano al testo: le coordinate sono relative alla
+ * colonna di lettura e vengono riscalate se cambia la larghezza.
+ * Con due dita si scorre la pagina anche a penna attiva.
+ * ========================================================================= */
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const ink = {
+  active: false,
+  tool: 'pen',        // 'pen' | 'hl' | 'eraser'
+  color: '#1c1c1c',
+  width: 3,
+  strokes: [],        // [{t, c, w, bw, pts:[[x,y],...]}] — bw: larghezza colonna al momento del tratto
+  chapter: null,
+  layer: null,        // l'elemento <svg>
+  drawing: null,      // tratto in corso {stroke, el, lx, ly} oppure {eraser:true}
+  pointers: new Map(),// dita/penne attive sul livello
+  scrollY: 0,         // baricentro per lo scorrimento a due dita
+  saveTimer: null
+};
+
+function inkKey() { return LS.ink + ink.chapter; }
+
+function inkLoad() {
+  ink.chapter = state.current ? state.current.path : null;
+  ink.strokes = [];
+  if (!ink.chapter) return;
+  try {
+    const d = JSON.parse(localStorage.getItem(inkKey()) || 'null');
+    if (d && Array.isArray(d.strokes)) ink.strokes = d.strokes;
+  } catch (e) {}
+}
+
+function inkSave() {
+  clearTimeout(ink.saveTimer);
+  ink.saveTimer = setTimeout(() => {
+    if (!ink.chapter) return;
+    if (!ink.strokes.length) { try { localStorage.removeItem(inkKey()); } catch (e) {} return; }
+    if (!lsSet(inkKey(), JSON.stringify({ v: 1, strokes: ink.strokes })))
+      toast('Spazio locale esaurito: le annotazioni a penna non sono state salvate', true);
+  }, 400);
+}
+
+// Curva morbida che passa per i punti (quadratiche verso i punti medi).
+function inkPathD(pts) {
+  if (pts.length === 1)
+    return `M${pts[0][0]} ${pts[0][1]} l0.1 0`;
+  let d = `M${pts[0][0]} ${pts[0][1]}`;
+  for (let i = 1; i < pts.length - 1; i++) {
+    const mx = (pts[i][0] + pts[i + 1][0]) / 2, my = (pts[i][1] + pts[i + 1][1]) / 2;
+    d += ` Q${pts[i][0]} ${pts[i][1]} ${Math.round(mx * 10) / 10} ${Math.round(my * 10) / 10}`;
+  }
+  const last = pts[pts.length - 1];
+  d += ` L${last[0]} ${last[1]}`;
+  return d;
+}
+
+function inkStrokeEl(s) {
+  const p = document.createElementNS(SVG_NS, 'path');
+  p.setAttribute('d', inkPathD(s.pts));
+  p.setAttribute('fill', 'none');
+  p.setAttribute('stroke', s.c);
+  p.setAttribute('stroke-width', s.w);
+  p.setAttribute('stroke-linecap', 'round');
+  p.setAttribute('stroke-linejoin', 'round');
+  if (s.t === 'hl') p.setAttribute('opacity', '0.4');
+  // il tratto e' stato disegnato con la colonna larga s.bw: se ora e' diversa
+  // (rotazione, altro dispositivo) si riscala tutto in proporzione
+  const cw = ink.layer ? ink.layer.clientWidth : 0;
+  const sc = s.bw && cw ? cw / s.bw : 1;
+  if (Math.abs(sc - 1) > 0.001) p.setAttribute('transform', `scale(${sc})`);
+  return p;
+}
+
+function inkRender() {
+  if (!ink.layer) return;
+  while (ink.layer.firstChild) ink.layer.removeChild(ink.layer.firstChild);
+  for (const s of ink.strokes) ink.layer.appendChild(inkStrokeEl(s));
+}
+
+// (Ri)crea il livello di disegno dentro al capitolo appena renderizzato.
+function inkMountLayer() {
+  ink.layer = null;
+  inkCancelStroke();
+  ink.pointers.clear();
+  if (!state.current || state.current.editorOnly) { inkLoad(); return; }
+  const svg = document.createElementNS(SVG_NS, 'svg');
+  svg.id = 'ink-layer';
+  svg.addEventListener('pointerdown', inkPointerDown);
+  svg.addEventListener('pointermove', inkPointerMove);
+  svg.addEventListener('pointerup', inkPointerUp);
+  svg.addEventListener('pointercancel', inkPointerUp);
+  $('reader-content').appendChild(svg);
+  ink.layer = svg;
+  inkLoad();
+  inkRender();
+}
+
+function inkPoint(e) {
+  const r = ink.layer.getBoundingClientRect();
+  return {
+    x: Math.round((e.clientX - r.left) * 10) / 10,
+    y: Math.round((e.clientY - r.top) * 10) / 10
+  };
+}
+
+function inkCentroidY() {
+  let y = 0;
+  for (const p of ink.pointers.values()) y += p.y;
+  return ink.pointers.size ? y / ink.pointers.size : 0;
+}
+
+function inkCancelStroke() {
+  if (ink.drawing && ink.drawing.el) ink.drawing.el.remove();
+  ink.drawing = null;
+}
+
+function inkPointerDown(e) {
+  if (!ink.active) return;
+  e.preventDefault();
+  ink.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (ink.pointers.size === 2) {
+    // secondo dito: si scorre la pagina, il tratto appena iniziato si annulla
+    inkCancelStroke();
+    ink.scrollY = inkCentroidY();
+    return;
+  }
+  if (ink.pointers.size > 2) return;
+  try { ink.layer.setPointerCapture(e.pointerId); } catch (err) {}
+  const p = inkPoint(e);
+  if (ink.tool === 'eraser') {
+    ink.drawing = { eraser: true };
+    inkEraseAt(p.x, p.y);
+    return;
+  }
+  const w = ink.tool === 'hl' ? Math.max(12, ink.width * 4) : ink.width;
+  const stroke = {
+    t: ink.tool, c: ink.color, w,
+    bw: Math.round(ink.layer.clientWidth), pts: [[p.x, p.y]]
+  };
+  ink.drawing = { stroke, el: inkStrokeEl(stroke), lx: p.x, ly: p.y };
+  ink.layer.appendChild(ink.drawing.el);
+}
+
+function inkPointerMove(e) {
+  if (!ink.active || !ink.pointers.has(e.pointerId)) return;
+  ink.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (ink.pointers.size >= 2) {
+    const y = inkCentroidY();
+    window.scrollBy(0, ink.scrollY - y);
+    ink.scrollY = inkCentroidY();
+    return;
+  }
+  if (!ink.drawing) return;
+  const p = inkPoint(e);
+  if (ink.drawing.eraser) { inkEraseAt(p.x, p.y); return; }
+  const dx = p.x - ink.drawing.lx, dy = p.y - ink.drawing.ly;
+  if (dx * dx + dy * dy < 4) return; // filtra il tremolio
+  ink.drawing.stroke.pts.push([p.x, p.y]);
+  ink.drawing.lx = p.x; ink.drawing.ly = p.y;
+  ink.drawing.el.setAttribute('d', inkPathD(ink.drawing.stroke.pts));
+}
+
+function inkPointerUp(e) {
+  ink.pointers.delete(e.pointerId);
+  if (!ink.drawing) return;
+  if (ink.drawing.eraser) {
+    if (!ink.pointers.size) ink.drawing = null;
+    return;
+  }
+  ink.strokes.push(ink.drawing.stroke);
+  ink.drawing = null;
+  inkSave();
+}
+
+/* ---- gomma: cancella il tratto che passa vicino al punto toccato ---- */
+function inkDistSeg2(px, py, a, b) {
+  const dx = b[0] - a[0], dy = b[1] - a[1];
+  const len2 = dx * dx + dy * dy;
+  let t = len2 ? ((px - a[0]) * dx + (py - a[1]) * dy) / len2 : 0;
+  t = Math.max(0, Math.min(1, t));
+  const qx = a[0] + t * dx - px, qy = a[1] + t * dy - py;
+  return qx * qx + qy * qy;
+}
+function inkStrokeHit(pts, x, y, r) {
+  const r2 = r * r;
+  if (pts.length === 1) {
+    const dx = pts[0][0] - x, dy = pts[0][1] - y;
+    return dx * dx + dy * dy <= r2;
+  }
+  for (let i = 0; i < pts.length - 1; i++)
+    if (inkDistSeg2(x, y, pts[i], pts[i + 1]) <= r2) return true;
+  return false;
+}
+function inkEraseAt(x, y) {
+  const cw = ink.layer.clientWidth;
+  let removed = false;
+  for (let i = ink.strokes.length - 1; i >= 0; i--) {
+    const s = ink.strokes[i];
+    const sc = s.bw && cw ? cw / s.bw : 1;
+    // il punto della gomma va riportato nello spazio originale del tratto
+    if (inkStrokeHit(s.pts, x / sc, y / sc, (14 + s.w / 2) / sc)) {
+      ink.strokes.splice(i, 1);
+      removed = true;
+    }
+  }
+  if (removed) { inkRender(); inkSave(); }
+}
+
+/* ---- attivazione e barra degli strumenti ---- */
+function inkSetActive(on) {
+  if (on && (!state.current || state.current.editorOnly)) return;
+  ink.active = !!on;
+  document.body.classList.toggle('ink-on', ink.active);
+  ink.active ? show($('pen-bar')) : hide($('pen-bar'));
+  $('btn-pen').classList.toggle('pen-active', ink.active);
+  if (!ink.active) { inkCancelStroke(); ink.pointers.clear(); }
+}
+
+function inkUpdateBarUi() {
+  const toolId = { pen: 'pen-tool-pen', hl: 'pen-tool-hl', eraser: 'pen-tool-eraser' }[ink.tool];
+  document.querySelectorAll('.pen-tool').forEach(b => b.classList.toggle('sel', b.id === toolId));
+  document.querySelectorAll('.pen-color').forEach(b =>
+    b.classList.toggle('sel', b.dataset.color === ink.color));
+  const dot = $('pen-preview-dot');
+  const d = Math.max(4, Math.min(24, ink.tool === 'hl' ? ink.width * 4 : ink.width * 2));
+  dot.style.width = dot.style.height = d + 'px';
+  dot.style.background = ink.color;
+  dot.style.opacity = ink.tool === 'hl' ? '0.5' : '1';
+}
+
+function initInk() {
+  ink.color = localStorage.getItem(LS.penColor) || '#1c1c1c';
+  const w = parseInt(localStorage.getItem(LS.penWidth), 10);
+  if (w >= 1 && w <= 10) ink.width = w;
+  $('pen-width').value = ink.width;
+
+  $('btn-pen').onclick = () => {
+    if (!ink.active && currentMode() === 'edit') switchMode('read');
+    if (!ink.active && !$('tts-bar').classList.contains('hidden')) ttsCloseBar();
+    inkSetActive(!ink.active);
+  };
+  $('pen-close').onclick = () => inkSetActive(false);
+
+  const setTool = t => { ink.tool = t; inkUpdateBarUi(); };
+  $('pen-tool-pen').onclick = () => setTool('pen');
+  $('pen-tool-hl').onclick = () => setTool('hl');
+  $('pen-tool-eraser').onclick = () => setTool('eraser');
+
+  document.querySelectorAll('.pen-color').forEach(b => {
+    b.onclick = () => {
+      ink.color = b.dataset.color;
+      lsSet(LS.penColor, ink.color);
+      if (ink.tool === 'eraser') ink.tool = 'pen'; // scegliere un colore riprende a scrivere
+      inkUpdateBarUi();
+    };
+  });
+
+  $('pen-width').oninput = () => {
+    ink.width = parseInt($('pen-width').value, 10) || 3;
+    lsSet(LS.penWidth, String(ink.width));
+    inkUpdateBarUi();
+  };
+
+  $('pen-undo').onclick = () => {
+    if (!ink.strokes.length) return;
+    ink.strokes.pop();
+    inkRender();
+    inkSave();
+  };
+  $('pen-clear').onclick = () => {
+    if (!ink.strokes.length) return;
+    if (!confirm('Cancelli tutte le annotazioni a penna di questo capitolo?')) return;
+    ink.strokes = [];
+    inkRender();
+    inkSave();
+    toast('Annotazioni del capitolo cancellate');
+  };
+
+  // ruotando lo schermo (o ridimensionando) i tratti si riscalano sulla colonna
+  let t = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(t);
+    t = setTimeout(inkRender, 200);
+  });
+
+  inkUpdateBarUi();
+}
+
 /* ---------------- Service worker ---------------- */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
@@ -2688,6 +2998,7 @@ initNotesUi();
 initImgUi();
 initFormatUi();
 initTts();
+initInk();
 // Il libro si apre subito (il repository e' pubblico, per leggere non serve nulla).
 // Le impostazioni/token compaiono solo per salvare o se il caricamento fallisce.
 startApp();
