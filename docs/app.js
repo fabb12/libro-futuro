@@ -2684,10 +2684,16 @@ function initTts() {
  * capitolo: si puo' sottolineare, evidenziare o scrivere come su un foglio
  * vero, scegliendo colore e spessore del tratto. La gomma cancella il
  * tratto toccato, ↩️ annulla l'ultimo, 🗑️ pulisce il capitolo.
- * I tratti si salvano sul dispositivo (localStorage, un elenco di punti per
- * capitolo) e si riagganciano al testo: le coordinate sono relative alla
- * colonna di lettura e vengono riscalate se cambia la larghezza.
- * Con due dita si scorre la pagina anche a penna attiva.
+ * Le annotazioni sono CONDIVISE come le note testuali: vengono salvate nel
+ * repository (file docs/ink-data.json, un elenco di tratti per capitolo) e
+ * tutti i lettori le vedono. Per scriverle nel file comune serve il token
+ * GitHub; senza token restano solo su questo dispositivo. La copia in
+ * localStorage fa da cache per l'offline e da coda per i tratti in attesa
+ * di condivisione (flag "p"); le cancellazioni di tratti gia' condivisi
+ * viaggiano come elenco di id (ink.deleted) e si applicano al file comune
+ * alla sincronizzazione successiva.
+ * Le coordinate sono relative alla colonna di lettura e vengono riscalate
+ * se cambia la larghezza. Con due dita si scorre la pagina a penna attiva.
  * ========================================================================= */
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const ink = {
@@ -2695,37 +2701,177 @@ const ink = {
   tool: 'pen',        // 'pen' | 'hl' | 'eraser'
   color: '#1c1c1c',
   width: 3,
-  strokes: [],        // [{t, c, w, bw, pts:[[x,y],...]}] — bw: larghezza colonna al momento del tratto
+  strokes: [],        // [{id, t, c, w, bw, pts:[[x,y],...], p?}] — bw: larghezza colonna; p: non ancora condiviso
+  deleted: new Set(), // id di tratti condivisi cancellati qui, da togliere dal file comune
   undo: [],           // cronologia per ↩️: tratti aggiunti E cancellazioni (gomma/🗑️)
   chapter: null,
   layer: null,        // l'elemento <svg>
-  drawing: null,      // tratto in corso {stroke, el, lx, ly} oppure {eraser:true}
+  drawing: null,      // tratto in corso {stroke, el, lx, ly} oppure {eraser:true, removed}
   pointers: new Map(),// dita/penne attive sul livello
   scrollY: 0,         // baricentro per lo scorrimento a due dita
-  saveTimer: null
+  saveTimer: null,
+  dirty: false,       // ci sono modifiche non ancora scritte nel file comune
+  syncTimer: null,
+  syncing: false,
+  localToast: false,  // avvisi mostrati al massimo una volta per sessione
+  sharedToast: false,
+  permToast: false
 };
+
+function inkNewId() {
+  return 's-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7);
+}
 
 function inkKey() { return LS.ink + ink.chapter; }
 
 function inkLoad() {
   ink.chapter = state.current ? state.current.path : null;
   ink.strokes = [];
+  ink.deleted = new Set();
   ink.undo = []; // la cronologia non attraversa i capitoli
+  ink.dirty = false;
+  clearTimeout(ink.syncTimer);
   if (!ink.chapter) return;
   try {
     const d = JSON.parse(localStorage.getItem(inkKey()) || 'null');
     if (d && Array.isArray(d.strokes)) ink.strokes = d.strokes;
+    if (d && Array.isArray(d.deleted)) ink.deleted = new Set(d.deleted);
   } catch (e) {}
+  // migrazione: i tratti salvati prima della condivisione non hanno id
+  for (const s of ink.strokes) if (!s.id) { s.id = inkNewId(); s.p = 1; }
+  // qualcosa e' rimasto in attesa (tratti non condivisi o cancellazioni)?
+  if (ink.strokes.some(s => s.p) || ink.deleted.size) inkMarkDirty();
 }
 
 function inkSave() {
   clearTimeout(ink.saveTimer);
   ink.saveTimer = setTimeout(() => {
     if (!ink.chapter) return;
-    if (!ink.strokes.length) { try { localStorage.removeItem(inkKey()); } catch (e) {} return; }
-    if (!lsSet(inkKey(), JSON.stringify({ v: 1, strokes: ink.strokes })))
+    if (!ink.strokes.length && !ink.deleted.size) {
+      try { localStorage.removeItem(inkKey()); } catch (e) {}
+      return;
+    }
+    if (!lsSet(inkKey(), JSON.stringify({ v: 1, strokes: ink.strokes, deleted: [...ink.deleted] })))
       toast('Spazio locale esaurito: le annotazioni a penna non sono state salvate', true);
   }, 400);
+}
+
+/* ---- condivisione: file docs/ink-data.json nel repository ---- */
+const INK_PATH = 'docs/ink-data.json';
+let repoInk = { sha: null, chapters: {}, loaded: false };
+
+async function repoInkLoad() {
+  try {
+    // cache no-store: come per le note, una risposta vecchia dell'API (60s)
+    // farebbe fallire con 409 la scrittura successiva
+    const j = await ghJson(`${API}/repos/${state.repo}/contents/${INK_PATH}?ref=${state.branch}`, { cache: 'no-store' });
+    let chapters = {};
+    try { chapters = JSON.parse(b64ToText(j.content)).chapters || {}; } catch (e) {}
+    repoInk = { sha: j.sha, chapters, loaded: true };
+  } catch (err) {
+    if (err.status !== 404) throw err;
+    repoInk = { sha: null, chapters: {}, loaded: true }; // il file non esiste ancora
+  }
+  return repoInk;
+}
+
+async function repoInkMutate(mutate, message) {
+  // stessa strategia di repoNotesMutate: applica la modifica all'ultima
+  // versione nota e, se qualcun altro ha salvato nel frattempo (409/422),
+  // ricarica e riprova da capo
+  let lastErr = null;
+  for (let attempt = 0; attempt < 4; attempt++) {
+    if (attempt > 0 || !repoInk.loaded) {
+      if (attempt > 0) await sleep(700 * attempt);
+      await repoInkLoad();
+    }
+    const chapters = mutate(JSON.parse(JSON.stringify(repoInk.chapters)));
+    const text = JSON.stringify({ v: 1, chapters }) + '\n';
+    try {
+      const res = await ghPutFile(INK_PATH, text, repoInk.sha || undefined, message);
+      repoInk = { sha: res.content.sha, chapters, loaded: true };
+      return chapters;
+    } catch (err) {
+      lastErr = err;
+      if (err.status !== 409 && err.status !== 422) throw err;
+    }
+  }
+  throw lastErr;
+}
+
+function inkMarkDirty() {
+  ink.dirty = true;
+  clearTimeout(ink.syncTimer);
+  ink.syncTimer = setTimeout(inkSync, 5000); // si condivide a raffiche, non a ogni tratto
+}
+
+// Scrive nel file comune i tratti in attesa e le cancellazioni del capitolo
+// corrente. Il merge lavora per id: non tocca i tratti degli altri lettori.
+async function inkSync() {
+  clearTimeout(ink.syncTimer);
+  if (!ink.dirty || !state.token || !ink.chapter || ink.syncing) return;
+  const chapter = ink.chapter;
+  const mine = ink.strokes.filter(s => s.p).map(s => {
+    const c = Object.assign({}, s); delete c.p; return c;
+  });
+  const deleted = new Set(ink.deleted);
+  ink.syncing = true;
+  try {
+    await repoInkMutate(chapters => {
+      const merged = (chapters[chapter] || []).filter(s => s && s.id && !deleted.has(s.id));
+      const have = new Set(merged.map(s => s.id));
+      for (const s of mine) if (!have.has(s.id)) merged.push(s);
+      if (merged.length) chapters[chapter] = merged;
+      else delete chapters[chapter];
+      return chapters;
+    }, 'Annotazioni a penna su ' + chapter);
+    if (ink.chapter === chapter) {
+      ink.dirty = false;
+      for (const s of ink.strokes) if (s.p) delete s.p;
+      for (const id of deleted) ink.deleted.delete(id);
+      inkSave();
+      if (!ink.sharedToast) {
+        ink.sharedToast = true;
+        toast('✓ Annotazioni a penna condivise con tutti i lettori');
+      }
+    }
+  } catch (e) {
+    if ((e.status === 401 || e.status === 403) && !ink.permToast) {
+      ink.permToast = true;
+      toast('Annotazioni a penna non condivise: il token non può scrivere sul repository', true);
+    }
+    // resta "dirty": nuovo tentativo piu' tardi o alla prossima occasione
+    if (ink.chapter === chapter) {
+      clearTimeout(ink.syncTimer);
+      ink.syncTimer = setTimeout(inkSync, 30000);
+    }
+  } finally {
+    ink.syncing = false;
+  }
+}
+
+// Aggiorna il capitolo con i tratti condivisi piu' recenti (in sottofondo,
+// dopo il montaggio): file comune, meno le cancellazioni locali, piu' i
+// tratti di questo dispositivo non ancora condivisi.
+async function inkRefreshShared() {
+  const chapter = ink.chapter;
+  if (!chapter) return;
+  try {
+    const { chapters } = await repoInkLoad();
+    if (ink.chapter !== chapter || !ink.layer) return; // capitolo cambiato nel frattempo
+    const raw = (chapters[chapter] || []).filter(s => s && s.id);
+    const rawIds = new Set(raw.map(s => s.id));
+    // i tombstone di tratti che nel file comune non ci sono piu' non servono
+    for (const id of [...ink.deleted]) if (!rawIds.has(id)) ink.deleted.delete(id);
+    const remote = raw.filter(s => !ink.deleted.has(s.id));
+    const remoteIds = new Set(remote.map(s => s.id));
+    const pending = ink.strokes.filter(s => s.p && !remoteIds.has(s.id));
+    ink.strokes = remote.concat(pending);
+    inkRender();
+    // il tratto eventualmente in corso di disegno non va perso
+    if (ink.drawing && ink.drawing.el) ink.layer.appendChild(ink.drawing.el);
+    inkSave();
+  } catch (e) { /* offline: si resta sulla copia locale */ }
 }
 
 // Curva morbida che passa per i punti (quadratiche verso i punti medi).
@@ -2767,6 +2913,7 @@ function inkRender() {
 
 // (Ri)crea il livello di disegno dentro al capitolo appena renderizzato.
 function inkMountLayer() {
+  if (ink.dirty) inkSync(); // il capitolo che si lascia si condivide subito
   ink.layer = null;
   inkCancelStroke();
   ink.pointers.clear();
@@ -2779,8 +2926,9 @@ function inkMountLayer() {
   svg.addEventListener('pointercancel', inkPointerUp);
   $('reader-content').appendChild(svg);
   ink.layer = svg;
-  inkLoad();
+  inkLoad();       // prima la copia locale (subito visibile, anche offline)
   inkRender();
+  inkRefreshShared(); // poi, in sottofondo, i tratti condivisi dagli altri
 }
 
 function inkPoint(e) {
@@ -2824,8 +2972,9 @@ function inkPointerDown(e) {
   }
   const w = ink.tool === 'hl' ? Math.max(12, ink.width * 4) : ink.width;
   const stroke = {
-    t: ink.tool, c: ink.color, w,
-    bw: Math.round(ink.layer.clientWidth), pts: [[p.x, p.y]]
+    id: inkNewId(), t: ink.tool, c: ink.color, w,
+    bw: Math.round(ink.layer.clientWidth), pts: [[p.x, p.y]],
+    p: 1 // in attesa di essere condiviso
   };
   ink.drawing = { stroke, el: inkStrokeEl(stroke), lx: p.x, ly: p.y };
   ink.layer.appendChild(ink.drawing.el);
@@ -2869,6 +3018,11 @@ function inkPointerUp(e) {
   inkPushUndo({ t: 'add', s: ink.drawing.stroke });
   ink.drawing = null;
   inkSave();
+  inkMarkDirty();
+  if (!state.token && !ink.localToast) {
+    ink.localToast = true;
+    toast('Annotazione salvata solo su questo dispositivo: per condividerla con tutti aggiungi il token GitHub nelle impostazioni');
+  }
 }
 
 /* ---- gomma: cancella il tratto che passa vicino al punto toccato ---- */
@@ -2901,10 +3055,12 @@ function inkEraseAt(x, y) {
       ink.strokes.splice(i, 1);
       // memorizza tratto e posizione: l'undo li rimette esattamente dov'erano
       if (ink.drawing && ink.drawing.removed) ink.drawing.removed.push({ i, s });
+      // un tratto gia' condiviso va tolto anche dal file comune
+      if (!s.p && s.id) ink.deleted.add(s.id);
       removed = true;
     }
   }
-  if (removed) { inkRender(); inkSave(); }
+  if (removed) { inkRender(); inkSave(); inkMarkDirty(); }
 }
 
 /* ---- attivazione e barra degli strumenti ---- */
@@ -2914,7 +3070,11 @@ function inkSetActive(on) {
   document.body.classList.toggle('ink-on', ink.active);
   ink.active ? show($('pen-bar')) : hide($('pen-bar'));
   $('btn-pen').classList.toggle('pen-active', ink.active);
-  if (!ink.active) { inkCancelStroke(); ink.pointers.clear(); }
+  if (!ink.active) {
+    inkCancelStroke();
+    ink.pointers.clear();
+    if (ink.dirty) inkSync(); // chiusa la penna, si condivide subito
+  }
 }
 
 function inkUpdateBarUi() {
@@ -2964,32 +3124,49 @@ function initInk() {
 
   // ↩️ annulla l'ultima azione, qualunque essa sia: un tratto disegnato viene
   // tolto, una passata di gomma (o il cestino) rimette i tratti cancellati.
+  // Un tratto rimesso al suo posto dall'undo torna "in attesa" (p) e perde
+  // l'eventuale tombstone: cosi' la sincronizzazione lo ricondivide anche se
+  // nel frattempo la sua cancellazione era gia' arrivata al file comune.
+  const restoreStroke = s => {
+    if (s.id) { ink.deleted.delete(s.id); s.p = 1; }
+  };
   $('pen-undo').onclick = () => {
     const a = ink.undo.pop();
     if (!a) return;
     if (a.t === 'add') {
-      const i = ink.strokes.indexOf(a.s);
-      if (i >= 0) ink.strokes.splice(i, 1);
+      // dopo un aggiornamento dal file comune l'oggetto puo' essere un altro:
+      // in quel caso il tratto si ritrova per id
+      let i = ink.strokes.indexOf(a.s);
+      if (i < 0 && a.s.id) i = ink.strokes.findIndex(s => s.id === a.s.id);
+      if (i >= 0) {
+        const s = ink.strokes.splice(i, 1)[0];
+        if (!s.p && s.id) ink.deleted.add(s.id); // era gia' condiviso: va tolto anche di la'
+      }
     } else if (a.t === 'erase') {
       // le rimozioni si riavvolgono in ordine inverso, ognuna al suo indice:
       // cosi' i tratti tornano esattamente dov'erano (anche come sovrapposizione)
       for (let k = a.ops.length - 1; k >= 0; k--) {
         const op = a.ops[k];
+        restoreStroke(op.s);
         ink.strokes.splice(Math.min(op.i, ink.strokes.length), 0, op.s);
       }
     } else if (a.t === 'clear') {
+      a.list.forEach(restoreStroke);
       ink.strokes = a.list.concat(ink.strokes);
     }
     inkRender();
     inkSave();
+    inkMarkDirty();
   };
   $('pen-clear').onclick = () => {
     if (!ink.strokes.length) return;
-    if (!confirm('Cancelli tutte le annotazioni a penna di questo capitolo?')) return;
+    if (!confirm('Cancelli tutte le annotazioni a penna di questo capitolo, per tutti i lettori?')) return;
     inkPushUndo({ t: 'clear', list: ink.strokes });
+    for (const s of ink.strokes) if (!s.p && s.id) ink.deleted.add(s.id);
     ink.strokes = [];
     inkRender();
     inkSave();
+    inkMarkDirty();
     toast('Annotazioni del capitolo cancellate (↩️ per ripristinarle)');
   };
 
@@ -2999,6 +3176,13 @@ function initInk() {
     clearTimeout(t);
     t = setTimeout(inkRender, 200);
   });
+
+  // lasciando l'app (cambio scheda, blocco schermo, chiusura) le annotazioni
+  // in attesa si scrivono subito nel file comune, senza aspettare il timer
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden' && ink.dirty) inkSync();
+  });
+  window.addEventListener('pagehide', () => { if (ink.dirty) inkSync(); });
 
   inkUpdateBarUi();
 }
