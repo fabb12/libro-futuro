@@ -62,7 +62,7 @@
 
       <details class="token-help notes-help">
         <summary>Note condivise (avanzato)</summary>
-        <p>Le note aggiunte al testo sono <b>condivise</b>: vengono salvate nel repository (file <code>docs/notes-data.json</code>) e <b>tutti i lettori le vedono</b>. Per salvarne di nuove serve il <b>token GitHub</b> qui sopra; senza token la nota resta solo su questo dispositivo.</p>
+        <p>Le note aggiunte al testo e le annotazioni a penna sono <b>condivise</b>: vengono salvate nel repository (file <code>docs/notes-data.json</code> e <code>docs/ink-data.json</code>) e <b>tutti i lettori le vedono</b>. Per salvarne di nuove serve il <b>token GitHub</b> qui sopra; senza token restano solo su questo dispositivo.</p>
         <p>In alternativa, se vuoi che anche lettori <b>senza token</b> possano scrivere note condivise, puoi usare un progetto gratuito <b>Firebase</b>:</p>
         <ol>
           <li>Crea un progetto su <b>console.firebase.google.com</b> e attiva <b>Firestore Database</b>.</li>
@@ -189,7 +189,7 @@
         <button id="pen-clear" class="iconbtn" title="Cancella tutti i tratti del capitolo">🗑️</button>
         <button id="pen-close" class="iconbtn" title="Chiudi la penna">✕</button>
       </div>
-      <div id="pen-hint">Disegna con un dito o con la penna · con due dita scorri la pagina · i tratti restano su questo dispositivo</div>
+      <div id="pen-hint">Disegna con un dito o con la penna · con due dita scorri la pagina · le annotazioni sono condivise con tutti i lettori (per salvarle serve il token)</div>
     </div>
 
     <!-- Note al testo: si aggiungono premendo due volte su una parola -->
@@ -281,6 +281,6 @@
   </div>
 
   <script src="notes-config.js"></script>
-  <script src="app.js?v=10"></script>
+  <script src="app.js?v=11"></script>
 </body>
 </html>
