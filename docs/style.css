@@ -80,6 +80,11 @@ button { font: inherit; cursor: pointer; }
   padding: 0 6px;
 }
 .topbar-actions { display: flex; }
+/* con la penna la barra ha piu' pulsanti: sui telefoni stretti si compattano */
+@media (max-width: 430px) {
+  #topbar .iconbtn { padding: 8px 6px; font-size: 20px; }
+}
+#btn-pen.pen-active { background: #5b4bd6; border-radius: 8px; }
 
 /* ===== Barra di ricerca nel capitolo ===== */
 #search-bar {
@@ -151,6 +156,7 @@ mark.search-hl.search-current {
 /* ===== Reader ===== */
 #reader { padding: 0 0 40px; }
 #reader-content {
+  position: relative; /* aggancia il livello delle annotazioni a penna */
   max-width: 680px; margin: 0 auto;
   padding: 24px 20px 20px;
   /* --font-scale: scelta dell'utente nelle impostazioni (app.js) */
@@ -200,21 +206,26 @@ mark.search-hl.search-current {
   font-family: -apple-system, system-ui, sans-serif;
 }
 
-/* ===== Copertina ===== */
+/* ===== Copertina =====
+   Occupa tutta la pagina: il contenitore di lettura (#reader-content.is-cover)
+   perde margini e larghezza massima e la copertina riempie lo schermo
+   sotto la barra (--topbar-h impostata da app.js). */
+#reader-content.is-cover { max-width: none; padding: 0; }
 .cover-page {
   position: relative;
-  max-width: 440px;
-  margin: 6px auto 24px;
+  margin: 0;
+  height: calc(100vh - var(--topbar-h, 52px));
+  height: calc(100dvh - var(--topbar-h, 52px));
+  min-height: 380px;
 }
 .cover-imgwrap {
   display: block;
-  aspect-ratio: 767 / 1024;   /* proporzioni di images/Cover.png */
+  height: 100%;
   background: #1a1a2e;
-  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 12px 36px rgba(0,0,0,.35);
 }
-.cover-imgwrap img {
+/* l'id serve a vincere su "#reader-content img { height:auto }" */
+#reader-content .cover-imgwrap img {
   width: 100%; height: 100%;
   object-fit: cover; display: block;
   border-radius: 0; box-shadow: none;
@@ -225,7 +236,9 @@ mark.search-hl.search-current {
   background: transparent; color: #999;
 }
 .cover-overlay {
-  position: absolute; top: 5%; left: 6%; right: 6%;
+  position: absolute; top: 6%; left: 50%;
+  transform: translateX(-50%);
+  width: min(88%, 620px);
   background: rgba(0,0,0,.45);
   color: #fff;
   border-radius: 12px;
@@ -234,7 +247,7 @@ mark.search-hl.search-current {
 }
 #reader-content .cover-overlay h1 {
   color: #fff;
-  font-size: clamp(17px, 5.2vw, 23px);
+  font-size: clamp(17px, 4.6vw, 30px);
   line-height: 1.3;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -244,13 +257,13 @@ mark.search-hl.search-current {
   margin: 0; text-align: center; hyphens: none;
 }
 #reader-content p.cover-subtitle {
-  font-size: clamp(12px, 3.4vw, 14px);
+  font-size: clamp(12px, 3.4vw, 17px);
   line-height: 1.5;
   margin: 0 0 12px;
 }
 #reader-content p.cover-author {
   font-family: -apple-system, system-ui, sans-serif;
-  font-size: clamp(12px, 3.4vw, 14px);
+  font-size: clamp(12px, 3.4vw, 16px);
   letter-spacing: .18em;
   text-transform: uppercase;
 }
@@ -493,6 +506,55 @@ body.dark #editor-bar .fmt-btn { color: #ddd; }
   padding: 8px 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 8px;
 }
 .notes-help code { background: #eee; padding: 1px 4px; border-radius: 4px; font-size: 12px; }
+
+/* ===== Penna: annotazioni a mano libera ===== */
+#ink-layer {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  overflow: visible;
+  pointer-events: none; /* a penna spenta i tocchi passano al testo */
+  z-index: 5;
+}
+body.ink-on #ink-layer {
+  pointer-events: auto;
+  touch-action: none; /* il dito disegna; per scorrere si usano due dita */
+  cursor: crosshair;
+}
+
+#pen-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+  background: #1a1a2e; color: #fff;
+  padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+  box-shadow: 0 -4px 20px rgba(0,0,0,.3);
+  font-family: -apple-system, system-ui, sans-serif;
+}
+.pen-row {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-bottom: 6px;
+}
+#pen-bar .iconbtn { color: #fff; font-size: 20px; padding: 6px 8px; border-radius: 8px; }
+#pen-bar .pen-tool.sel { background: #5b4bd6; }
+.pen-sep { width: 1px; height: 24px; background: #44446a; margin: 0 4px; }
+.pen-color {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 2px solid transparent; background: var(--c);
+  padding: 0; flex: 0 0 auto;
+}
+.pen-color.sel { border-color: #fff; box-shadow: 0 0 0 2px #5b4bd6; }
+.pen-width-label {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: #aaa;
+}
+#pen-width { width: min(150px, 34vw); accent-color: #5b4bd6; }
+#pen-preview {
+  width: 28px; height: 28px; flex: 0 0 auto;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #2a2a45; border-radius: 6px;
+}
+#pen-preview-dot { display: block; border-radius: 50%; background: #1c1c1c; }
+#pen-hint { text-align: center; font-size: 11px; color: #888; }
+body.ink-on #reader { padding-bottom: 170px; }
+body.ink-on #chapter-nav { padding-bottom: 170px; }
 
 /* ===== Toast / loading ===== */
 #toast {

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=Source+Sans+3:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=8">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -93,6 +93,7 @@
         <button id="btn-search" class="iconbtn" title="Cerca nel capitolo">🔍</button>
         <button id="btn-theme" class="iconbtn" title="Lettura notturna">🌙</button>
         <button id="btn-tts" class="iconbtn" title="Ascolta il capitolo">🔊</button>
+        <button id="btn-pen" class="iconbtn" title="Penna: sottolinea e scrivi sul testo">🖊️</button>
         <button id="btn-mode" class="iconbtn" title="Modifica">✏️</button>
         <button id="btn-save" class="iconbtn hidden" title="Salva sul repository">💾</button>
       </div>
@@ -164,6 +165,31 @@
         </label>
       </div>
       <div id="tts-hint">Tocca un paragrafo per iniziare a leggere da lì</div>
+    </div>
+
+    <!-- Barra della penna: annotazioni a mano libera in modalità lettura -->
+    <div id="pen-bar" class="hidden">
+      <div class="pen-row">
+        <button id="pen-tool-pen" class="iconbtn pen-tool sel" title="Penna">✒️</button>
+        <button id="pen-tool-hl" class="iconbtn pen-tool" title="Evidenziatore">🖍️</button>
+        <button id="pen-tool-eraser" class="iconbtn pen-tool" title="Gomma: tocca un tratto per cancellarlo">🧽</button>
+        <span class="pen-sep"></span>
+        <button class="pen-color" data-color="#1c1c1c" title="Nero" style="--c:#1c1c1c"></button>
+        <button class="pen-color" data-color="#d62828" title="Rosso" style="--c:#d62828"></button>
+        <button class="pen-color" data-color="#1d4ed8" title="Blu" style="--c:#1d4ed8"></button>
+        <button class="pen-color" data-color="#15803d" title="Verde" style="--c:#15803d"></button>
+        <button class="pen-color" data-color="#e8b800" title="Giallo" style="--c:#e8b800"></button>
+      </div>
+      <div class="pen-row">
+        <label class="pen-width-label">Tratto
+          <input id="pen-width" type="range" min="1" max="10" step="1" value="3" title="Spessore del tratto">
+        </label>
+        <span id="pen-preview"><span id="pen-preview-dot"></span></span>
+        <button id="pen-undo" class="iconbtn" title="Annulla l'ultimo tratto">↩️</button>
+        <button id="pen-clear" class="iconbtn" title="Cancella tutti i tratti del capitolo">🗑️</button>
+        <button id="pen-close" class="iconbtn" title="Chiudi la penna">✕</button>
+      </div>
+      <div id="pen-hint">Disegna con un dito o con la penna · con due dita scorri la pagina · i tratti restano su questo dispositivo</div>
     </div>
 
     <!-- Note al testo: si aggiungono premendo due volte su una parola -->
@@ -255,6 +281,6 @@
   </div>
 
   <script src="notes-config.js"></script>
-  <script src="app.js?v=8"></script>
+  <script src="app.js?v=9"></script>
 </body>
 </html>
