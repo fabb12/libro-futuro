@@ -2696,6 +2696,7 @@ const ink = {
   color: '#1c1c1c',
   width: 3,
   strokes: [],        // [{t, c, w, bw, pts:[[x,y],...]}] — bw: larghezza colonna al momento del tratto
+  undo: [],           // cronologia per ↩️: tratti aggiunti E cancellazioni (gomma/🗑️)
   chapter: null,
   layer: null,        // l'elemento <svg>
   drawing: null,      // tratto in corso {stroke, el, lx, ly} oppure {eraser:true}
@@ -2709,6 +2710,7 @@ function inkKey() { return LS.ink + ink.chapter; }
 function inkLoad() {
   ink.chapter = state.current ? state.current.path : null;
   ink.strokes = [];
+  ink.undo = []; // la cronologia non attraversa i capitoli
   if (!ink.chapter) return;
   try {
     const d = JSON.parse(localStorage.getItem(inkKey()) || 'null');
@@ -2814,7 +2816,9 @@ function inkPointerDown(e) {
   try { ink.layer.setPointerCapture(e.pointerId); } catch (err) {}
   const p = inkPoint(e);
   if (ink.tool === 'eraser') {
-    ink.drawing = { eraser: true };
+    // "removed" raccoglie i tratti tolti in questa passata di gomma:
+    // al rilascio diventano un'unica voce della cronologia, annullabile con ↩️
+    ink.drawing = { eraser: true, removed: [] };
     inkEraseAt(p.x, p.y);
     return;
   }
@@ -2846,14 +2850,23 @@ function inkPointerMove(e) {
   ink.drawing.el.setAttribute('d', inkPathD(ink.drawing.stroke.pts));
 }
 
+// Aggiunge una voce alla cronologia dell'undo (limitata per non crescere all'infinito).
+function inkPushUndo(action) {
+  ink.undo.push(action);
+  if (ink.undo.length > 50) ink.undo.shift();
+}
+
 function inkPointerUp(e) {
   ink.pointers.delete(e.pointerId);
   if (!ink.drawing) return;
   if (ink.drawing.eraser) {
-    if (!ink.pointers.size) ink.drawing = null;
+    if (ink.pointers.size) return;
+    if (ink.drawing.removed.length) inkPushUndo({ t: 'erase', ops: ink.drawing.removed });
+    ink.drawing = null;
     return;
   }
   ink.strokes.push(ink.drawing.stroke);
+  inkPushUndo({ t: 'add', s: ink.drawing.stroke });
   ink.drawing = null;
   inkSave();
 }
@@ -2886,6 +2899,8 @@ function inkEraseAt(x, y) {
     // il punto della gomma va riportato nello spazio originale del tratto
     if (inkStrokeHit(s.pts, x / sc, y / sc, (14 + s.w / 2) / sc)) {
       ink.strokes.splice(i, 1);
+      // memorizza tratto e posizione: l'undo li rimette esattamente dov'erano
+      if (ink.drawing && ink.drawing.removed) ink.drawing.removed.push({ i, s });
       removed = true;
     }
   }
@@ -2947,19 +2962,35 @@ function initInk() {
     inkUpdateBarUi();
   };
 
+  // ↩️ annulla l'ultima azione, qualunque essa sia: un tratto disegnato viene
+  // tolto, una passata di gomma (o il cestino) rimette i tratti cancellati.
   $('pen-undo').onclick = () => {
-    if (!ink.strokes.length) return;
-    ink.strokes.pop();
+    const a = ink.undo.pop();
+    if (!a) return;
+    if (a.t === 'add') {
+      const i = ink.strokes.indexOf(a.s);
+      if (i >= 0) ink.strokes.splice(i, 1);
+    } else if (a.t === 'erase') {
+      // le rimozioni si riavvolgono in ordine inverso, ognuna al suo indice:
+      // cosi' i tratti tornano esattamente dov'erano (anche come sovrapposizione)
+      for (let k = a.ops.length - 1; k >= 0; k--) {
+        const op = a.ops[k];
+        ink.strokes.splice(Math.min(op.i, ink.strokes.length), 0, op.s);
+      }
+    } else if (a.t === 'clear') {
+      ink.strokes = a.list.concat(ink.strokes);
+    }
     inkRender();
     inkSave();
   };
   $('pen-clear').onclick = () => {
     if (!ink.strokes.length) return;
     if (!confirm('Cancelli tutte le annotazioni a penna di questo capitolo?')) return;
+    inkPushUndo({ t: 'clear', list: ink.strokes });
     ink.strokes = [];
     inkRender();
     inkSave();
-    toast('Annotazioni del capitolo cancellate');
+    toast('Annotazioni del capitolo cancellate (↩️ per ripristinarle)');
   };
 
   // ruotando lo schermo (o ridimensionando) i tratti si riscalano sulla colonna
