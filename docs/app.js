@@ -15,24 +15,49 @@ const LS = {
 };
 
 /* ---------------- localStorage: cache auto-pulente ----------------
- * Le copie locali dei capitoli (lf.file:*) e delle note (lf.notes:*)
- * possono saturare la quota (~5 MB) e far fallire anche le scritture
- * piccole (es. lf.titles). Rimedi:
+ * Le copie locali dei capitoli (lf.file:*), delle note (lf.notes:*) e dei
+ * tratti a penna (lf.ink:*) possono saturare la quota (~5 MB) e far fallire
+ * anche le scritture piccole (es. lf.titles). Rimedi:
  *  - purgeLocalCache() elimina solo le chiavi di cache, mai config/token;
- *  - lsSet() riprova la scrittura dopo una pulizia se la quota è piena;
+ *    con deep=true sfoltisce anche lf.ink:*, tenendo solo i tratti in
+ *    attesa di condivisione (flag "p") e le cancellazioni in coda — il
+ *    resto vive in docs/ink-data.json e si ricarica alla prossima apertura;
+ *  - lsSet() riprova la scrittura dopo una pulizia se la quota è piena,
+ *    prima leggera e poi profonda;
  *  - una pulizia una-tantum all'avvio libera lo spazio già saturo. */
-function purgeLocalCache() {
+function purgeLocalCache(deep) {
+  // le versioni ridotte si riscrivono solo a pulizia finita, quando lo
+  // spazio liberato da TUTTE le chiavi eliminate e' davvero disponibile
+  const rewrites = [];
   for (const k of Object.keys(localStorage)) {
     if (k.startsWith(LS.fileCache) || k.startsWith(LS.notesCache)) {
       try { localStorage.removeItem(k); } catch (e) {}
+    } else if (deep && k.startsWith(LS.ink)) {
+      let d = null;
+      try { d = JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) {}
+      const strokes = (d && Array.isArray(d.strokes)) ? d.strokes : null;
+      const pending = strokes ? strokes.filter(s => s && s.p) : [];
+      const deleted = (d && Array.isArray(d.deleted)) ? d.deleted : [];
+      if (!strokes || (!pending.length && !deleted.length)) {
+        try { localStorage.removeItem(k); } catch (e) {}
+      } else if (pending.length < strokes.length) {
+        try { localStorage.removeItem(k); } catch (e) {}
+        rewrites.push([k, JSON.stringify({ v: 1, strokes: pending, deleted })]);
+      }
     }
+  }
+  for (const [k, v] of rewrites) {
+    try { localStorage.setItem(k, v); } catch (e) {}
   }
 }
 function lsSet(key, value) {
   try { localStorage.setItem(key, value); return true; }
   catch (e) {
     try { purgeLocalCache(); localStorage.setItem(key, value); return true; }
-    catch (e2) { return false; }
+    catch (e2) {
+      try { purgeLocalCache(true); localStorage.setItem(key, value); return true; }
+      catch (e3) { return false; }
+    }
   }
 }
 try {
