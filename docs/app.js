@@ -1108,9 +1108,13 @@ async function openChapter(entry, keepMode) {
 
 function renderCover() {
   const m = state.meta || {};
+  // l'overlay sta DENTRO al riquadro dell'immagine: così resta allineato alla
+  // copertina anche quando questa e' piu' stretta dello schermo
   let html = '<div class="cover-page">' +
-    '<span class="cover-imgwrap"><img data-imgpath="Cover.png" alt="Copertina del libro">' +
-    '<span class="img-loading">Carico la copertina…</span></span>' +
+    // width/height danno le proporzioni prima del caricamento, così il riquadro
+    // non collassa e l'overlay resta al posto giusto
+    '<div class="cover-imgwrap"><img data-imgpath="Cover.png" width="767" height="1024" alt="Copertina del libro">' +
+    '<span class="img-loading">Carico la copertina…</span>' +
     '<div class="cover-overlay">' +
     '<h1 class="cover-title">' + escHtml(m.title || 'Il mio libro') + '</h1>';
   if (m.subtitleA || m.subtitleB) {
@@ -1118,7 +1122,7 @@ function renderCover() {
       (m.subtitleA && m.subtitleB ? '<br>' : '') + escHtml(m.subtitleB || '') + '</em></p>';
   }
   if (m.author) html += '<p class="cover-author">' + escHtml(m.author) + '</p>';
-  html += '</div></div>';
+  html += '</div></div></div>';
   return html;
 }
 
