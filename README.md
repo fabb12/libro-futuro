@@ -1,6 +1,6 @@
 # Memorie di un futuro anteriore
 
-Libro in LaTeX di Fabio Fargnoli. I capitoli sono in `content/`, le immagini in `images/`, la struttura del libro in `main.tex`.
+Libro in LaTeX di F. I capitoli sono in `content/`, le immagini in `images/`, la struttura del libro in `main.tex`.
 
 ## 📱 Web app (PWA) per leggere e modificare il libro
 
