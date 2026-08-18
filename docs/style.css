@@ -479,7 +479,7 @@ mark.note-hl.note-flash {
   font-family: Georgia, 'Times New Roman', serif; font-size: 16px;
   line-height: 1.2; padding: 2px 9px; color: #444;
 }
-#editor-bar #btn-bold { margin-left: auto; }
+#editor-bar #btn-copy { margin-left: auto; }
 #editor-bar .img-btn { font-size: 19px; padding: 2px 8px; }
 body.dark #editor-bar .fmt-btn { color: #ddd; }
 .img-file-label { display: inline-block; margin-bottom: 12px; }
