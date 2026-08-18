@@ -2222,6 +2222,26 @@ function initFormatUi() {
   };
   bind('btn-bold', 'textbf');
   bind('btn-italic', 'textit');
+
+  const copyBtn = $('btn-copy');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      const ta = $('editor-area');
+      if (!ta) return;
+      ta.focus();
+      ta.select();
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(ta.value);
+        } else {
+          document.execCommand('copy');
+        }
+        toast('✓ Testo copiato negli appunti');
+      } catch (err) {
+        toast('Impossibile copiare il testo negli appunti', true);
+      }
+    });
+  }
 }
 
 async function saveFile() {
