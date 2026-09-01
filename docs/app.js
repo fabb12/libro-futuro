@@ -11,7 +11,8 @@ const LS = {
   noteAuthor: 'lf.noteAuthor', myNotes: 'lf.myNotes', notesCache: 'lf.notes:',
   theme: 'lf.theme', fontSize: 'lf.fontSize', fontFamily: 'lf.fontFamily',
   bookmark: 'lf.bookmark',
-  ink: 'lf.ink:', penColor: 'lf.penColor', penWidth: 'lf.penWidth'
+  ink: 'lf.ink:', penColor: 'lf.penColor', penWidth: 'lf.penWidth',
+  aiUrl: 'lf.aiUrl', aiModel: 'lf.aiModel', aiKey: 'lf.aiKey'
 };
 
 /* ---------------- localStorage: cache auto-pulente ----------------
@@ -2144,7 +2145,115 @@ function searchOpenBar() {
 
 function searchCloseBar() {
   hide($('search-bar'));
+  hide($('search-results'));
+  hide($('search-status'));
   searchClear();
+}
+
+function searchPlainLatex(text) {
+  return latexAccentsToText(text)
+    .replace(/%.*$/gm, ' ')
+    .replace(/\\(?:includegraphics|label|index|cite)\*?(?:\[[^\]]*\])?\{[^}]*\}/g, ' ')
+    .replace(/\\[a-zA-Z@]+\*?(?:\[[^\]]*\])?/g, ' ')
+    .replace(/[{}~]/g, ' ')
+    .replace(/\s+/g, ' ').trim();
+}
+
+async function conceptTerms(query) {
+  const key = localStorage.getItem(LS.aiKey) || '';
+  const base = (localStorage.getItem(LS.aiUrl) || 'https://api.openai.com/v1').replace(/\/$/, '');
+  const model = localStorage.getItem(LS.aiModel) || 'gpt-4o-mini';
+  if (!key) throw new Error('Inserisci la chiave API AI nelle Impostazioni / esci.');
+  const res = await fetch(base + '/chat/completions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
+    body: JSON.stringify({
+      model, temperature: 0,
+      messages: [
+        { role: 'system', content: 'Espandi un concetto per cercarlo in un libro italiano. Rispondi solo con un array JSON di massimo 12 parole o brevi espressioni italiane pertinenti, includendo il testo originale.' },
+        { role: 'user', content: query }
+      ]
+    })
+  });
+  if (!res.ok) {
+    let detail = ''; try { detail = (await res.json()).error.message; } catch (e) {}
+    throw new Error('API AI: ' + (detail || res.status + ' ' + res.statusText));
+  }
+  const data = await res.json();
+  const raw = data.choices && data.choices[0] && data.choices[0].message.content;
+  const match = String(raw || '').match(/\[[\s\S]*\]/);
+  if (!match) throw new Error('L’API AI non ha restituito termini utilizzabili.');
+  let terms;
+  try { terms = JSON.parse(match[0]); } catch (e) { throw new Error('Risposta AI non valida. Riprova.'); }
+  return [...new Set([query, ...terms].map(x => String(x).trim()).filter(x => x.length > 1))].slice(0, 13);
+}
+
+function termOccurrences(text, terms, wholeWord) {
+  const normalized = normText(text); const found = [];
+  for (const term of terms) {
+    const needle = normText(term); let from = 0;
+    while (needle && found.length < 3) {
+      const at = normalized.indexOf(needle, from);
+      if (at < 0) break;
+      const word = c => !!c && /[a-z0-9à-öø-ÿ]/i.test(c);
+      if (!wholeWord || (!word(normalized[at - 1]) && !word(normalized[at + needle.length])))
+        found.push({ at, length: needle.length, term });
+      from = at + Math.max(needle.length, 1);
+    }
+    if (found.length >= 3) break;
+  }
+  return found.sort((a, b) => a.at - b.at);
+}
+
+function resultSnippet(text, hit) {
+  const start = Math.max(0, hit.at - 75), end = Math.min(text.length, hit.at + hit.length + 105);
+  return (start ? '…' : '') + escHtml(text.slice(start, hit.at)) + '<mark>' +
+    escHtml(text.slice(hit.at, hit.at + hit.length)) + '</mark>' +
+    escHtml(text.slice(hit.at + hit.length, end)) + (end < text.length ? '…' : '');
+}
+
+async function runBookSearch() {
+  const query = $('search-input').value.trim();
+  if (query.length < 2) { toast('Scrivi almeno due caratteri', true); return; }
+  const status = $('search-status'), box = $('search-results'), run = $('search-run');
+  run.disabled = true; show(status); hide(box); status.className = ''; status.textContent = 'Preparo la ricerca…';
+  try {
+    const kind = $('search-kind').value;
+    const terms = kind === 'concept' ? await conceptTerms(query) : [query];
+    if (kind === 'concept') status.textContent = 'Concetti collegati: ' + terms.join(', ') + '. Cerco nel testo…';
+    else status.textContent = 'Cerco nel testo del libro…';
+    const entries = $('search-scope').value === 'chapter'
+      ? [state.current].filter(e => e && !e.editorOnly)
+      : state.toc.filter(e => !e.editorOnly && !e.cover);
+    let cursor = 0; const results = [];
+    async function worker() {
+      while (cursor < entries.length) {
+        const entry = entries[cursor++];
+        const raw = state.current === entry ? state.fileText : (await ghGetFile(entry.path)).text;
+        const plain = searchPlainLatex(raw);
+        for (const hit of termOccurrences(plain, terms, kind === 'word'))
+          results.push({ entry, plain, hit });
+      }
+    }
+    await Promise.all(Array.from({ length: Math.min(4, entries.length) }, worker));
+    results.sort((a, b) => entries.indexOf(a.entry) - entries.indexOf(b.entry) || a.hit.at - b.hit.at);
+    box.innerHTML = '';
+    for (const item of results) {
+      const b = document.createElement('button'); b.className = 'search-result';
+      b.innerHTML = '<span class="search-result-title">' + escHtml(item.entry.title) + '</span>' +
+        '<span class="search-result-snippet">' + resultSnippet(item.plain, item.hit) + '</span>';
+      b.onclick = async () => {
+        $('search-scope').value = 'chapter'; $('search-input').value = item.hit.term;
+        hide(box); await openChapter(item.entry);
+        show($('search-bar')); searchApply(); searchJumpNearest();
+      };
+      box.appendChild(b);
+    }
+    status.textContent = results.length ? results.length + ' risultati' + (results.length >= entries.length * 3 ? ' (mostrati i primi 3 per capitolo)' : '') : 'Nessun risultato.';
+    if (results.length) show(box); else hide(box);
+  } catch (e) {
+    status.className = 'err'; status.textContent = e.message;
+  } finally { run.disabled = false; }
 }
 
 function initSearchUi() {
@@ -2153,20 +2262,25 @@ function initSearchUi() {
   $('btn-search').onclick = () =>
     $('search-bar').classList.contains('hidden') ? searchOpenBar() : searchCloseBar();
   $('search-close').onclick = searchCloseBar;
+  $('search-run').onclick = runBookSearch;
   $('search-prev').onclick = () => searchJump(-1);
   $('search-next').onclick = () => searchJump(1);
   inp.addEventListener('input', () => {
     clearTimeout(t);
-    t = setTimeout(() => { searchApply(); searchJumpNearest(); }, 250);
+    if ($('search-scope').value === 'chapter' && $('search-kind').value !== 'concept')
+      t = setTimeout(() => { searchApply(); searchJumpNearest(); }, 250);
   });
   inp.addEventListener('keydown', e => {
     if (e.key === 'Enter') {
       e.preventDefault();
       clearTimeout(t);
-      if (!search.groups.length) { searchApply(); searchJumpNearest(); }
+      if ($('search-scope').value === 'book' || $('search-kind').value === 'concept') runBookSearch();
+      else if (!search.groups.length) { searchApply(); searchJumpNearest(); }
       else searchJump(e.shiftKey ? -1 : 1);
     } else if (e.key === 'Escape') searchCloseBar();
   });
+  $('search-scope').onchange = () => { searchClear(); hide($('search-results')); hide($('search-status')); };
+  $('search-kind').onchange = () => { searchClear(); hide($('search-results')); hide($('search-status')); };
 }
 
 function initBookmark() {
@@ -2334,6 +2448,9 @@ function initSetupScreen(hint) {
   $('cfg-repo').value = state.repo;
   $('cfg-branch').value = state.branch;
   $('cfg-token').value = state.token;
+  $('cfg-ai-url').value = localStorage.getItem(LS.aiUrl) || 'https://api.openai.com/v1';
+  $('cfg-ai-model').value = localStorage.getItem(LS.aiModel) || 'gpt-4o-mini';
+  $('cfg-ai-key').value = localStorage.getItem(LS.aiKey) || '';
   const nc = (window.LF_NOTES_CONFIG && window.LF_NOTES_CONFIG.firestore) || {};
   $('cfg-fb-project').value = localStorage.getItem(LS.fbProject) || nc.projectId || '';
   $('cfg-fb-key').value = localStorage.getItem(LS.fbKey) || nc.apiKey || '';
@@ -2369,6 +2486,9 @@ function initSetupScreen(hint) {
     lsSet(LS.repo, state.repo);
     lsSet(LS.branch, state.branch);
     lsSet(LS.token, state.token);
+    lsSet(LS.aiUrl, $('cfg-ai-url').value.trim().replace(/\/$/, ''));
+    lsSet(LS.aiModel, $('cfg-ai-model').value.trim());
+    lsSet(LS.aiKey, $('cfg-ai-key').value.trim());
     lsSet(LS.fbProject, $('cfg-fb-project').value.trim());
     lsSet(LS.fbKey, $('cfg-fb-key').value.trim());
     hide($('setup-error'));
