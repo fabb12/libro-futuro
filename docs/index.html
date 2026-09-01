@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=Source+Sans+3:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="stylesheet" href="style.css?v=10">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -78,6 +78,20 @@
         <p>Per attivarle <b>per tutti</b> in modo permanente, gli stessi due valori vanno messi nel file <code>docs/notes-config.js</code> del repository.</p>
       </details>
 
+      <details class="token-help ai-help">
+        <summary>Ricerca per concetto (AI)</summary>
+        <p>Per cercare idee affini, inserisci una chiave per un'API compatibile con OpenAI. La chiave resta solo su questo dispositivo ed è usata esclusivamente quando scegli <b>Concetto</b>.</p>
+        <label>Indirizzo API
+          <input id="cfg-ai-url" type="url" autocapitalize="off" autocorrect="off" placeholder="https://api.openai.com/v1">
+        </label>
+        <label>Modello
+          <input id="cfg-ai-model" type="text" autocapitalize="off" autocorrect="off" placeholder="gpt-4o-mini">
+        </label>
+        <label>Chiave API AI
+          <input id="cfg-ai-key" type="password" autocapitalize="off" autocomplete="off" placeholder="sk-…">
+        </label>
+      </details>
+
       <button id="btn-connect" class="btn primary">Salva e continua</button>
       <p id="setup-error" class="error hidden"></p>
     </div>
@@ -99,14 +113,28 @@
       </div>
     </header>
 
-    <!-- Barra di ricerca nel capitolo (modalità lettura) -->
+    <!-- Ricerca nel capitolo o nell'intero libro -->
     <div id="search-bar" class="hidden">
-      <input id="search-input" type="search" placeholder="Cerca nel capitolo…"
-             autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false">
-      <span id="search-count"></span>
-      <button id="search-prev" class="iconbtn" title="Risultato precedente">▲</button>
-      <button id="search-next" class="iconbtn" title="Risultato successivo">▼</button>
-      <button id="search-close" class="iconbtn" title="Chiudi la ricerca">✕</button>
+      <div class="search-controls">
+        <select id="search-kind" title="Tipo di ricerca">
+          <option value="word">Parola</option>
+          <option value="phrase">Frase esatta</option>
+          <option value="concept">Concetto (AI)</option>
+        </select>
+        <select id="search-scope" title="Dove cercare">
+          <option value="book">Tutto il libro</option>
+          <option value="chapter">Questo capitolo</option>
+        </select>
+        <input id="search-input" type="search" placeholder="Parola, frase o concetto…"
+               autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false">
+        <button id="search-run" class="btn small primary">Cerca</button>
+        <span id="search-count"></span>
+        <button id="search-prev" class="iconbtn" title="Risultato precedente">▲</button>
+        <button id="search-next" class="iconbtn" title="Risultato successivo">▼</button>
+        <button id="search-close" class="iconbtn" title="Chiudi la ricerca">✕</button>
+      </div>
+      <div id="search-status" class="hidden"></div>
+      <div id="search-results" class="hidden"></div>
     </div>
 
     <!-- TOC drawer -->
@@ -282,6 +310,6 @@
   </div>
 
   <script src="notes-config.js"></script>
-  <script src="app.js?v=12"></script>
+  <script src="app.js?v=13"></script>
 </body>
 </html>

@@ -10,6 +10,7 @@ Nella cartella [`docs/`](docs/) c'è una web app installabile su cellulare e tab
 - **modificare** il sorgente LaTeX di ogni capitolo direttamente dal browser;
 - **salvare** le modifiche nel repository: ogni salvataggio diventa un commit su GitHub;
 - **rileggere offline** gli ultimi capitoli aperti (l'app conserva una copia locale).
+- **cercare** una parola o una frase nel capitolo o in tutto il libro; con una chiave API AI facoltativa, la ricerca per concetto trova anche espressioni semanticamente affini.
 
 ### Attivazione (una sola volta)
 
@@ -28,6 +29,7 @@ Nella cartella [`docs/`](docs/) c'è una web app installabile su cellulare e tab
 ### Uso quotidiano
 
 - **☰** apre l'indice del libro (parti e capitoli, letti da `main.tex`).
+- **🔍** cerca parole, frasi esatte o concetti nel capitolo corrente o in tutto il libro. La ricerca per concetto richiede indirizzo, modello e chiave di un'API compatibile con OpenAI, configurabili in **Impostazioni / esci**; la chiave resta nel browser del dispositivo.
 - **✏️** passa alla modifica del sorgente LaTeX del capitolo; **💾** salva sul repository (un commit per ogni salvataggio).
 - Toccando i numeri delle **note** si apre il testo della nota; le note complete sono anche in fondo al capitolo.
 - La voce *"Struttura del libro (main.tex)"* in fondo all'indice permette di riordinare o attivare/disattivare i capitoli.
