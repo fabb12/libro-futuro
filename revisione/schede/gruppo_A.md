@@ -58,19 +58,19 @@
 - **Apertura**: l'immagine di un archivista da assumere che riscrive i fascicoli.
 - **Chiusura**: il ragionamento come «matematico incompetente»; rinvio al capitolo successivo.
 - **Figure**: images/infografica_cap3_1.png; images/Perché_gli_anni_volano_.png. Nessun \fbox attivo.
-- **Note**: Due blocchi \begin{comment} disattivati (righe 104-126, con \fbox «Il paradosso della vacanza», contenuto ripetuto nel testo). La metafora del film/montaggio ricorre in più sezioni. Riga 140: menzione delle «intelligenze artificiali» che dovranno imparare a dimenticare. Nessuna menzione di Sora, deepfake o video sintetici.
+- **Note**: \begin{comment} disattivato (righe 104-126, con \fbox «Il paradosso della vacanza»). Metafora del film/montaggio ricorrente. Riga 140: «intelligenze artificiali» che dovranno imparare a dimenticare. Nessuna menzione di Sora, deepfake o video sintetici.
 
 ## content/part1/chapter7.tex — L'illusione di essere razionali
 - **Tesi**: Il «mito del decisore razionale» è una finzione: il Sistema 1 riconosce schemi e decide, la ragione giustifica a posteriori (elefante e cavaliere di Haidt). Bias blind spot, effetto Dunning-Kruger e superiorità illusoria rendono invisibili i propri bias. La saggezza sta nelle protesi cognitive e nel disaccordo.
 - **Sezioni**: Il teatro della decisione; Il decisore invisibile e l'elefante che porta il cavaliere; Lo specchio opaco: perché vediamo solo i bias degli altri; L'architetto della coerenza e il sistema immunitario dell'ego; La mala fede: quando l'autoinganno diventa una scelta; La saggezza dell'imperfezione e il prezzo del comfort.
 - **Concetti introdotti/definiti qui**: mito del decisore razionale; macchina predittiva; riconoscimento di schemi; elefante e cavaliere; punto cieco dei bias; effetto Dunning-Kruger; superiorità illusoria; architetto della coerenza; piramide dell'autogiustificazione; sistema immunitario dell'ego; distorsione retrospettiva; mala fede; akrasia.
 - **Esempi/studi/aneddoti/persone citati**: cereali (47 tipi); Libet (1983); Kasparov; Charness et al. (2001); Gary Klein e i vigili del fuoco; Pronin et al. (2002); Marco, Giulia, Paolo; Kruger & Dunning (1999); Svenson (1981), 93% degli automobilisti; Tavris & Aronson; Fischhoff (1975); Jung; Sartre (cameriere); Aristotele, *Etica Nicomachea* VII; paradosso del cretese.
-- **Concetti richiamati ma spiegati altrove**: Sistema 1 / 2 (prologo, cap. 1); ragionamento motivato (cap. 2); Io/Es (cap. 1); Platone (cap. 1).
-- **Rimandi espliciti ad altri capitoli**: «nel prossimo esploreremo questo mal di testa dell'anima» (verso la dissonanza, cap. 22).
+- **Concetti richiamati ma spiegati altrove**: Sistema 1 / 2 (prologo, cap. 1); ragionamento motivato (cap. 2).
+- **Rimandi espliciti ad altri capitoli**: «nel prossimo esploreremo questo mal di testa dell'anima» (cap. 22).
 - **Apertura**: supermercato, quarantasette tipi di cereali, tre secondi per decidere.
 - **Chiusura**: la dissonanza come «istante in cui ci accorgiamo di stare recitando»; rinvio al capitolo successivo.
 - **Figure**: images/elefante_mahout.png (label fig:elephant_rider). Nessun \fbox.
-- **Note**: Il passo su Sartre, mala fede e fumatore è quasi identico al cap. 22. Aristotele/akrasia ripetuti anche nel cap. 22. Kant (dovere) ripetuto nel cap. 22. Pascal citato anche nel cap. 1. Nessuna menzione di Sora, deepfake o video sintetici.
+- **Note**: Passo su Sartre e mala fede quasi identico al cap. 22. Aristotele/akrasia e Kant ripetuti nel cap. 22. Nessuna menzione di Sora, deepfake o video sintetici.
 
 ## content/part1/chapter22.tex — La dissonanza cognitiva: quando il cervello va in tilt
 - **Tesi**: La dissonanza è il disagio che segue la contraddizione tra credenze e comportamenti. Genera un ciclo a tre tempi: akrasia, dissonanza, razionalizzazione. La conoscenza dei bias non basta: serve modificare l'ambiente.
@@ -85,13 +85,13 @@
 - **Note**: Il passo sulla mala fede (fumatore, Sartre) ricalca il cap. 7. Il titolo e il ciclo di tre tempi sono ripetuti più volte nel capitolo. Nessuna menzione di Sora, deepfake o video sintetici.
 
 ## content/part1/chapter9.tex — La continuità evolutiva dei bias: dal topo all'intelligenza collettiva
-- **Tesi**: I bias hanno continuità evolutiva tra specie (topi, piccioni, formiche, scimpanzé). L'intelligenza collettiva emergente può degenerare in stupidità di massa. L'altruismo nasce da selezione parentale e reciprocità, e la cooperazione è un motore evolutivo: contro la «teoria della patina».
+- **Tesi**: I bias hanno continuità evolutiva tra specie. L'intelligenza collettiva emergente può degenerare in stupidità di massa. Altruismo e cooperazione hanno radici evolutive (selezione parentale, reciprocità), contro la «teoria della patina».
 - **Sezioni**: Il topo filosofo non sopravvive; L'intelligenza che emerge dal caos; Quando l'intelligenza collettiva diventa stupidità di massa; Lo specchio peloso: i primati e i nostri bias condivisi; Il pregiudizio è più antico dell'umanità; L'egoismo dell'altruista: un istinto animale; Il cervello altruista: quando aiutare fa sentire bene; La trappola della teoria della patina; Le gerarchie dei primati e l'ansia dell'ufficio; La saggezza e la follia delle folle; Il paradosso della nostra epoca; La lezione degli animali; Il motore sotto il cofano.
-- **Concetti introdotti/definiti qui**: teoria della gestione dell'errore; complessità emergente; tre regole dello stormo; ottimizzazione a colonia di formiche; bolla speculativa; effetto ancoraggio; avversione alle perdite (primati); tribalismo; selezione parentale; altruismo reciproco; helper's high; teoria della patina; espansione del cerchio morale; saggezza delle folle; gerarchie di dominanza.
-- **Esempi/studi/aneddoti/persone citati**: Skinner (1948), piccioni; Reynolds (1987); Dorigo & Stützle; bolla dei tulipani (1637); crisi del 2008; Beran (2008), numero 8; Chen et al. (2006), cappuccine; Goodall; Marsh et al. (2021), ossitocina; Yoeli et al. (2013); Carter & Wilkinson (2013), pipistrelli; suricati; api operaie; Hobbes; Rousseau; Kropotkin (1902); Singer (1981); Galton (1906), bue; Marmot (Whitehall); de Waal.
-- **Concetti richiamati ma spiegati altrove**: Sistema 1 (cap. 1-2); sistema limbico ed emozioni (cap. 2); bias di conferma (prologo, cap. 1); bias di gregge (prologo).
-- **Rimandi espliciti ad altri capitoli**: «nel prossimo capitolo» verso la dipendenza digitale (capitolo non incluso nel gruppo).
-- **Apertura**: un topo di laboratorio con rituali superstiziosi, poi le formiche e gli storni.
-- **Chiusura**: le emozioni come motore; rinvio al capitolo sull'ecosistema digitale e il «kit di sopravvivenza».
-- **Figure**: images/tre_regole.png (label fig:archivista_cervello, label non coerente con il contenuto); images/L_Espansione_del_Cerchio_Morale (1).png (nome con spazi e parentesi). Nessun \fbox.
-- **Note**: Haselton & Nettle (2006) citato anche nel cap. 2. Il tema del «cervello sociale per cinquanta persone» ricorre in più sezioni. Nessuna menzione di Sora, deepfake o video sintetici.
+- **Concetti introdotti/definiti qui**: teoria della gestione dell'errore; complessità emergente; bolla speculativa; effetto ancoraggio; avversione alle perdite (primati); tribalismo; selezione parentale; altruismo reciproco; helper's high; teoria della patina; cerchio morale; gerarchie di dominanza.
+- **Esempi/studi/aneddoti/persone citati**: Skinner (1948), piccioni; Reynolds (1987), tre regole dello stormo; bolla dei tulipani (1637); crisi del 2008; Beran (2008); Chen et al. (2006), cappuccine; Marsh et al. (2021), ossitocina; Carter & Wilkinson (2013), pipistrelli; api operaie; Hobbes; Rousseau; Kropotkin; Singer; Galton (1906), bue; Marmot (Whitehall).
+- **Concetti richiamati ma spiegati altrove**: Sistema 1 (cap. 1-2); sistema limbico (cap. 2); bias di conferma e di gregge (prologo).
+- **Rimandi espliciti ad altri capitoli**: «nel prossimo capitolo» verso la dipendenza digitale (fuori gruppo).
+- **Apertura**: un topo di laboratorio con rituali superstiziosi.
+- **Chiusura**: le emozioni come motore; rinvio al capitolo digitale.
+- **Figure**: images/tre_regole.png (label fig:archivista_cervello, non coerente); images/L_Espansione_del_Cerchio_Morale (1).png (nome con spazi e parentesi). Nessun \fbox.
+- **Note**: Haselton & Nettle (2006) citato anche nel cap. 2. Nessuna menzione di Sora, deepfake o video sintetici.
