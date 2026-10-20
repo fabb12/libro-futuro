@@ -29,15 +29,21 @@ used=set()
 for f in active:
     t=strip(read(f))
     for m in re.finditer(r'\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}',t):
-        n=m.group(1); used.add(os.path.basename(n))
+        n=m.group(1)
+        if n.startswith('#'): continue
+        used.add(os.path.basename(n))
         ok=os.path.exists(n) or any(os.path.exists(n+e) for e in ('.png','.jpg','.jpeg','.pdf'))
         if not ok: print(f"  RIFERIMENTO ROTTO {f}: {n}")
     for m in re.finditer(r'\\begin\{figure\}.*?\\end\{figure\}',t,re.S):
         b=m.group(0)
         if '\\caption' not in b: print(f"  figura senza caption in {f}")
         if '\\label' not in b: print(f"  figura senza label in {f}")
-        if 'includegraphics' not in b: print(f"  figura senza immagine in {f}")
+        if 'includegraphics' not in b and '\\immagine' not in b: print(f"  figura senza immagine in {f}")
     for m in re.finditer(r'\{\{?\s*(?:FIGURA|IMMAGINE|TODO|DA INSERIRE)[^}]*\}',t,re.I): print(f"  segnaposto in {f}: {m.group(0)[:60]}")
+for f in active:
+    for m in re.finditer(r'\\immagine\{([^}]+)\}\{([^}]*)\}',strip(read(f))):
+        n=m.group(1)
+        if not os.path.exists(n): print(f"  SEGNAPOSTO (file da aggiungere) {f}: {n}")
 print("  immagini in images/ mai usate:",sorted(i for i in imgs if i not in used and not i.startswith('.')))
 print("\n== LABEL / REF ==")
 labels=collections.Counter(); refs=[]
