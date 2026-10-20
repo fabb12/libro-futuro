@@ -1,0 +1,17 @@
+# Verifica fonti 46-60
+
+46. NON TROVATA — nessuna corrispondenza per "AI Psychosis: A New Challenge for Psychiatry" di Kidd e Castillo su British Journal of Psychiatry — nessun URL
+47. REALE — Gunkel, Person, Thing, Robot, MIT Press 2023 (titolo e sottotitolo corrispondono) — https://mitpressbookstore.mit.edu/book/9780262546157
+48. NON TROVATA — nessuna corrispondenza per "Echoes in the Void: The Algorithmic Erosion of Human Connection" di Rossi (St. Martin's Press, 2025) — nessun URL
+49. NON TROVATA — nessuna corrispondenza per "Convergent Dialogues: How LLMs Create Frictionless Realities" di Lee e Singh — nessun URL
+50. NON TROVATA — nessun libro di Turkle intitolato "The Empathy Gap" (Penguin, 2017); Turkle ha pubblicato The Empathy Diaries (Penguin Press, 2021), ma e' un'opera diversa e non viene proposta come correzione — https://www.harvard.com/book/9780525560111
+51. NON TROVATA — nessuna corrispondenza per "Patient Empowerment in the Age of AI: A Case Study of LLM Integration in Oncology" (Chen, NEJM Informatics, 2025) — nessun URL
+52. NON TROVATA — nessuna corrispondenza per "From Tool to Oracle: The Perilous Leap in Human-AI Interaction" (Serres, Psychoanalytic Review) — nessun URL
+53. NON TROVATA — nessuna corrispondenza per "Necro-Art and the Nostalgia Market" su Digital Culture Quarterly (la voce non ha autore) — nessun URL
+54. NON TROVATA — nessuna traccia di "Behave 2.0: The Neuroscience of a Digital World" di Sapolsky (2023); esiste solo Behave (2017) — nessun URL
+55. NON TROVATA — nessuna corrispondenza per E. Valdman, "Riflessioni sulla Seconda Solitudine" (2026), ne' per la frase dell'epigrafe, quindi l'attribuzione non e' verificabile — nessun URL
+56. CORREGGERE — l'articolo esiste ma e' pubblicato su Preventive Medicine Reports, vol. 12, pp. 271-283 (non Preventive Medicine 112) — Twenge, J. M., & Campbell, W. K. (2018). Associations between screen time and lower psychological well-being among children and adolescents: Evidence from a population-based study. Preventive Medicine Reports, 12, 271-283. doi:10.1016/j.pmedr.2018.10.003 — https://doaj.org/article/c41b44a9a44945d386ac974fac7b76f7
+57. REALE — Mark, G., Attention Span, Hanover Square Press, gennaio 2023, sottotitolo corrispondente — https://search.ub.tum.de/vufind/Record/DE-604.BV049494085
+58. REALE — il saggio di Harris del 2016 su Medium esiste (titolo completo: "How Technology Hijacks People's Minds — from a Magician and Google's Design Ethicist", sottotitolo omesso nella voce); trovato solo tramite riassunti, non la pagina Medium — https://www.getabstract.com/en/summary/how-technology-hijacks-peoples-minds-from-a-magician-and-googles-design-ethicist/28438
+59. CORREGGERE — nessun libro Routledge "Digital Afterlives: Death, Technology and Beyond"; la monografia di Bassett e' Palgrave 2021 con titolo diverso — Bassett, D. J. (2021). The Creation and Inheritance of Digital Afterlives: You Only Live Twice. Palgrave Macmillan. (Bassett ha anche scritto un capitolo nel volume curato Digital Afterlife: Death Matters in a Digital Age, Routledge, a cura di Savin-Baden e Mason-Robbie, ma il libro non e' suo) — https://intersections.ssrc.org/citations/the-creation-and-inheritance-of-digital-afterlives-you-only-live-twice
+60. NON TROVATA — nessuna corrispondenza per "Algorithmic Transparency and Psychological Well-being: The Case for Cognitive Nutrition Labels" (Pittman e Sheehan, Journal of Media Psychology, 2025) — nessun URL
