@@ -1,0 +1,71 @@
+## content/part2/chapter20.tex — Venere e Marte Hanno lo Stesso Cervello
+- **Tesi**: Il cervello è un mosaico individuale; le differenze medie tra sessi (fiducia, rischio, empatia) sono piccole e sovrapposte. Il danno nasce quando tendenze statistiche diventano destino («le donne tendono a» che diventa «le donne sono»).
+- **Sezioni**: La fiducia e il suo opposto; La soglia invisibile della candidatura; Il mosaico della propensione al rischio; L'empatia e il mito della lettura del pensiero; La sindrome dell'impostore e il suo specchio; Quando gli errori opposti si incontrano; Il mosaico che cambia
+- **Concetti introdotti/definiti qui**: overconfidence bias; impostor phenomenon; stereotype threat; doppio vincolo (role congruity); d di Cohen; «mosaico» (metafora); specchi deformanti (attribuzione successo/fallimento); «zaino invisibile»; «in media» come chiave di lettura; sensibilità sociale media (intelligenza collettiva).
+- **Esempi/studi/aneddoti/persone citati**: Joel et al. 2015 (oltre 1.400 risonanze, PNAS); Barber & Odean 2001 (35.000 conti, uomini +45% compravendite, -1,5% annuo); Lundeberg 1994; caso HP 2014 (donne candidate al 100% dei requisiti, uomini al 60%); Brenda Major 1989; Eagly (doppio vincolo: «troppo aggressiva»); Figner & Weber 2011 (rischio per dominio); Baron-Cohen (sistematizzazione/empatizzazione); Thompson & Voyer 2014 (d 0,2–0,5, circa 60%); Steele & Aronson 1995; Clance & Imes 1978; Woolley et al. 2010 (MIT); Twenge 2001; epigrafe di Levi-Montalcini.
+- **Concetti richiamati ma spiegati altrove**: nessuno.
+- **Rimandi espliciti ad altri capitoli**: nessuno.
+- **Apertura**: Epigrafe di Levi-Montalcini, poi lo studio del 2015 su oltre 1.400 cervelli.
+- **Chiusura**: Estende il bias a età, nazionalità, professione («Il cervello ama le scorciatoie. La realtà... resta complicata»); nessun rinvio al capitolo successivo.
+- **Figure**: nessuna.
+- **Note**: «mosaico» in due titoli di sezione e nel corpo; «in media» molto ricorrente. Twenge 2001 (dati 1931–1993) citato a sostegno di «dati più recenti». Caso HP aneddotico, dichiarato semplificato nel testo. Nessuna menzione di Sora, deepfake o video sintetici.
+
+## content/part2/chapter13.tex — Mille Modi di Sbagliare
+- **Tesi**: I bias variano per cultura: ogni cultura ha un proprio set di errori, distorsioni opposte e ugualmente parziali. La globalizzazione li fa collidere; vanno visti come «sistemi operativi», non come verità universali.
+- **Sezioni**: Modi Diversi di Vedere il Mondo; Il Bias del Tempo: Quando gli Orologi Mentali Corrono Diversamente; La Geometria Variabile della Logica; Il Bias della Vergogna contro il Bias della Colpa; Conseguenze Reali: Economia, Felicità e Vita Quotidiana; La Globalizzazione dei Bias: Quando i Mondi Cognitivi Collidono; Verso una Saggezza Plurale
+- **Concetti introdotti/definiti qui**: tempo policromico/monocromico; logica lineare vs circolare; cultura della vergogna vs della colpa; bias del risparmio, del consumo, del clan; bias della lingua dominante; bias di cattiva fede culturale; illusione di universalità; sistemi operativi culturali.
+- **Esempi/studi/aneddoti/persone citati**: Morris & Peng 1994 (attribuzione successo: 82% americani); Hall 1983; Benedict 1946; Chamon & Prasad 2010 (risparmio Cina 45% del PIL vs USA 7%); Fukuyama («raggio di fiducia»); Svezia e frodi; Schadenfreude; Google Translate he/she; Henrich et al. 2010 (WEIRD); manager americano in Giappone; imprenditori tedesco e messicano.
+- **Concetti richiamati ma spiegati altrove**: «cavernicolo con lo smartphone» (metafora ricorrente, non definita qui); bias del punto cieco e bias di controllo usati come noti.
+- **Rimandi espliciti ad altri capitoli**: nessuno.
+- **Apertura**: Se i bias fossero universali li ritroveremmo identici ovunque; invece ogni cultura ha «un bouquet» di errori.
+- **Chiusura**: Il pianeta «parla molte lingue ma spesso pensa in una sola»; nessun rinvio al capitolo successivo.
+- **Figure**: tre \captionof{figure} senza immagine (fig:spettro_culturale, fig:logica_culturale, fig:collisione_globale); \includegraphics commentati. Nessun \fbox.
+- **Note**: «Entrambi e nessuno» in più sezioni. Morris & Peng 1994 citato per «manager di 50 paesi», ma lo studio riguarda americani e cinesi: discrepanza. Svezia e Google Translate senza fonte. Nessuna menzione di Sora, deepfake o video sintetici.
+
+## content/part2/chapter12.tex — L'Apprendimento Impossibile
+- **Tesi**: I bias si installano nei primi anni (finestra critica circa 3–7 anni, neuroni specchio, contagio sociale) e resistono al cambiamento. Per l'asimmetria tra acquisire e disapprendere eliminarli è impossibile; l'obiettivo realistico è la meta-consapevolezza e la distinzione tra bias utili e dannosi.
+- **Sezioni**: La Finestra Critica: Quando il Cervello Decide per Sempre; L'Orchestra Invisibile dei Neuroni Specchio; La Scuola come Laboratorio Involontario del Pregiudizio; L'Asimmetria Crudele: Acquisire È Facile, Liberarsi È Impossibile; Il Contagio Virale del Pregiudizio nell'Era Digitale; Navigare l'Impossibile: Verso una Pedagogia della Consapevolezza
+- **Concetti introdotti/definiti qui**: bias di gruppo; finestra critica; imprinting; neuroni specchio; contagio cognitivo; profezia che si autoavvera; categorizzazione noi/loro; effetto rimbalzo; meta-consapevolezza; bias utili vs dannosi. Metafore: «cemento fresco», «cera calda».
+- **Esempi/studi/aneddoti/persone citati**: Mahajan & Wynn 2012 (bias di gruppo a 3 anni); Lorenz (oche); Rizzolatti (Parma, scimmie); Nietzsche (la smorfia); Rosenthal & Jacobson 1968 («Pygmalion in the classroom»); Wegner (orso bianco); Cvencek et al. 2011 (70% delle bambine 6–10 anni); Le Bon; playground «le femmine sono noiose»; Smith & Johnson 2023 (+40% stereotipi dopo due settimane di YouTube).
+- **Concetti richiamati ma spiegati altrove**: bias di conferma (usato come noto); «bias cognitivi» (generico).
+- **Rimandi espliciti ad altri capitoli**: nessuno. Rimando implicito: «la storia del nostro cervello di cavernicoli».
+- **Apertura**: Domanda se i bambini nascano con i bias o li imparino; risposta «sì».
+- **Chiusura**: «Siamo tutti ex-bambini» che cercano di superare lezioni apprese troppo presto; nessun rinvio al capitolo successivo.
+- **Figure**: tre \captionof{figure} senza immagine (fig:finestra_critica, fig:neuroni_specchio, fig:asimmetria_bias); \includegraphics commentati. Nessun \fbox.
+- **Note**: «cemento fresco» ripetuto tre volte; l'intro usa «cera calda»: metafore miste. Dati 70% (Cvencek 2011) e +40% (Smith & Johnson 2023) da verificare; la fonte 2023 non è identificabile. Nessuna menzione di Sora, deepfake o video sintetici.
+
+## content/part2/chapter29.tex — Il Bias di Ancoraggio sulla Propria Infanzia: Quando il Passato Analogico Giudica il Presente Digitale
+- **Tesi**: I genitori cresciuti in epoca analogica usano la propria infanzia come ancora per giudicare l'infanzia digitale dei figli, sottovalutandone sfide e opportunità. Il superamento passa per competenze bidirezionali, mediazione attiva e formazione dei genitori.
+- **Sezioni**: Le Radici Psicologiche del Bias di Ancoraggio Genitoriale; L'Incomprensione dell'Infanzia Digitale: Sfide e Opportunità Misconosciute; Il Divario Comunicativo Intergenerazionale; Evidenze Empiriche dalla Ricerca Italiana; Conseguenze del Bias: Relazioni Familiari e Sviluppo Infantile; Strategie di Superamento del Bias; Implicazioni per la Pratica Educativa e Clinica; Prospettive Future e Ricerca; Conclusioni
+- **Concetti introdotti/definiti qui**: bias di ancoraggio genitoriale; genitorialità nostalgica; bias dei «bei tempi andati» (rosy retrospection); trasmissione intergenerazionale; nativi digitali; alfabetizzazione digitale; tempo di schermo; mediazione attiva vs restrittiva; mediazione collaborativa; resilienza digitale; alfabetizzazione digitale familiare.
+- **Esempi/studi/aneddoti/persone citati**: Yin et al. 2025 (nostalgia e trasmissione delle tradizioni); Mitchell et al. 1997 («rosy view»); Prensky 2001; Livingstone & Blum-Ross 2020; Bavelier et al. 2021; Ferrari 2024 (progetto DISCUSS, 1.349 famiglie: gioco non digitale 69–70% tra laureati vs 43,5–52,3%); Montessori; Nikken & Schols 2015; Mascheroni et al. 2018.
+- **Concetti richiamati ma spiegati altrove**: nessuno.
+- **Rimandi espliciti ad altri capitoli**: nessuno.
+- **Apertura**: Nell'era della trasformazione digitale, il «bias di ancoraggio genitoriale» sull'infanzia.
+- **Chiusura**: Riepilogo in tre paragrafi e auspicio di «sintesi innovative»; nessun rinvio al capitolo successivo.
+- **Figure**: sette \fbox segnaposto senza immagine (confronto_infanzie, meccanismi_neurali, competenze_digitali, divario_comunicativo, mappa_italia, educazione_bidirezionale, protocollo_assessment). Nessun file immagine.
+- **Note**: «bias di ancoraggio» coincide con il termine di Tversky-Kahneman (anchoring), mai citato. Conclusioni quasi identiche all'intro. «competenze complementari tra generazioni» ripetuto due volte. Citazioni non pertinenti: Conti et al. 2024 (sviluppo di bambini con disabilità durante il COVID) per le modificazioni epigenetiche; Blum-Ross & Livingstone 2017 (sharenting) per i fattori protettivi. Nessuna menzione di Sora, deepfake o video sintetici.
+
+## content/part2/chapter21.tex — La tirannia delle infinite possibilità
+- **Tesi**: L'abbondanza di opzioni riduce soddisfazione e capacità di scelta; il digitale trasforma il paradosso in condizione permanente. Strategie: definire il «abbastanza buono», limitare le opzioni, delegare, essere grati per la scelta fatta; i vincoli liberano.
+- **Sezioni**: Il supermercato come metafora esistenziale; L'architettura neurologica dell'indecisione; Il paradosso digitale della scelta; Maximizer vs Satisficer: due strategie di sopravvivenza; La FOMO e il fantasma delle vite non vissute; Il ritorno del vincolo come liberazione; Strategie per sopravvivere all'abbondanza; La saggezza della limitazione
+- **Concetti introdotti/definiti qui**: paradosso della scelta; tirannia delle piccole decisioni; maximizer/satisficer; decision fatigue; FOMO (definita qui); vincolo come liberazione; «good enough».
+- **Esempi/studi/aneddoti/persone citati**: Iyengar & Lepper 2000 (banco di marmellate: 24 gusti vs 6; acquisto 3% vs 30%); Vohs et al. 2008; Simon 1956; Schwartz 2004; Netflix; Spotify (70 milioni di brani); Amazon (12 milioni di prodotti); supermercato sovietico vs americano (300 cereali); Instagram, LinkedIn, Facebook; Odisseo e le sirene; sonetto e tela come vincoli.
+- **Concetti richiamati ma spiegati altrove**: stratificazione evolutiva del cervello, richiamata come «di cui abbiamo parlato».
+- **Rimandi espliciti ad altri capitoli**: nessun numero di capitolo; «quella stratificazione evolutiva del cervello di cui abbiamo parlato».
+- **Apertura**: Confronto tra un negozio sovietico e un supermercato americano: quale rende più felici.
+- **Chiusura**: Il buffet infinito, lo stomaco di dimensione fissa, «bisogna smettere di assaggiare tutto»; nessun rinvio al capitolo successivo.
+- **Figure**: nessuna.
+- **Note**: «paralizzati dall'abbondanza» ripetuto (apertura e sezione digitale). Statistiche su cataloghi e opzioni senza fonte; 10–15 opzioni attribuito a Vohs 2008 senza riscontro esplicito. Maximizer/satisficer attribuiti a Simon 1956, che introduce il satisficing; la coppia di etichette è di Schwartz et al. 2002 (da verificare). Nessuna menzione di Sora, deepfake o video sintetici.
+
+## content/part2/chapter30.tex — Il Bias del Sopravvissuto: Quando vediamo solo i successi e ignoriamo le rovine
+- **Tesi**: Il bias del sopravvissuto porta a giudicare sulla base dei soli casi visibili; nell'era digitale narrazioni di successo, social e algoritmi lo amplificano, producendo decisioni su informazioni incomplete. Difese: pensiero controfattuale («Cosa non sto vedendo?»), dataset completo, umiltà epistemologica, fonti diversificate.
+- **Sezioni**: nessuna \section (testo continuo).
+- **Concetti introdotti/definiti qui**: bias del sopravvissuto; «software cognitivo pleistocenico»; «filtro della perfezione»; «pensiero controfattuale» (usato per «cosa non sto vedendo?»); «dataset completo»; umiltà epistemologica; «alone invisibile di tentativi falliti».
+- **Esempi/studi/aneddoti/persone citati**: Abraham Wald e le blindature dei bombardieri in WWII; il «nonno fumatore» (93 anni); il ponte romano; Bill Gates, Zuckerberg, Jobs (abbandoni universitari); trading online; biografie di startup; Ellison 2021; Ioannidis 2005; Slovic 2000; Krasnova et al. 2013 (invidia su Facebook); Pariser 2011 (filter bubble); Pronin et al. 2002; Kruger & Dunning 1999; Mercier & Sperber 2017; Haidt 2012; Gazzaniga 2018.
+- **Concetti richiamati ma spiegati altrove**: Sistema 1 (Kahneman, citato); bias del punto cieco (Capitolo 28.1); effetto Dunning-Kruger (Capitolo 28.2); FOMO (Capitolo 24.5); bei tempi andati (Capitolo 32.1.2); illusione di essere razionali (Capitolo 11).
+- **Rimandi espliciti ad altri capitoli**: «Nel Capitolo 18, paragrafo 18.10, abbiamo brevemente accennato»; «Capitolo 32.1.2»; «Capitolo 24.5»; «Capitolo 28.1»; «Capitolo 28.2»; «Capitolo 11».
+- **Apertura**: Rimando al paragrafo 18.10, dove il bias era stato solo accennato.
+- **Chiusura**: La consapevolezza come «bussola più preziosa» per una comprensione autentica di sé e della realtà; nessun rinvio al capitolo successivo.
+- **Figure**: nessuna.
+- **Note**: «sabotatore» usato due volte; «filtro» in più accezioni. «Pensiero controfattuale» non coincide con la domanda proposta. Ioannidis 2005 e Cosmides & Tooby 1994 citati per affermazioni poco pertinenti. Ellison 2021, Hopkins 2016 e Young et al. 2013 da verificare. Numerazioni di capitolo (32.1.2, 24.5, 28.x) da controllare. Nessuna menzione di Sora, deepfake o video sintetici.
