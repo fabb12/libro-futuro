@@ -374,3 +374,14 @@ columns=2
 	\end{tcolorbox}%
 	\vspace{0.3em}%
 }
+
+% Immagine con segnaposto: se il file non esiste ancora in images/ compare un
+% riquadro con la descrizione, e il libro compila lo stesso. Quando il file
+% viene aggiunto, l'immagine appare da sola.
+% Uso: \immagine{images/nome.png}{descrizione di cosa deve mostrare}
+\newcommand{\immagine}[2]{%
+	\IfFileExists{#1}%
+		{\includegraphics[width=0.9\textwidth]{#1}}%
+		{\fbox{\parbox{0.8\textwidth}{\centering\small\vspace{1.5em}%
+			[IMMAGINE DA INSERIRE: #2]\\[0.4em]\texttt{\detokenize{#1}}\vspace{1.5em}}}}%
+}
