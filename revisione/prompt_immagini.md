@@ -227,20 +227,6 @@ Per ogni immagine: incolla prima il **blocco di stile**, poi la riga «Soggetto�
 - **Soggetto (da incollare dopo il blocco di stile):** Composizione illustrata sull'apofenia produttiva: al centro una nuvola in cui si riconosce un profilo di volto; ai lati, in sequenza, il sellino e il manubrio di bicicletta che diventano la testa di toro di Picasso, e una macchia d'inchiostro che prende la forma di una figura. Frecce dalle forme «casuali» alle interpretazioni creative, didascalie brevi per ciascun passaggio.
 - **Testi in italiano da inserire:** solo le etichette citate nel soggetto tra «…»; se non ce ne sono, al massimo un titolo di 3-6 parole che riassuma la scena.
 
-### musica_apollineo_dionisiaco.jpg  (cap. 34)
-
-- **File da salvare:** `images/musica_apollineo_dionisiaco.jpg`  · **Capitolo:** `content/part4/chapter40.tex`
-- **Didascalia nel libro:** La distinzione nietzschiana applicata alla musica generata dall'intelligenza artificiale: l'algoritmo può riprodurre perfettamente la forma apollinea, ordine e struttura, ma non possiede un io da dissolvere nell'ebbrezza dionisiaca.
-- **Soggetto (da incollare dopo il blocco di stile):** Schema a due colonne che contrappone l'apollineo (scultura, ordine, forma chiara, individuo distinto) al dionisiaco (ebbrezza, fusione, perdita dei confini dell'io), con l'algoritmo musicale collocato sul lato apollineo e un abisso vuoto al posto del dionisiaco
-- **Testi in italiano da inserire:** solo le etichette citate nel soggetto tra «…»; se non ce ne sono, al massimo un titolo di 3-6 parole che riassuma la scena.
-
-### musica_langer_simbolo.jpg  (cap. 34)
-
-- **File da salvare:** `images/musica_langer_simbolo.jpg`  · **Capitolo:** `content/part4/chapter40.tex`
-- **Didascalia nel libro:** La differenza teorizzata da Susanne Langer tra segno discorsivo e simbolo presentativo: la parola descrive un'emozione dall'esterno, mentre la musica ne presenta direttamente la forma dinamica.
-- **Soggetto (da incollare dopo il blocco di stile):** Confronto a due riquadri: a sinistra il segno discorsivo (la parola «tristezza» che descrive l'emozione dall'esterno, come un'etichetta), a destra il simbolo presentativo (una linea musicale di tensione e distensione che presenta direttamente la forma dell'emozione)
-- **Testi in italiano da inserire:** solo le etichette citate nel soggetto tra «…»; se non ce ne sono, al massimo un titolo di 3-6 parole che riassuma la scena.
-
 ### tre_fragilita.png  (cap. 35)
 
 - **File da salvare:** `images/tre_fragilita.png`  · **Capitolo:** `content/part4/chapter41.tex`
