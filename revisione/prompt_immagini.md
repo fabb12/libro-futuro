@@ -236,7 +236,7 @@ Per ogni immagine: incolla prima il **blocco di stile**, poi la riga «Soggetto�
 
 ### tempesta_cognitiva.png  (cap. 36)
 
-- **File da salvare:** `images/tempesta_cognitiva.png`  · **Capitolo:** `content/part4/chapter8.tex`
+- **File da salvare:** `images/tempesta_cognitiva.png`  · **Capitolo:** `content/part4/chapter25.tex`
 - **Didascalia nel libro:** La «tempesta cognitiva perfetta»: quattro bias che si alimentano a vicenda e proteggono la convinzione dalla realtà.
 - **Soggetto (da incollare dopo il blocco di stile):** Diagramma circolare: al centro una convinzione da difendere; intorno a essa quattro frecce ad anello che collegano bias di conferma, effetto gregge, avversione alle perdite e punto cieco, ciascuno con una breve didascalia (cerco solo conferme, seguo chi la pensa come me, non abbandono ciò che ho già investito, io sono razionale), così da mostrare come si rinforzano a vicenda
 - **Testi in italiano da inserire:** solo le etichette citate nel soggetto tra «…»; se non ce ne sono, al massimo un titolo di 3-6 parole che riassuma la scena.
