@@ -1,110 +1,95 @@
-\indexentry{euristica dell'affetto}{34}
-\indexentry{generation effect}{43}
-\indexentry{bias di coerenza}{47}
-\indexentry{macchina predittiva}{56}
-\indexentry{riconoscimento di schemi}{57}
-\indexentry{paradosso della scelta}{58}
-\indexentry{punto cieco dei bias}{60}
-\indexentry{effetto Dunning-Kruger}{60}
-\indexentry{superiorit\`{a} illusoria}{61}
-\indexentry{sistema di coerenza narrativa}{61}
-\indexentry{dissonanza cognitiva}{62}
-\indexentry{sistema immunitario dell'ego}{63}
-\indexentry{ragionamento motivato}{63}
-\indexentry{distorsione retrospettiva}{63}
-\indexentry{avversione alle perdite}{79}
-\indexentry{bias di conferma}{80}
-\indexentry{bias del gregge}{83}
-\indexentry{effetto ancoraggio}{83}
-\indexentry{empatia cognitiva}{165}
-\indexentry{decentramento cognitivo}{167}
-\indexentry{apofenia}{171}
-\indexentry{bias narrativo}{172}
-\indexentry{bias di attribuzione fondamentale}{185}
-\indexentry{pensiero olistico}{185}
-\indexentry{bias di controllo}{185}
-\indexentry{orologi mentali culturali}{188}
-\indexentry{logica lineare}{188}
-\indexentry{logica circolare}{188}
-\indexentry{bias del risparmio}{190}
-\indexentry{bias del consumo}{190}
-\indexentry{bias del clan}{190}
-\indexentry{bias della fiducia sociale}{190}
-\indexentry{bias della felicità}{191}
-\indexentry{pessimismo intellettuale}{191}
-\indexentry{dissonanza cognitiva culturale}{191}
-\indexentry{bias di impoverimento culturale}{192}
-\indexentry{bias di standardizzazione linguistica}{193}
-\indexentry{bias della lingua dominante}{193}
-\indexentry{bias di cattiva fede culturale}{194}
-\indexentry{illusione di universalità}{194}
-\indexentry{bias del punto cieco}{194}
-\indexentry{sistemi operativi culturali}{195}
-\indexentry{intelligenza culturale}{195}
-\indexentry{agilità cognitiva}{195}
-\indexentry{umiltà linguistica}{195}
-\indexentry{bias cognitivi}{197}
-\indexentry{bias di gruppo}{197}
-\indexentry{finestra critica}{198}
-\indexentry{plasticità cerebrale}{198}
-\indexentry{fobie infantili}{198}
-\indexentry{neuroni specchio}{199}
-\indexentry{contagio cognitivo}{199}
-\indexentry{profezia che si autoavvera}{200}
-\indexentry{bias di conferma}{200}
-\indexentry{categorizzazione}{200}
-\indexentry{effetto rimbalzo}{201}
-\indexentry{plasticità cerebrale}{202}
-\indexentry{ingroup vs outgroup}{202}
-\indexentry{stereotipi di genere}{202}
-\indexentry{contagio sociale}{202}
-\indexentry{meta-consapevolezza}{203}
-\indexentry{riconoscimento di pattern}{362}
-\indexentry{creatività}{363}
-\indexentry{fiducia epistemica}{364}
-\indexentry{frammentazione cognitiva}{365}
-\indexentry{pensiero complesso}{367}
-\indexentry{ricerca del reale}{369}
-\indexentry{vulnerabilità}{371}
-\indexentry{pattern temporali}{376}
-\indexentry{sottoprodotto evolutivo}{377}
-\indexentry{coesione sociale}{377}
-\indexentry{segnale costoso}{379}
-\indexentry{brivido musicale}{379}
-\indexentry{anticipazione}{380}
-\indexentry{rete neurale distribuita}{381}
-\indexentry{percezione tonale}{382}
-\indexentry{pattern matematici}{383}
-\indexentry{pensiero ricorsivo}{383}
-\indexentry{regolazione emotiva}{384}
-\indexentry{prolattina}{385}
-\indexentry{assenza come presenza}{386}
-\indexentry{soglia neurologica}{386}
-\indexentry{sincronizzazione alfa}{386}
-\indexentry{mimesi computazionale}{387}
-\indexentry{processo creativo}{388}
-\indexentry{sincronizzazione AI-cervello}{389}
-\indexentry{problema difficile della coscienza}{390}
-\indexentry{esperienza soggettiva}{390}
-\indexentry{ignoranza volontaria}{399}
-\indexentry{distrazione cronica}{399}
-\indexentry{pigrizia cognitiva}{399}
-\indexentry{scelta consapevole}{400}
-\indexentry{asimmetria informativa}{401}
-\indexentry{ignoranza desiderata}{401}
-\indexentry{attenzione}{401}
-\indexentry{discernimento}{402}
-\indexentry{livellamento qualitativo}{402}
-\indexentry{pigrizia epistemologica}{402}
-\indexentry{nichilismo edonistico}{402}
-\indexentry{prospettiva umana}{403}
-\indexentry{gusto estetico}{404}
-\indexentry{cultura personale}{404}
-\indexentry{senso estetico}{404}
-\indexentry{idee originali}{404}
-\indexentry{visione artistica}{404}
-\indexentry{ignoranza volontaria}{405}
-\indexentry{distrazione}{405}
-\indexentry{pigrizia cognitiva}{405}
-\indexentry{scelta consapevole}{406}
-\indexentry{responsabilità individuale}{406}
+\indexentry{bias di autorità}{4}
+\indexentry{euristica dell'affetto}{31}
+\indexentry{generation effect}{39}
+\indexentry{bias di coerenza}{42}
+\indexentry{riconoscimento di pattern}{51}
+\indexentry{paradosso della scelta}{52}
+\indexentry{punto cieco dei bias}{52}
+\indexentry{effetto Dunning-Kruger}{54}
+\indexentry{superiorità illusoria}{54}
+\indexentry{sistema di coerenza narrativa}{54}
+\indexentry{dissonanza cognitiva}{55}
+\indexentry{sistema immunitario dell'ego}{55}
+\indexentry{ragionamento motivato}{55}
+\indexentry{distorsione retrospettiva}{56}
+\indexentry{illusione di razionalità}{60}
+\indexentry{effetto IKEA}{63}
+\indexentry{avversione alle perdite}{69}
+\indexentry{bias di conferma}{70}
+\indexentry{bias del gregge}{72}
+\indexentry{bias di disponibilità}{90}
+\indexentry{illusione di comprensione}{100}
+\indexentry{eccesso di fiducia (overconfidence)}{101}
+\indexentry{eccesso di fiducia (overconfidence)}{110}
+\indexentry{bias del sopravvissuto}{114}
+\indexentry{bias di disponibilità}{118}
+\indexentry{eccesso di fiducia (overconfidence)}{119}
+\indexentry{cognizione identity protective}{133}
+\indexentry{bias dello status quo}{134}
+\indexentry{effetto alone}{142}
+\indexentry{bias di autorità}{142}
+\indexentry{ragionamento motivato}{143}
+\indexentry{illusione di controllo}{157}
+\indexentry{eccesso di fiducia (overconfidence)}{162}
+\indexentry{bias di attribuzione fondamentale}{169}
+\indexentry{bias di controllo}{170}
+\indexentry{logica lineare}{171}
+\indexentry{logica circolare}{172}
+\indexentry{bias del risparmio}{174}
+\indexentry{bias del consumo}{174}
+\indexentry{bias del clan}{174}
+\indexentry{bias della fiducia sociale}{174}
+\indexentry{bias della felicità}{174}
+\indexentry{pessimismo intellettuale}{175}
+\indexentry{dissonanza cognitiva culturale}{175}
+\indexentry{bias di impoverimento culturale}{176}
+\indexentry{bias di standardizzazione linguistica}{176}
+\indexentry{bias della lingua dominante}{177}
+\indexentry{bias di cattiva fede culturale}{177}
+\indexentry{illusione di universalità}{177}
+\indexentry{bias del punto cieco}{177}
+\indexentry{bias cognitivi}{181}
+\indexentry{bias di gruppo}{181}
+\indexentry{finestra critica}{182}
+\indexentry{fobie infantili}{183}
+\indexentry{contagio cognitivo}{183}
+\indexentry{profezia che si autoavvera}{184}
+\indexentry{bias di conferma}{184}
+\indexentry{effetto rimbalzo}{185}
+\indexentry{ingroup vs outgroup}{186}
+\indexentry{stereotipi di genere}{186}
+\indexentry{contagio sociale}{186}
+\indexentry{bias del sopravvissuto}{205}
+\indexentry{illusione di razionalità}{218}
+\indexentry{bias di antropomorfizzazione}{224}
+\indexentry{bias di disponibilità}{224}
+\indexentry{bias di negatività}{225}
+\indexentry{sycophancy (piaggeria)}{226}
+\indexentry{bias di ottimismo}{226}
+\indexentry{bias di autorità}{228}
+\indexentry{eccesso di fiducia (overconfidence)}{229}
+\indexentry{bias di rappresentatività}{229}
+\indexentry{sycophancy (piaggeria)}{234}
+\indexentry{bias del cinismo}{240}
+\indexentry{bias di negatività}{275}
+\indexentry{bias di ottimismo}{294}
+\indexentry{bias di disponibilità}{295}
+\indexentry{eccesso di fiducia (overconfidence)}{295}
+\indexentry{bias di rappresentatività}{295}
+\indexentry{bias di disponibilità}{301}
+\indexentry{eccesso di fiducia (overconfidence)}{303}
+\indexentry{riconoscimento di pattern}{310}
+\indexentry{ignoranza volontaria}{321}
+\indexentry{distrazione cronica}{321}
+\indexentry{pigrizia cognitiva}{321}
+\indexentry{ignoranza desiderata}{324}
+\indexentry{pigrizia epistemologica}{325}
+\indexentry{nichilismo edonistico}{325}
+\indexentry{riconoscimento di pattern}{326}
+\indexentry{ignoranza volontaria}{328}
+\indexentry{distrazione}{328}
+\indexentry{pigrizia cognitiva}{328}
+\indexentry{eccesso di fiducia (overconfidence)}{334}
+\indexentry{bias del cinismo}{336}
+\indexentry{bias di antropomorfizzazione}{349}
+\indexentry{sycophancy (piaggeria)}{349}
