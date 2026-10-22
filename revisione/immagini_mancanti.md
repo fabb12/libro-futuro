@@ -2,7 +2,7 @@
 
 Il libro compila anche senza questi file: nel PDF compare un riquadro segnaposto con la descrizione. Quando aggiungi in `images/` un file con **esattamente il nome indicato**, l'immagine appare da sola, senza toccare il testo. Se preferisci un altro nome o formato, cambia il nome nella macro `\immagine{...}` del file indicato.
 
-Totale: **32** immagini.
+Totale: **34** immagini.
 
 | Cap. | File del capitolo | Nome file da usare in `images/` | Cosa deve mostrare | Didascalia attuale |
 |---|---|---|---|---|
@@ -59,3 +59,5 @@ Totale: **32** immagini.
 - `prima_ora.png`
 - `rivoluzioni.png`
 - `tempo_soggettivo.png`
+
+Aggiunte (capitoli senza figure): `inondazione_slop.png` (cap. 31, chapter39.tex) e `archivio_distribuito.png` (cap. 34, chapter26.tex). Totale ora: **34**.
