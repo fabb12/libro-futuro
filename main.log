@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.10.22)  22 OCT 2026 21:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.10.22)  23 OCT 2026 08:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1515,20 +1515,19 @@ LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/n' will be
 
 [5
 
-] [6] [7] [8] [9] [10] [11] [12])
+] [6] [7] [8] [9] [10] [11])
 \tf@toc=\write7
 \openout7 = `main.toc'.
 
- [13] [14
+ [12] (./frontmatter/preface.tex [13
 
-] (./frontmatter/preface.tex
-[15
 
-] [16]
+] [14]
 LaTeX Font Info:    Font shape `T1/SourceSerifPro-LF/m/it' will be
 (Font)              scaled to size 10.95pt on input line 26.
-) [17{/usr/share/texlive/texmf-dist/fonts/enc/dvips/sourceserifpro/a_5mjl2d.enc
-}] [18
+)
+[15{/usr/share/texlive/texmf-dist/fonts/enc/dvips/sourceserifpro/a_5mjl2d.enc}]
+[16
 
 ] (./content/prologo.tex
 LaTeX Font Info:    Font shape `T1/SourceSerifPro-LF/m/n' will be
@@ -1548,15 +1547,14 @@ LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/n' aliased to
 (Font)              `T1/SourceSansPro-TLF/regular/n' on input line 18.
 LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/n' will be
 (Font)              scaled to size 9.0pt on input line 18.
- [2] [3] [4] [5] [6] [7]) [8]
-(./parts/part1.tex
+ [2] [3] [4] [5] [6] [7]) [8] (./parts/part1.tex
 LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/n' aliased to
 (Font)              `T1/SourceSansPro-TLF/regular/n' on input line 14.
 LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/n' will be
 (Font)              scaled to size 20.74pt on input line 14.
 LaTeX Font Info:    Font shape `T1/SourceSerifPro-LF/m/it' will be
 (Font)              scaled to size 12.0pt on input line 31.
- [9
+[9
 
 
 ] [10
@@ -1576,7 +1574,7 @@ LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/bold/n' will be
 [11
 
 ] [12]
-<images/cambriano_alieni.jpg, id=657, 809.0225pt x 619.31375pt>
+<images/cambriano_alieni.jpg, id=620, 809.0225pt x 619.31375pt>
 File: images/cambriano_alieni.jpg Graphic file (type jpg)
 <use images/cambriano_alieni.jpg>
 Package pdftex.def Info: images/cambriano_alieni.jpg  used on input line 30.
@@ -1596,7 +1594,7 @@ LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/b/n' aliased to
 LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/bold/n' will be
 (Font)              scaled to size 8.0pt on input line 31.
 [13 <./images/cambriano_alieni.jpg>] [14]
-<images/bias_condominio3.jpg, id=676, 2007.5pt x 1541.76pt>
+<images/bias_condominio3.jpg, id=638, 2007.5pt x 1541.76pt>
 File: images/bias_condominio3.jpg Graphic file (type jpg)
 <use images/bias_condominio3.jpg>
 Package pdftex.def Info: images/bias_condominio3.jpg  used on input line 57.
@@ -1608,7 +1606,7 @@ Package caption Warning: The option `hypcap=true' will be ignored for this
 See the caption package documentation for explanation.
 
 [15 <./images/bias_condominio3.jpg>] [16]
-<images/tre_mappe_anima.png, id=692, 1156.32pt x 2040.8747pt>
+<images/tre_mappe_anima.png, id=655, 1156.32pt x 2040.8747pt>
 File: images/tre_mappe_anima.png Graphic file (type png)
 <use images/tre_mappe_anima.png>
 Package pdftex.def Info: images/tre_mappe_anima.png  used on input line 112.
@@ -1623,7 +1621,7 @@ Capitolo 2.
 [21
 
 ]
-<images/prima_dopo2.png, id=726, 1541.76pt x 1027.84pt>
+<images/prima_dopo2.png, id=689, 1541.76pt x 1027.84pt>
 File: images/prima_dopo2.png Graphic file (type png)
 <use images/prima_dopo2.png>
 Package pdftex.def Info: images/prima_dopo2.png  used on input line 18.
@@ -1641,13 +1639,13 @@ Pro-LF/m/it/9 (+10) Ethi-ca, or-di-ne geo-me-tri-co de-mon-stra-ta\T1/SourceSer
 ifPro-LF/m/n/9 (+10) . Pub-bli-ca-zio-ne po-stu-ma,
  []
 
-<images/bilancia_allarmi.png, id=736, 1027.84pt x 1541.76pt>
+<images/bilancia_allarmi.png, id=699, 1027.84pt x 1541.76pt>
 File: images/bilancia_allarmi.png Graphic file (type png)
 <use images/bilancia_allarmi.png>
 Package pdftex.def Info: images/bilancia_allarmi.png  used on input line 35.
 (pdftex.def)             Requested size: 320.09132pt x 480.12852pt.
 [23] [24 <./images/bilancia_allarmi.png (PNG copy)>]
-<images/tempi_amigdala.png, id=753, 1027.84pt x 1027.84pt>
+<images/tempi_amigdala.png, id=716, 1027.84pt x 1027.84pt>
 File: images/tempi_amigdala.png Graphic file (type png)
 <use images/tempi_amigdala.png>
 Package pdftex.def Info: images/tempi_amigdala.png  used on input line 57.
@@ -1669,7 +1667,7 @@ rd and de-ci-sion si-gnals: From theo-ries to da-ta.
 ]
 Capitolo 3.
 [35] [36]
-<images/infografica_cap3_1.png, id=862, 1156.32pt x 2034.85219pt>
+<images/infografica_cap3_1.png, id=825, 1156.32pt x 2034.85219pt>
 File: images/infografica_cap3_1.png Graphic file (type png)
 <use images/infografica_cap3_1.png>
 Package pdftex.def Info: images/infografica_cap3_1.png  used on input line 26.
@@ -1686,7 +1684,7 @@ nal of
  []
 
 [43] [44]
-<images/Perché_gli_anni_volano_.png, id=933, 1156.32pt x 2040.8747pt>
+<images/Perché_gli_anni_volano_.png, id=894, 1156.32pt x 2040.8747pt>
 File: images/Perché_gli_anni_volano_.png Graphic file (type png)
 <use images/Perché_gli_anni_volano_.png>
 Package pdftex.def Info: images/Perché_gli_anni_volano_.png  used on input lin
@@ -1709,7 +1707,7 @@ ifPro-LF/m/n/9 (+10) . Pub-bli-ca-zio-ne po-stu-ma,
  []
 
 [50] [51]
-<images/elefante_mahout.png, id=990, 1027.84pt x 1541.76pt>
+<images/elefante_mahout.png, id=953, 1027.84pt x 1541.76pt>
 File: images/elefante_mahout.png Graphic file (type png)
 <use images/elefante_mahout.png>
 Package pdftex.def Info: images/elefante_mahout.png  used on input line 34.
@@ -1742,7 +1740,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 
 [63] [64{/usr/share/texlive/texmf-dist/fonts/enc/dvips/sourcecodepro/a_lutrty.e
 nc}]
-<images/disso.png, id=1087, 1156.32pt x 2031.84094pt>
+<images/disso.png, id=1050, 1156.32pt x 2031.84094pt>
 File: images/disso.png Graphic file (type png)
 <use images/disso.png>
 Package pdftex.def Info: images/disso.png  used on input line 60.
@@ -1756,7 +1754,7 @@ Capitolo 6.
 [69
 
 ] [70]
-<images/tre_regole.png, id=1126, 2826.56pt x 1541.76pt>
+<images/tre_regole.png, id=1089, 2826.56pt x 1541.76pt>
 File: images/tre_regole.png Graphic file (type png)
 <use images/tre_regole.png>
 Package pdftex.def Info: images/tre_regole.png  used on input line 26.
@@ -1774,7 +1772,7 @@ ronto-mesolimbic net-works gui-de de-ci-sions about
  []
 
 [75] [76]
-<images/L_Espansione_del_Cerchio_Morale (1).png, id=1197, 1156.32pt x 2047.65pt
+<images/L_Espansione_del_Cerchio_Morale (1).png, id=1160, 1156.32pt x 2047.65pt
 >
 File: images/L_Espansione_del_Cerchio_Morale (1).png Graphic file (type png)
 <use images/L_Espansione_del_Cerchio_Morale (1).png>
@@ -1795,13 +1793,13 @@ Capitolo 7.
 [85
 
 ] [86]
-<images/piramide_wallace.png, id=1262, 1541.76pt x 2700.0875pt>
+<images/piramide_wallace.png, id=1223, 1541.76pt x 2700.0875pt>
 File: images/piramide_wallace.png Graphic file (type png)
 <use images/piramide_wallace.png>
 Package pdftex.def Info: images/piramide_wallace.png  used on input line 21.
 (pdftex.def)             Requested size: 284.52864pt x 498.27237pt.
  [87] [88 <./images/piramide_wallace.png>] [89] [90] [91]
-<images/1000087949.png, id=1301, 1541.76pt x 2762.32pt>
+<images/1000087949.png, id=1263, 1541.76pt x 2762.32pt>
 File: images/1000087949.png Graphic file (type png)
 <use images/1000087949.png>
 Package pdftex.def Info: images/1000087949.png  used on input line 64.
@@ -1813,13 +1811,13 @@ Capitolo 8.
 [97
 
 ]
-<images/1000088107.png, id=1339, 1027.84pt x 1541.76pt>
+<images/1000088107.png, id=1301, 1027.84pt x 1541.76pt>
 File: images/1000088107.png Graphic file (type png)
 <use images/1000088107.png>
 Package pdftex.def Info: images/1000088107.png  used on input line 12.
 (pdftex.def)             Requested size: 284.52864pt x 426.79659pt.
  [98] [99 <./images/1000088107.png (PNG copy)>] [100] [101] [102]
-<images/1000088109.png, id=1372, 851.18pt x 1268.74pt>
+<images/1000088109.png, id=1335, 851.18pt x 1268.74pt>
 File: images/1000088109.png Graphic file (type png)
 <use images/1000088109.png>
 Package pdftex.def Info: images/1000088109.png  used on input line 54.
@@ -1830,13 +1828,13 @@ Package pdftex.def Info: images/1000088109.png  used on input line 54.
 ]
 Capitolo 9.
 [107]
-<images/1000088133.png, id=1400, 770.88pt x 1381.16pt>
+<images/1000088133.png, id=1363, 770.88pt x 1381.16pt>
 File: images/1000088133.png Graphic file (type png)
 <use images/1000088133.png>
 Package pdftex.def Info: images/1000088133.png  used on input line 16.
 (pdftex.def)             Requested size: 284.52864pt x 509.77779pt.
  [108] [109 <./images/1000088133.png>] [110] [111]
-<images/1000088166.png, id=1424, 770.88pt x 1381.16pt>
+<images/1000088166.png, id=1387, 770.88pt x 1381.16pt>
 File: images/1000088166.png Graphic file (type png)
 <use images/1000088166.png>
 Package pdftex.def Info: images/1000088166.png  used on input line 54.
@@ -1847,7 +1845,7 @@ Package pdftex.def Info: images/1000088166.png  used on input line 54.
 ]
 Capitolo 10.
 [117] [118] [119]
-<images/1000088198.png, id=1472, 851.18pt x 1268.74pt>
+<images/1000088198.png, id=1435, 851.18pt x 1268.74pt>
 File: images/1000088198.png Graphic file (type png)
 <use images/1000088198.png>
 Package pdftex.def Info: images/1000088198.png  used on input line 30.
@@ -1859,7 +1857,7 @@ ce stan-co con una pri-ma im-pres-sio-ne
  []
 
 [120] [121 <./images/1000088198.png>] [122] [123] [124] [125]
-<images/1000088199.png, id=1520, 770.88pt x 1381.16pt>
+<images/1000088199.png, id=1483, 770.88pt x 1381.16pt>
 File: images/1000088199.png Graphic file (type png)
 <use images/1000088199.png>
 Package pdftex.def Info: images/1000088199.png  used on input line 70.
@@ -1875,19 +1873,19 @@ Underfull \hbox (badness 2142) in paragraph at lines 12--12
 i-ma-te Chan-ge Re-mains Top Glo-bal Th-reat Across
  []
 
-<images/1000000077.png, id=1544, 770.88pt x 1381.16pt>
+<images/1000000077.png, id=1507, 770.88pt x 1381.16pt>
 File: images/1000000077.png Graphic file (type png)
 <use images/1000000077.png>
 Package pdftex.def Info: images/1000000077.png  used on input line 18.
 (pdftex.def)             Requested size: 284.52864pt x 509.77779pt.
 [130] [131 <./images/1000000077.png>] [132] [133] [134]
-<images/1000000075.png, id=1577, 770.88pt x 1381.16pt>
+<images/1000000075.png, id=1539, 770.88pt x 1381.16pt>
 File: images/1000000075.png Graphic file (type png)
 <use images/1000000075.png>
 Package pdftex.def Info: images/1000000075.png  used on input line 49.
 (pdftex.def)             Requested size: 284.52864pt x 509.77779pt.
  [135] [136 <./images/1000000075.png>]
-<images/1000000076.png, id=1589, 770.88pt x 1381.16pt>
+<images/1000000076.png, id=1552, 770.88pt x 1381.16pt>
 File: images/1000000076.png Graphic file (type png)
 <use images/1000000076.png>
 Package pdftex.def Info: images/1000000076.png  used on input line 61.
@@ -1898,7 +1896,7 @@ Package pdftex.def Info: images/1000000076.png  used on input line 61.
 ]
 Capitolo 12.
 [141] [142]
-<images/1000000078.png, id=1624, 770.88pt x 1381.16pt>
+<images/1000000078.png, id=1586, 770.88pt x 1381.16pt>
 File: images/1000000078.png Graphic file (type png)
 <use images/1000000078.png>
 Package pdftex.def Info: images/1000000078.png  used on input line 20.
@@ -1909,13 +1907,13 @@ Underfull \hbox (badness 1655) in paragraph at lines 42--42
 Mass com-mu-ni-ca-tion and pa-ra-so-cial in-te-rac-tion.
  []
 
-<images/1000088805.png, id=1647, 770.88pt x 1381.16pt>
+<images/1000088805.png, id=1609, 770.88pt x 1381.16pt>
 File: images/1000088805.png Graphic file (type png)
 <use images/1000088805.png>
 Package pdftex.def Info: images/1000088805.png  used on input line 46.
 (pdftex.def)             Requested size: 284.52864pt x 509.77779pt.
 [146] [147 <./images/1000088805.png>] [148]
-<images/1000088806.png, id=1667, 770.88pt x 1381.16pt>
+<images/1000088806.png, id=1630, 770.88pt x 1381.16pt>
 File: images/1000088806.png Graphic file (type png)
 <use images/1000088806.png>
 Package pdftex.def Info: images/1000088806.png  used on input line 69.
@@ -1990,71 +1988,63 @@ See the caption package documentation for explanation.
 
 ]
 Capitolo 17.
-[191] [192] [193] [194] [195] [196] [197]) (./content/part2/chapter21.tex
+[191] [192] [193] [194] [195] [196] [197]) (./content/part2/chapter30.tex
 [198]
 Capitolo 18.
 [199
 
-] [200] [201] [202]) (./content/part2/chapter30.tex [203] [204
+] [200] [201] [202] [203] [204] [205] [206] [207]) (./parts/part3.tex
+[208] [209
 
-]
-Capitolo 19.
-[205] [206] [207] [208] [209] [210]) (./parts/part3.tex [211] [212
-
-] [213]
-[214
+] [210
 
 ]) (./content/part3/chapter11.tex
-Capitolo 20.
-[215
+Capitolo 19.
+[211
 
-] [216] [217] [218] [219] [220]) (./content/part3/chapter35.tex [221]
-[222
+] [212] [213] [214] [215] [216]) (./content/part3/chapter35.tex [217]
+[218
 
 ]
-Capitolo 21.
-[223] [224] [225]
-<images/no_memory.png, id=2227, 1027.84pt x 1541.76pt>
+Capitolo 20.
+[219] [220] [221]
+<images/no_memory.png, id=2171, 1027.84pt x 1541.76pt>
 File: images/no_memory.png Graphic file (type png)
 <use images/no_memory.png>
 Package pdftex.def Info: images/no_memory.png  used on input line 34.
 (pdftex.def)             Requested size: 284.52864pt x 426.79659pt.
- [226] [227 <./images/no_memory.png (PNG copy)>] [228]
-[229]) (./content/part3/chapter37.tex [230] [231] [232
+ [222] [223 <./images/no_memory.png (PNG copy)>] [224]
+[225] [226] [227] [228]) (./content/part3/chapter24.tex [229] [230
 
 ]
-Capitolo 22.
-[233]
-LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/b/n' aliased to
-(Font)              `T1/SourceSansPro-TLF/bold/n' on input line 30.
-LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/bold/n' will be
-(Font)              scaled to size 12.0pt on input line 30.
- [234] [235] [236]) (./content/part3/chapter24.tex [237] [238
-
-]
-Capitolo 23.
-[239] [240] [241] [242] [243]
+Capitolo 21.
+[231] [232] [233] [234] [235]
 LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/it' aliased to
 (Font)              `T1/SourceSansPro-TLF/regular/it' on input line 198.
 LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/it' will be
 (Font)              scaled to size 8.0pt on input line 198.
- [244] [245] [246]) (./content/part3/chapter27.tex [247] [248
+ [236] [237] [238]) (./content/part3/chapter27.tex [239] [240
 
 ]
-Capitolo 24.
-[249] [250] [251] [252] [253] [254]) (./content/part3/chapter38.tex [255]
-[256
+Capitolo 22.
+[241] [242] [243] [244] [245] [246]) (./content/part3/chapter38.tex [247]
+[248
 
 ]
-Capitolo 25.
-[257] [258] [259] [260] [261]) (./parts/part4.tex [262] [263
+Capitolo 23.
+[249]
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/b/n' aliased to
+(Font)              `T1/SourceSansPro-TLF/bold/n' on input line 18.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/bold/n' will be
+(Font)              scaled to size 12.0pt on input line 18.
+ [250] [251] [252] [253]) (./parts/part4.tex [254] [255
 
-] [264
+] [256
 
 ])
 (./content/part4/chapter10.tex
-Capitolo 26.
-[265
+Capitolo 24.
+[257
 
 ]
 Underfull \hbox (badness 1142) in paragraph at lines 10--10
@@ -2063,24 +2053,24 @@ ard pre-dic-tion er-ror co-ding. \T1/SourceSerifPro-LF/m/it/9 (+10) Dia-lo-gues
  in Cli-ni-cal
  []
 
-<images/hacking_cognitivo.png, id=2501, 1027.84pt x 1541.76pt>
+<images/hacking_cognitivo.png, id=2424, 1027.84pt x 1541.76pt>
 File: images/hacking_cognitivo.png Graphic file (type png)
 <use images/hacking_cognitivo.png>
 Package pdftex.def Info: images/hacking_cognitivo.png  used on input line 21.
 (pdftex.def)             Requested size: 213.39784pt x 320.08568pt.
-[266] [267 <./images/hacking_cognitivo.png (PNG copy)>] [268] [269] [270])
-(./content/part4/chapter31.tex [271] [272]
-Capitolo 27.
-[273
+[258] [259 <./images/hacking_cognitivo.png (PNG copy)>] [260] [261] [262])
+(./content/part4/chapter31.tex [263] [264]
+Capitolo 25.
+[265
 
-] [274] [275] [276] [277]) (./content/part4/chapter32.tex [278] [279]
-[280
+] [266] [267] [268] [269]) (./content/part4/chapter32.tex [270] [271]
+[272
 
 ]
-Capitolo 28.
-[281] [282] [283] [284] [285] [286] [287] [288] [289])
-(./content/part4/chapter33.tex [290]
-Capitolo 29.
+Capitolo 26.
+[273] [274] [275] [276] [277] [278] [279] [280] [281])
+(./content/part4/chapter33.tex [282]
+Capitolo 27.
 
 Underfull \hbox (badness 1019) in paragraph at lines 8--8
 \T1/SourceSerifPro-LF/m/n/9 (+10) ses^^T. \T1/SourceSerifPro-LF/m/it/9 (+10) Sc
@@ -2088,53 +2078,53 @@ ien-ce\T1/SourceSerifPro-LF/m/n/9 (+10) , 185(4157), 1124-1131. Que-sto pa-per
 se-mi-na-le ha ri-vo-lu-zio-na-to la no-stra
  []
 
-[291
+[283
 
-] [292] [293] [294]
+] [284] [285] [286]
 Underfull \hbox (badness 1796) in paragraph at lines 43--43
 [][][][][]\T1/SourceSerifPro-LF/m/n/9 (+10) Ariely, D. (2008). \T1/SourceSerifP
 ro-LF/m/it/9 (+10) Pre-dic-ta-bly Ir-ra-tio-nal: The Hid-den For-ces That Sha-p
 e Our De-ci-sions\T1/SourceSerifPro-LF/m/n/9 (+10) .
  []
 
-[295]
-<images/neurodiversita.png, id=2741, 1027.84pt x 1027.84pt>
+[287]
+<images/neurodiversita.png, id=2664, 1027.84pt x 1027.84pt>
 File: images/neurodiversita.png Graphic file (type png)
 <use images/neurodiversita.png>
 Package pdftex.def Info: images/neurodiversita.png  used on input line 60.
 (pdftex.def)             Requested size: 213.39784pt x 213.39044pt.
- [296] [297 <./images/neurodiversita.png (PNG copy)>] [298])
-(./content/part4/chapter17.tex [299] [300
+ [288] [289 <./images/neurodiversita.png (PNG copy)>] [290])
+(./content/part4/chapter17.tex [291] [292
+
+]
+Capitolo 28.
+[293] [294] [295] [296] [297] [298]) (./content/part4/chapter39.tex [299]
+[300
+
+]
+Capitolo 29.
+[301] [302] [303] [304] [305] [306] [307] [308] [309] [310])
+(./content/part4/chapter41.tex [311] [312
 
 ]
 Capitolo 30.
-[301] [302] [303] [304] [305] [306]) (./content/part4/chapter39.tex [307]
-[308
-
-]
+[313] [314] [315] [316] [317] [318] [319]) (./content/part4/chapter25.tex
+[320]
 Capitolo 31.
-[309] [310] [311] [312] [313] [314] [315] [316] [317] [318])
-(./content/part4/chapter41.tex [319] [320
+[321
 
-]
-Capitolo 32.
-[321] [322] [323] [324] [325] [326] [327]) (./content/part4/chapter25.tex
-[328]
-Capitolo 33.
-[329
-
-] [330] [331] [332]
-<images/kruger.png, id=2956, 997.47656pt x 931.98187pt>
+] [322] [323] [324]
+<images/kruger.png, id=2879, 997.47656pt x 931.98187pt>
 File: images/kruger.png Graphic file (type png)
 <use images/kruger.png>
 Package pdftex.def Info: images/kruger.png  used on input line 73.
 (pdftex.def)             Requested size: 284.52864pt x 265.84512pt.
- [333 <./images/kruger.png>] [334] [335] [336])
-(./content/part4/chapter26.tex [337] [338
+ [325 <./images/kruger.png>] [326] [327] [328])
+(./content/part4/chapter26.tex [329] [330
 
 ]
-Capitolo 34.
-[339] [340] [341] [342] [343] [344] [345] [346] [347]) [348]
+Capitolo 32.
+[331] [332] [333] [334] [335] [336] [337] [338] [339]) [340]
 (./appendix/dialogue.tex
 Overfull \hbox (13.13995pt too wide) in paragraph at lines 33--34
 [][] 
@@ -2144,28 +2134,28 @@ LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/b/n' aliased to
 (Font)              `T1/SourceSansPro-TLF/bold/n' on input line 37.
 LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/bold/n' will be
 (Font)              scaled to size 10.95pt on input line 37.
-[349
+[341
 
 
-] [350] [351] [352]
+] [342] [343] [344]
 Overfull \hbox (13.13995pt too wide) in paragraph at lines 79--81
 [][]
  []
 
-[353]
+[345]
 Overfull \hbox (13.13995pt too wide) in paragraph at lines 99--100
 [][] 
  []
 
-) [354] (./main.ind [355
+) [346] (./main.ind [347
 
 
 
-] [356] [357]) [358] (./cognitive.ind [359
+] [348] [349]) [350] (./cognitive.ind [351
 
 
 
-]) [360]
+]) [352]
 (./frontmatter/backpage.tex
 LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/it' aliased to
 (Font)              `T1/SourceSansPro-TLF/regular/it' on input line 21.
@@ -2205,7 +2195,7 @@ Missing character: There is no s in font SourceSansPro-Regular-tlf-ts1!
 Missing character: There is no 0 in font SourceSansPro-Regular-tlf-ts1!
 Missing character: There is no p in font SourceSansPro-Regular-tlf-ts1!
 Missing character: There is no t in font SourceSansPro-Regular-tlf-ts1!
-) [361
+) [353
 
 
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/sourcesanspro/a_5ponh6.enc}]
@@ -2226,10 +2216,10 @@ L3 programming layer <2024-01-22>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 37802 strings out of 475502
- 769662 string characters out of 5776332
+ 37741 strings out of 475502
+ 768709 string characters out of 5776332
  1943975 words of memory out of 5000000
- 57287 multiletter control sequences out of 15000+600000
+ 57258 multiletter control sequences out of 15000+600000
  1219998 words of font info for 582 fonts, out of 8000000 for 9000
  395 hyphenation exceptions out of 8191
  88i,14n,120p,1900b,832s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -2241,10 +2231,10 @@ sanspro/SourceSansPro-Regular.pfb></usr/share/texlive/texmf-dist/fonts/type1/ad
 obe/sourceserifpro/SourceSerifPro-It.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/adobe/sourceserifpro/SourceSerifPro-Regular.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/adobe/sourceserifpro/SourceSerifPro-Semibold.pfb>
-Output written on main.pdf (379 pages, 80405034 bytes).
+Output written on main.pdf (369 pages, 80396172 bytes).
 PDF statistics:
- 4116 PDF objects out of 4296 (max. 8388607)
- 3643 compressed objects within 37 object streams
- 1050 named destinations out of 1200 (max. 500000)
- 165432 words of extra memory for PDF output out of 184870 (max. 10000000)
+ 3992 PDF objects out of 4296 (max. 8388607)
+ 3530 compressed objects within 36 object streams
+ 1024 named destinations out of 1200 (max. 500000)
+ 165320 words of extra memory for PDF output out of 184870 (max. 10000000)
 

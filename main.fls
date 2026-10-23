@@ -783,11 +783,6 @@ INPUT ./content/part2/chapter29.tex
 INPUT ./content/part2/chapter29.tex
 INPUT ./content/part2/chapter29.tex
 INPUT content/part2/chapter29.tex
-INPUT ./content/part2/chapter21.tex
-INPUT ./content/part2/chapter21.tex
-INPUT ./content/part2/chapter21.tex
-INPUT ./content/part2/chapter21.tex
-INPUT content/part2/chapter21.tex
 INPUT ./content/part2/chapter30.tex
 INPUT ./content/part2/chapter30.tex
 INPUT ./content/part2/chapter30.tex
@@ -813,14 +808,6 @@ INPUT ./images/no_memory.png
 INPUT ./images/no_memory.png
 INPUT ./images/no_memory.png
 INPUT ./images/no_memory.png
-INPUT ./content/part3/chapter37.tex
-INPUT ./content/part3/chapter37.tex
-INPUT ./content/part3/chapter37.tex
-INPUT ./content/part3/chapter37.tex
-INPUT content/part3/chapter37.tex
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/sourcesanspro/SourceSansPro-Bold-tlf-t1.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/vf/adobe/sourcesanspro/SourceSansPro-Bold-tlf-t1.vf
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/sourcesanspro/SourceSansPro-Bold-tlf-t1--base.tfm
 INPUT ./content/part3/chapter24.tex
 INPUT ./content/part3/chapter24.tex
 INPUT ./content/part3/chapter24.tex
@@ -839,6 +826,9 @@ INPUT ./content/part3/chapter38.tex
 INPUT ./content/part3/chapter38.tex
 INPUT ./content/part3/chapter38.tex
 INPUT content/part3/chapter38.tex
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/sourcesanspro/SourceSansPro-Bold-tlf-t1.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/vf/adobe/sourcesanspro/SourceSansPro-Bold-tlf-t1.vf
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/sourcesanspro/SourceSansPro-Bold-tlf-t1--base.tfm
 INPUT ./parts/part4.tex
 INPUT ./parts/part4.tex
 INPUT ./parts/part4.tex
