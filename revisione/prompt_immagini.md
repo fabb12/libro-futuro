@@ -241,3 +241,17 @@ Per ogni immagine: incolla prima il **blocco di stile**, poi la riga «Soggetto�
 - **Soggetto (da incollare dopo il blocco di stile):** Diagramma circolare: al centro una convinzione da difendere; intorno a essa quattro frecce ad anello che collegano bias di conferma, effetto gregge, avversione alle perdite e punto cieco, ciascuno con una breve didascalia (cerco solo conferme, seguo chi la pensa come me, non abbandono ciò che ho già investito, io sono razionale), così da mostrare come si rinforzano a vicenda
 - **Testi in italiano da inserire:** solo le etichette citate nel soggetto tra «…»; se non ce ne sono, al massimo un titolo di 3-6 parole che riassuma la scena.
 
+
+### inondazione_slop.png  (cap. 31)
+
+- **File da salvare:** `images/inondazione_slop.png`  · **Capitolo:** `content/part4/chapter39.tex`
+- **Didascalia nel libro:** L'inondazione dell'AI slop: contenuti plausibili, abbondanti e a costo quasi nullo sommergono il poco che è curato.
+- **Soggetto (da incollare dopo il blocco di stile):** Una biblioteca invasa da una marea di fogli quasi identici che sale dagli scaffali; in primo piano un lettore cerca un libro autentico tra pile di copie plausibili. Etichette: «Quasi corretto», «Cento video mediocri», «Uno eccellente».
+- **Testi in italiano da inserire:** solo le etichette citate nel soggetto tra «…».
+
+### archivio_distribuito.png  (cap. 34)
+
+- **File da salvare:** `images/archivio_distribuito.png`  · **Capitolo:** `content/part4/chapter26.tex`
+- **Didascalia nel libro:** L'archivio distribuito: l'identità è custodita negli altri, non nei profili digitali.
+- **Soggetto (da incollare dopo il blocco di stile):** Una persona al centro collegata da fili sottili a molti volti e mani, ciascuno con un frammento luminoso del suo ricordo; a lato un server grigio e freddo con la scritta «Copia digitale». Etichette: «Archivio distribuito», «Copia digitale».
+- **Testi in italiano da inserire:** solo le etichette citate nel soggetto tra «…».
