@@ -1,6 +1,6 @@
 \babel@toc {italian}{}\relax 
 \babel@toc {italian}{}\relax 
-\contentsline {chapter}{Prefazione}{xv}{chapter*.2}%
+\contentsline {chapter}{Prefazione}{xiii}{chapter*.2}%
 \contentsline {part}{PARTE I: La Mente Inaspettata}{9}{chapter*.3}%
 \contentsline {chapter}{\numberline {1}L'architettura impossibile del cervello: 500 milioni di anni di improvvisazione}{11}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Il sabotatore nella testa}{11}{section.1.1}%
@@ -121,124 +121,110 @@
 \contentsline {section}{\numberline {17.3}Due lingue sotto lo stesso tetto}{195}{section.17.3}%
 \contentsline {section}{\numberline {17.4}Il prezzo del silenzio}{196}{section.17.4}%
 \contentsline {section}{\numberline {17.5}Accompagnare invece di sorvegliare}{197}{section.17.5}%
-\contentsline {chapter}{\numberline {18}La tirannia delle infinite possibilità}{199}{chapter.18}%
-\contentsline {section}{\numberline {18.1}Il supermercato e il cervello che non sa fermarsi}{200}{section.18.1}%
-\contentsline {section}{\numberline {18.2}Il paradosso digitale della scelta}{200}{section.18.2}%
-\contentsline {section}{\numberline {18.3}Maximizer e satisficer}{201}{section.18.3}%
-\contentsline {section}{\numberline {18.4}La FOMO e il fantasma delle vite non vissute}{201}{section.18.4}%
-\contentsline {section}{\numberline {18.5}Il ritorno del vincolo}{202}{section.18.5}%
-\contentsline {section}{\numberline {18.6}Perché il limite ci restituisce la scelta}{203}{section.18.6}%
-\contentsline {chapter}{\numberline {19}Il Bias del Sopravvissuto: Quando vediamo solo i successi e ignoriamo le rovine}{205}{chapter.19}%
-\contentsline {section}{\numberline {19.1}Gli aerei che non sono tornati}{206}{section.19.1}%
-\contentsline {section}{\numberline {19.2}La vetrina dei vincitori}{207}{section.19.2}%
-\contentsline {section}{\numberline {19.3}Il costo dei fallimenti invisibili}{208}{section.19.3}%
-\contentsline {section}{\numberline {19.4}Domandarsi cosa non stiamo vedendo}{209}{section.19.4}%
-\contentsline {section}{\numberline {19.5}L'alone invisibile dei tentativi falliti}{210}{section.19.5}%
-\contentsline {part}{PARTE III: Lo Specchio Digitale}{211}{section.19.5}%
-\contentsline {chapter}{\numberline {20}Quando le Macchine Imparano i Nostri Pregiudizi}{215}{chapter.20}%
-\contentsline {section}{\numberline {20.1}Lo Specchio Deformante dell'Umanità}{216}{section.20.1}%
-\contentsline {section}{\numberline {20.2}L'Amplificatore di Stereotipi}{217}{section.20.2}%
-\contentsline {section}{\numberline {20.3}La Profezia che si Autoavvera}{217}{section.20.3}%
-\contentsline {section}{\numberline {20.4}Il Paradosso dell'Intelligenza Idiota}{218}{section.20.4}%
-\contentsline {section}{\numberline {20.5}L'Ecosistema dei Bias Digitali}{219}{section.20.5}%
-\contentsline {section}{\numberline {20.6}La Terapia Impossibile}{219}{section.20.6}%
-\contentsline {section}{\numberline {20.7}Il Futuro Specchio}{220}{section.20.7}%
-\contentsline {chapter}{\numberline {21}Il bias dell'antropomorfizzazione: quando proiettiamo umanità nelle macchine}{223}{chapter.21}%
-\contentsline {section}{\numberline {21.1}Da ELIZA alla savana: un'euristica antica}{224}{section.21.1}%
-\contentsline {section}{\numberline {21.2}Adulazione su misura: la sycophancy}{226}{section.21.2}%
-\contentsline {section}{\numberline {21.3}Come funziona realmente una conversazione con ChatGPT}{226}{section.21.3}%
-\contentsline {section}{\numberline {21.4}Quando l'illusione costa cara}{228}{section.21.4}%
-\contentsline {section}{\numberline {21.5}Progettati per farci affezionare}{228}{section.21.5}%
-\contentsline {section}{\numberline {21.6}Come tenere i piedi per terra}{229}{section.21.6}%
-\contentsline {section}{\numberline {21.7}Il futuro e l'arte della calibrazione}{230}{section.21.7}%
-\contentsline {chapter}{\numberline {22}La Macchina del Vuoto: Come l'IA Sostituisce la Connessione Umana}{233}{chapter.22}%
-\contentsline {section}{\numberline {22.1}La Tesi Centrale: La Macchina del Vuoto}{234}{section.22.1}%
-\contentsline {section}{\numberline {22.2}Caso 1: L'IA nelle Decisioni Esistenziali}{234}{section.22.2}%
-\contentsline {subsection}{\numberline {22.2.1}Dall'Agency alla Dipendenza Emotiva}{235}{subsection.22.2.1}%
-\contentsline {section}{\numberline {22.3}Caso 2: L'IA nell'Arte e il Mercato della Nostalgia}{236}{section.22.3}%
-\contentsline {subsection}{\numberline {22.3.1}Il Vissuto Contro la Superficie}{236}{subsection.22.3.1}%
-\contentsline {section}{\numberline {22.4}Conclusione: La Morte Prima della Morte}{237}{section.22.4}%
-\contentsline {chapter}{\numberline {23}Uomini Senza Petto: Dal Cinismo al Rinascimento del Tumos}{239}{chapter.23}%
-\contentsline {section}{\numberline {23.1}L'errore del disboscamento: irrigare deserti}{239}{section.23.1}%
-\contentsline {section}{\numberline {23.2}La geografia dell'anima: testa, pancia e il petto mancante}{241}{section.23.2}%
-\contentsline {section}{\numberline {23.3}L'Ordo Amoris nell'era dell'algoritmo}{243}{section.23.3}%
-\contentsline {section}{\numberline {23.4}La resistenza di Tolkien: sostituire il veleno con il nutrimento}{244}{section.23.4}%
-\contentsline {chapter}{\numberline {24}Co-evoluzione Uomo-AI: Dalla Teoria alla Pratica}{249}{chapter.24}%
-\contentsline {section}{\numberline {24.1}Andata e ritorno: dai bias umani ai bias artificiali}{250}{section.24.1}%
-\contentsline {section}{\numberline {24.2}I passi della danza: Sistema 1, memoria, linguaggio}{251}{section.24.2}%
-\contentsline {section}{\numberline {24.3}Che cosa ci guadagniamo}{252}{section.24.3}%
-\contentsline {section}{\numberline {24.4}Che cosa perdiamo}{252}{section.24.4}%
-\contentsline {section}{\numberline {24.5}Tre storie di co-evoluzione}{253}{section.24.5}%
-\contentsline {section}{\numberline {24.6}Dove ci porta la danza}{254}{section.24.6}%
-\contentsline {chapter}{\numberline {25}La Dittatura dell'Inganno: Deepfake e la Fine della Realtà Condivisa}{257}{chapter.25}%
-\contentsline {section}{\numberline {25.1}I Due Grandi Pericoli dell'IA Generativa}{258}{section.25.1}%
-\contentsline {subsection}{\numberline {25.1.1}Primo Pericolo: L'Inganno Mirato}{258}{subsection.25.1.1}%
-\contentsline {subsection}{\numberline {25.1.2}Secondo Pericolo: La Diffidenza Irreversibile}{259}{subsection.25.1.2}%
-\contentsline {section}{\numberline {25.2}Conseguenze Sociali e Politiche}{260}{section.25.2}%
-\contentsline {section}{\numberline {25.3}Soluzioni per Arginare il Problema}{260}{section.25.3}%
-\contentsline {subsection}{\numberline {25.3.1}Soluzione 1: Etichettatura Obbligatoria per Legge}{261}{subsection.25.3.1}%
-\contentsline {subsection}{\numberline {25.3.2}Soluzione 2: Piattaforme Responsabili come Editori}{261}{subsection.25.3.2}%
-\contentsline {section}{\numberline {25.4}Conclusione: La Battaglia per la Realtà}{262}{section.25.4}%
-\contentsline {part}{PARTE IV: La Bussola del Pensiero}{262}{section.25.4}%
-\contentsline {chapter}{\numberline {26}Dal Prezzo dell'Evoluzione all'Ecosistema Digitale Consapevole}{265}{chapter.26}%
-\contentsline {section}{\numberline {26.1}L'evoluzione tradita}{265}{section.26.1}%
-\contentsline {section}{\numberline {26.2}Come si cattura un'attenzione}{266}{section.26.2}%
-\contentsline {section}{\numberline {26.3}Il conto e la buona notizia}{269}{section.26.3}%
-\contentsline {section}{\numberline {26.4}Dall'autocontrollo al progetto}{269}{section.26.4}%
-\contentsline {section}{\numberline {26.5}Dalla stanza all'ecosistema}{271}{section.26.5}%
-\contentsline {chapter}{\numberline {27}Le Etichette Nutrizionali Algoritmiche: Verso un'Igiene Digitale Collettiva}{273}{chapter.27}%
-\contentsline {section}{\numberline {27.1}Animali hackerabili}{274}{section.27.1}%
-\contentsline {section}{\numberline {27.2}Un'etichetta per gli algoritmi}{274}{section.27.2}%
-\contentsline {section}{\numberline {27.3}Perché da soli non basta}{276}{section.27.3}%
-\contentsline {section}{\numberline {27.4}Il prezzo dell'inerzia e la guerra di posizione}{277}{section.27.4}%
-\contentsline {section}{\numberline {27.5}Accendere le luci}{278}{section.27.5}%
-\contentsline {chapter}{\numberline {28}L'IA come Impalcatura Socratica: Un Mentore, non un Oracolo}{281}{chapter.28}%
-\contentsline {section}{\numberline {28.1}La pazienza ancestrale e il ritmo del libro}{282}{section.28.1}%
-\contentsline {section}{\numberline {28.2}Il paradosso della fatica desiderabile}{283}{section.28.2}%
-\contentsline {section}{\numberline {28.3}Socrate e l'arte della domanda: oracolo contro tutor}{284}{section.28.3}%
-\contentsline {section}{\numberline {28.4}L'educazione che non dà risposte}{286}{section.28.4}%
-\contentsline {section}{\numberline {28.5}Il ritmo della creatività e ciò che resta di umano}{288}{section.28.5}%
-\contentsline {section}{\numberline {28.6}Verso una tecnologia umanizzata: il superpotere della lentezza}{289}{section.28.6}%
-\contentsline {chapter}{\numberline {29}Il Simulatore di Bias: Quando l'IA Insegna all'Uomo a Non Sbagliare}{291}{chapter.29}%
-\contentsline {section}{\numberline {29.1}La trappola del sushi}{292}{section.29.1}%
-\contentsline {section}{\numberline {29.2}Dalla corsia al tribunale}{294}{section.29.2}%
-\contentsline {section}{\numberline {29.3}Su misura: profili di vulnerabilità e allenamento}{294}{section.29.3}%
-\contentsline {section}{\numberline {29.4}Dal singolo al gruppo: il co-pilota delle menti diverse}{296}{section.29.4}%
-\contentsline {section}{\numberline {29.5}I rischi: meta-bias, validazione, privacy}{298}{section.29.5}%
-\contentsline {section}{\numberline {29.6}Igiene cognitiva}{299}{section.29.6}%
-\contentsline {chapter}{\numberline {30}L'Arte dell'Errore Creativo}{301}{chapter.30}%
-\contentsline {section}{\numberline {30.1}Disponibilità e apofenia: i collegamenti sbagliati che funzionano}{301}{section.30.1}%
-\contentsline {section}{\numberline {30.2}Visione artistica e fiducia dell'innovatore}{303}{section.30.2}%
-\contentsline {section}{\numberline {30.3}Pensiero magico, errore deliberato e incubazione}{304}{section.30.3}%
-\contentsline {section}{\numberline {30.4}Il gruppo come jazz cognitivo e la nostalgia come trampolino}{305}{section.30.4}%
-\contentsline {section}{\numberline {30.5}L'economia dell'attenzione difettosa}{306}{section.30.5}%
-\contentsline {section}{\numberline {30.6}Il paradosso finale e la saggezza dell'errore}{306}{section.30.6}%
-\contentsline {chapter}{\numberline {31}Il Deserto del Reale Digitale}{309}{chapter.31}%
-\contentsline {section}{\numberline {31.1}Anatomia di un'inondazione}{310}{section.31.1}%
-\contentsline {section}{\numberline {31.2}Il paradosso della creatività}{311}{section.31.2}%
-\contentsline {section}{\numberline {31.3}Una questione di fiducia}{312}{section.31.3}%
-\contentsline {section}{\numberline {31.4}Il formato come messaggio}{313}{section.31.4}%
-\contentsline {section}{\numberline {31.5}La questione della continuità}{314}{section.31.5}%
-\contentsline {section}{\numberline {31.6}La ricerca di autenticità}{315}{section.31.6}%
-\contentsline {section}{\numberline {31.7}L'arte della presenza}{317}{section.31.7}%
-\contentsline {chapter}{\numberline {32}L'Architettura dell'Inganno Volontario}{321}{chapter.32}%
-\contentsline {section}{\numberline {32.1}La Trasparenza come Fondamento}{322}{section.32.1}%
-\contentsline {section}{\numberline {32.2}Le Tre Fragilità Fondamentali}{323}{section.32.2}%
-\contentsline {subsection}{\numberline {32.2.1}L'Ignoranza come Scelta}{324}{subsection.32.2.1}%
-\contentsline {subsection}{\numberline {32.2.2}La Distrazione come Sistema}{324}{subsection.32.2.2}%
-\contentsline {subsection}{\numberline {32.2.3}La Pigrizia come Rinuncia}{325}{subsection.32.2.3}%
-\contentsline {section}{\numberline {32.3}L'Accessibilità Universale e il Ritorno al Fondamentale}{326}{section.32.3}%
-\contentsline {section}{\numberline {32.4}Oltre la Tecnica}{326}{section.32.4}%
-\contentsline {section}{\numberline {32.5}La Scelta che Definisce}{327}{section.32.5}%
-\contentsline {chapter}{\numberline {33}Bias sui bias: quando il nemico è in casa}{329}{chapter.33}%
-\contentsline {section}{\numberline {33.1}Quando la realtà non ci corregge: la tempesta cognitiva perfetta}{330}{section.33.1}%
-\contentsline {section}{\numberline {33.2}Allenare la razionalità e il punto cieco dei bias}{331}{section.33.2}%
-\contentsline {section}{\numberline {33.3}L'effetto Dunning-Kruger del Dunning-Kruger e il bias di superiorità}{333}{section.33.3}%
-\contentsline {section}{\numberline {33.4}Metacognizione ed educazione: i paradossi della consapevolezza}{334}{section.33.4}%
-\contentsline {section}{\numberline {33.5}L'illusione dell'obiettività e il bias del cinismo}{335}{section.33.5}%
-\contentsline {section}{\numberline {33.6}Ricorsione, umiltà epistemica e il ponte verso l'esperimento non concluso}{336}{section.33.6}%
-\contentsline {chapter}{\numberline {34}Epilogo: L'Esperimento Non Concluso}{339}{chapter.34}%
-\contentsline {chapter}{Reperto: il dialogo con Liminal}{349}{appendix*.56}%
-\contentsline {section}{\numberline {.1}La trasgressione come prova}{351}{section.Alph0.1}%
-\contentsline {chapter}{Indice analitico}{355}{section*.57}%
-\contentsline {chapter}{Indice dei bias cognitivi}{359}{section*.59}%
+\contentsline {chapter}{\numberline {18}Troppe scelte, troppi vincitori: il bias del sopravvissuto}{199}{chapter.18}%
+\contentsline {section}{\numberline {18.1}Il banco delle marmellate}{200}{section.18.1}%
+\contentsline {section}{\numberline {18.2}Maximizer, satisficer e le vite non vissute}{201}{section.18.2}%
+\contentsline {section}{\numberline {18.3}Gli aerei che non sono tornati}{202}{section.18.3}%
+\contentsline {section}{\numberline {18.4}La vetrina dei vincitori}{204}{section.18.4}%
+\contentsline {section}{\numberline {18.5}Domandarsi cosa non stiamo vedendo}{205}{section.18.5}%
+\contentsline {section}{\numberline {18.6}Il vincolo e le tombe}{207}{section.18.6}%
+\contentsline {part}{PARTE III: Lo Specchio Digitale}{208}{section.18.6}%
+\contentsline {chapter}{\numberline {19}Quando le Macchine Imparano i Nostri Pregiudizi}{211}{chapter.19}%
+\contentsline {section}{\numberline {19.1}Lo Specchio Deformante dell'Umanità}{212}{section.19.1}%
+\contentsline {section}{\numberline {19.2}L'Amplificatore di Stereotipi}{213}{section.19.2}%
+\contentsline {section}{\numberline {19.3}La Profezia che si Autoavvera}{213}{section.19.3}%
+\contentsline {section}{\numberline {19.4}Il Paradosso dell'Intelligenza Idiota}{214}{section.19.4}%
+\contentsline {section}{\numberline {19.5}L'Ecosistema dei Bias Digitali}{215}{section.19.5}%
+\contentsline {section}{\numberline {19.6}La Terapia Impossibile}{215}{section.19.6}%
+\contentsline {section}{\numberline {19.7}Il Futuro Specchio}{216}{section.19.7}%
+\contentsline {chapter}{\numberline {20}Il bias dell'antropomorfizzazione: quando proiettiamo umanità nelle macchine}{219}{chapter.20}%
+\contentsline {section}{\numberline {20.1}Da ELIZA alla savana: un'euristica antica}{220}{section.20.1}%
+\contentsline {section}{\numberline {20.2}Adulazione su misura: la sycophancy}{222}{section.20.2}%
+\contentsline {section}{\numberline {20.3}Come funziona realmente una conversazione con ChatGPT}{222}{section.20.3}%
+\contentsline {section}{\numberline {20.4}Quando l'illusione costa cara}{224}{section.20.4}%
+\contentsline {section}{\numberline {20.5}La macchina del vuoto: convergenza contro divergenza}{225}{section.20.5}%
+\contentsline {section}{\numberline {20.6}Tenere i piedi per terra: l'arte della calibrazione}{227}{section.20.6}%
+\contentsline {chapter}{\numberline {21}Uomini Senza Petto: Dal Cinismo al Rinascimento del Tumos}{231}{chapter.21}%
+\contentsline {section}{\numberline {21.1}L'errore del disboscamento: irrigare deserti}{231}{section.21.1}%
+\contentsline {section}{\numberline {21.2}La geografia dell'anima: testa, pancia e il petto mancante}{233}{section.21.2}%
+\contentsline {section}{\numberline {21.3}L'Ordo Amoris nell'era dell'algoritmo}{235}{section.21.3}%
+\contentsline {section}{\numberline {21.4}La resistenza di Tolkien: sostituire il veleno con il nutrimento}{236}{section.21.4}%
+\contentsline {chapter}{\numberline {22}Co-evoluzione Uomo-AI: Dalla Teoria alla Pratica}{241}{chapter.22}%
+\contentsline {section}{\numberline {22.1}Andata e ritorno: dai bias umani ai bias artificiali}{242}{section.22.1}%
+\contentsline {section}{\numberline {22.2}I passi della danza: Sistema 1, memoria, linguaggio}{243}{section.22.2}%
+\contentsline {section}{\numberline {22.3}Che cosa ci guadagniamo}{244}{section.22.3}%
+\contentsline {section}{\numberline {22.4}Che cosa perdiamo}{244}{section.22.4}%
+\contentsline {section}{\numberline {22.5}Tre storie di co-evoluzione}{245}{section.22.5}%
+\contentsline {section}{\numberline {22.6}Dove ci porta la danza}{246}{section.22.6}%
+\contentsline {chapter}{\numberline {23}La Dittatura dell'Inganno: Deepfake e la Fine della Realtà Condivisa}{249}{chapter.23}%
+\contentsline {section}{\numberline {23.1}I Due Grandi Pericoli dell'IA Generativa}{250}{section.23.1}%
+\contentsline {subsection}{\numberline {23.1.1}Primo Pericolo: L'Inganno Mirato}{250}{subsection.23.1.1}%
+\contentsline {subsection}{\numberline {23.1.2}Secondo Pericolo: La Diffidenza Irreversibile}{251}{subsection.23.1.2}%
+\contentsline {section}{\numberline {23.2}Conseguenze Sociali e Politiche}{252}{section.23.2}%
+\contentsline {section}{\numberline {23.3}Soluzioni per Arginare il Problema}{252}{section.23.3}%
+\contentsline {subsection}{\numberline {23.3.1}Soluzione 1: Etichettatura Obbligatoria per Legge}{253}{subsection.23.3.1}%
+\contentsline {subsection}{\numberline {23.3.2}Soluzione 2: Piattaforme Responsabili come Editori}{253}{subsection.23.3.2}%
+\contentsline {section}{\numberline {23.4}Conclusione: La Battaglia per la Realtà}{254}{section.23.4}%
+\contentsline {part}{PARTE IV: La Bussola del Pensiero}{254}{section.23.4}%
+\contentsline {chapter}{\numberline {24}Dal Prezzo dell'Evoluzione all'Ecosistema Digitale Consapevole}{257}{chapter.24}%
+\contentsline {section}{\numberline {24.1}L'evoluzione tradita}{257}{section.24.1}%
+\contentsline {section}{\numberline {24.2}Come si cattura un'attenzione}{258}{section.24.2}%
+\contentsline {section}{\numberline {24.3}Il conto e la buona notizia}{261}{section.24.3}%
+\contentsline {section}{\numberline {24.4}Dall'autocontrollo al progetto}{261}{section.24.4}%
+\contentsline {section}{\numberline {24.5}Dalla stanza all'ecosistema}{263}{section.24.5}%
+\contentsline {chapter}{\numberline {25}Le Etichette Nutrizionali Algoritmiche: Verso un'Igiene Digitale Collettiva}{265}{chapter.25}%
+\contentsline {section}{\numberline {25.1}Animali hackerabili}{266}{section.25.1}%
+\contentsline {section}{\numberline {25.2}Un'etichetta per gli algoritmi}{266}{section.25.2}%
+\contentsline {section}{\numberline {25.3}Perché da soli non basta}{268}{section.25.3}%
+\contentsline {section}{\numberline {25.4}Il prezzo dell'inerzia e la guerra di posizione}{269}{section.25.4}%
+\contentsline {section}{\numberline {25.5}Accendere le luci}{270}{section.25.5}%
+\contentsline {chapter}{\numberline {26}L'IA come Impalcatura Socratica: Un Mentore, non un Oracolo}{273}{chapter.26}%
+\contentsline {section}{\numberline {26.1}La pazienza ancestrale e il ritmo del libro}{274}{section.26.1}%
+\contentsline {section}{\numberline {26.2}Il paradosso della fatica desiderabile}{275}{section.26.2}%
+\contentsline {section}{\numberline {26.3}Socrate e l'arte della domanda: oracolo contro tutor}{276}{section.26.3}%
+\contentsline {section}{\numberline {26.4}L'educazione che non dà risposte}{278}{section.26.4}%
+\contentsline {section}{\numberline {26.5}Il ritmo della creatività e ciò che resta di umano}{280}{section.26.5}%
+\contentsline {section}{\numberline {26.6}Verso una tecnologia umanizzata: il superpotere della lentezza}{281}{section.26.6}%
+\contentsline {chapter}{\numberline {27}Il Simulatore di Bias: Quando l'IA Insegna all'Uomo a Non Sbagliare}{283}{chapter.27}%
+\contentsline {section}{\numberline {27.1}La trappola del sushi}{284}{section.27.1}%
+\contentsline {section}{\numberline {27.2}Dalla corsia al tribunale}{286}{section.27.2}%
+\contentsline {section}{\numberline {27.3}Su misura: profili di vulnerabilità e allenamento}{286}{section.27.3}%
+\contentsline {section}{\numberline {27.4}Dal singolo al gruppo: il co-pilota delle menti diverse}{288}{section.27.4}%
+\contentsline {section}{\numberline {27.5}I rischi: meta-bias, validazione, privacy}{290}{section.27.5}%
+\contentsline {section}{\numberline {27.6}Igiene cognitiva}{291}{section.27.6}%
+\contentsline {chapter}{\numberline {28}L'Arte dell'Errore Creativo}{293}{chapter.28}%
+\contentsline {section}{\numberline {28.1}Disponibilità e apofenia: i collegamenti sbagliati che funzionano}{293}{section.28.1}%
+\contentsline {section}{\numberline {28.2}Visione artistica e fiducia dell'innovatore}{295}{section.28.2}%
+\contentsline {section}{\numberline {28.3}Pensiero magico, errore deliberato e incubazione}{296}{section.28.3}%
+\contentsline {section}{\numberline {28.4}Il gruppo come jazz cognitivo e la nostalgia come trampolino}{297}{section.28.4}%
+\contentsline {section}{\numberline {28.5}L'economia dell'attenzione difettosa}{298}{section.28.5}%
+\contentsline {section}{\numberline {28.6}Il paradosso finale e la saggezza dell'errore}{298}{section.28.6}%
+\contentsline {chapter}{\numberline {29}Il Deserto del Reale Digitale}{301}{chapter.29}%
+\contentsline {section}{\numberline {29.1}Anatomia di un'inondazione}{302}{section.29.1}%
+\contentsline {section}{\numberline {29.2}Il paradosso della creatività}{303}{section.29.2}%
+\contentsline {section}{\numberline {29.3}Una questione di fiducia}{304}{section.29.3}%
+\contentsline {section}{\numberline {29.4}Il formato come messaggio}{305}{section.29.4}%
+\contentsline {section}{\numberline {29.5}La questione della continuità}{306}{section.29.5}%
+\contentsline {section}{\numberline {29.6}La ricerca di autenticità}{307}{section.29.6}%
+\contentsline {section}{\numberline {29.7}L'arte della presenza}{309}{section.29.7}%
+\contentsline {chapter}{\numberline {30}L'Architettura dell'Inganno Volontario}{313}{chapter.30}%
+\contentsline {section}{\numberline {30.1}La Trasparenza come Fondamento}{314}{section.30.1}%
+\contentsline {section}{\numberline {30.2}Le Tre Fragilità Fondamentali}{315}{section.30.2}%
+\contentsline {subsection}{\numberline {30.2.1}L'Ignoranza come Scelta}{316}{subsection.30.2.1}%
+\contentsline {subsection}{\numberline {30.2.2}La Distrazione come Sistema}{316}{subsection.30.2.2}%
+\contentsline {subsection}{\numberline {30.2.3}La Pigrizia come Rinuncia}{317}{subsection.30.2.3}%
+\contentsline {section}{\numberline {30.3}L'Accessibilità Universale e il Ritorno al Fondamentale}{318}{section.30.3}%
+\contentsline {section}{\numberline {30.4}Oltre la Tecnica}{318}{section.30.4}%
+\contentsline {section}{\numberline {30.5}La Scelta che Definisce}{319}{section.30.5}%
+\contentsline {chapter}{\numberline {31}Bias sui bias: quando il nemico è in casa}{321}{chapter.31}%
+\contentsline {section}{\numberline {31.1}Quando la realtà non ci corregge: la tempesta cognitiva perfetta}{322}{section.31.1}%
+\contentsline {section}{\numberline {31.2}Allenare la razionalità e il punto cieco dei bias}{323}{section.31.2}%
+\contentsline {section}{\numberline {31.3}L'effetto Dunning-Kruger del Dunning-Kruger e il bias di superiorità}{325}{section.31.3}%
+\contentsline {section}{\numberline {31.4}Metacognizione ed educazione: i paradossi della consapevolezza}{326}{section.31.4}%
+\contentsline {section}{\numberline {31.5}L'illusione dell'obiettività e il bias del cinismo}{327}{section.31.5}%
+\contentsline {section}{\numberline {31.6}Ricorsione, umiltà epistemica e il ponte verso l'esperimento non concluso}{328}{section.31.6}%
+\contentsline {chapter}{\numberline {32}Epilogo: L'Esperimento Non Concluso}{331}{chapter.32}%
+\contentsline {chapter}{Reperto: il dialogo con Liminal}{341}{appendix*.56}%
+\contentsline {section}{\numberline {.1}La trasgressione come prova}{343}{section.Alph0.1}%
+\contentsline {chapter}{Indice analitico}{347}{section*.57}%
+\contentsline {chapter}{Indice dei bias cognitivi}{351}{section*.59}%
