@@ -6,7 +6,7 @@
 	
 	% Sfondo a tutta pagina
 	\AddToShipoutPictureBG*{%
-		\AtPageLowerLeft{\includegraphics[width=\paperwidth,height=\paperheight]{Cover.png}}%
+		\AtPageLowerLeft{\makebox[\paperwidth][c]{\includegraphics[height=\paperheight,keepaspectratio=false]{Cover.png}}}%
 	}
 	
 	% --- BLOCCO TITOLO + SOTTOTITOLO CON RETTANGOLO TRASPARENTE ---

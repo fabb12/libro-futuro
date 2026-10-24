@@ -2,7 +2,7 @@
 
 Il libro compila anche senza questi file: nel PDF compare un riquadro segnaposto con la descrizione. Quando aggiungi in `images/` un file con **esattamente il nome indicato**, l'immagine appare da sola, senza toccare il testo. Se preferisci un altro nome o formato, cambia il nome nella macro `\immagine{...}` del file indicato.
 
-Ancora da aggiungere: **14** immagini (le altre 20 sono già state inserite).
+Ancora da aggiungere: **13** immagini (le altre 21 sono già state inserite).
 
 | Cap. | File del capitolo | Nome file da usare in `images/` | Cosa deve mostrare | Didascalia attuale |
 |---|---|---|---|---|
@@ -14,7 +14,6 @@ Ancora da aggiungere: **14** immagini (le altre 20 sono già state inserite).
 | 17 | `content/part2/chapter29.tex` | `cap29_educazione_bidirezionale.png` | Schema circolare con genitori e figli ai due lati e frecce in entrambe le direzioni: i genitori portano saggezza relazionale e valutazione delle conseguenze a lungo termine, i figli competenze tecniche e linguaggi digitali. Al centro attività condivise di apprendimento collaborativo (alfabetizzazione digitale familiare). | Strategie di apprendimento collaborativo intergenerazionale per superare il bias di ancoraggio |
 | 17 | `content/part2/chapter29.tex` | `cap29_protocollo_assessment.png` | Diagramma di flusso per professionisti: dall'osservazione della famiglia alla domanda «il bias di ancoraggio genitoriale è presente?», con passaggi di raccolta della storia digitale dei genitori, confronto con le esperienze dei figli, valutazione dell'impatto sulla relazione e scelta dell'intervento (psicoeducazione, mediazione attiva, invio). | Protocollo di assessment per professionisti: identificazione e valutazione del bias di ancoraggio nelle dinamiche familiari |
 | 19 | `content/part2/chapter30.tex` | `sopravvissuto_aerei_wald.png` | La sagoma di un bombardiere della Seconda guerra mondiale vista dall'alto, con puntini rossi che segnano i fori di proiettile sugli aerei rientrati: fitti su ali e fusoliera, quasi assenti su motori e cabina di pilotaggio. Accanto, la stessa sagoma con le zone vuote evidenziate in un cerchio e la didascalia «dove gli aerei colpiti non sono tornati». | Il ragionamento di Abraham Wald: i fori sugli aerei rientrati mostrano dove si può essere colpiti e sopravvivere, non dove si deve rinforzare. |
-| 23 | `content/part3/chapter24.tex` | `uomo_senza_petto.png` | L'«uomo senza petto» di Lewis: una figura che possiede intelletto e istinti, ma ha perduto il centro emotivo che le tiene insieme. Una metafora per la crisi del carattere nell'era digitale. | L'«uomo senza petto» di Lewis: una figura che possiede intelletto e istinti, ma ha perduto il centro emotivo che le tiene insieme. Una metafora per la crisi del carattere nell'era digitale. |
 | 23 | `content/part3/chapter24.tex` | `ordo_amoris_algoritmo.png` | L'algoritmo di raccomandazione come distorsore dell'\textit{ordo amoris}: progettato per amplificare istinti primari, bypassa il petto e indebolisce la capacità di percepire valori autentici. | L'algoritmo di raccomandazione come distorsore dell'\textit{ordo amoris}: progettato per amplificare istinti primari, bypassa il petto e indebolisce la capacità di percepire valori autentici. |
 | 23 | `content/part3/chapter24.tex` | `tolkien_mordor.png` | Il fango di Mordor come metafora pedagogica: la bellezza conquistata con fatica, l'amicizia come sacrificio, l'eroismo fragile. Il contrario esatto della gratificazione istantanea digitale. | Il fango di Mordor come metafora pedagogica: la bellezza conquistata con fatica, l'amicizia come sacrificio, l'eroismo fragile. Il contrario esatto della gratificazione istantanea digitale. |
 | 26 | `content/part3/chapter38.tex` | `deepfake_prova_percettiva.png` | Un fotogramma video che si «sfalda» a metà: a sinistra un volto realistico in un telegiornale, a destra lo stesso volto come mappa di punti, maschera e forme d'onda della voce clonata, per mostrare come volto e voce siano costruiti artificialmente | Quando volto e voce possono essere fabbricati, la prova percettiva smette di essere una prova. |
@@ -42,4 +41,4 @@ Ancora da aggiungere: **14** immagini (le altre 20 sono già state inserite).
 - `rivoluzioni.png`
 - `tempo_soggettivo.png`
 
-Aggiunte (capitoli senza figure): `inondazione_slop.png` (cap. 31, chapter39.tex) e `archivio_distribuito.png` (cap. 34, chapter26.tex). Totale ora: **14**.
+Aggiunte (capitoli senza figure): `inondazione_slop.png` (cap. 31, chapter39.tex) e `archivio_distribuito.png` (cap. 34, chapter26.tex). Totale ora: **13**.
