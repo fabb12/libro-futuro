@@ -1,1 +1,17 @@
+# File generati dalla compilazione LaTeX
 main.pdf
+main.aux
+main.log
+main.out
+main.toc
+main.idx
+main.ind
+main.ilg
+main.fls
+main.fdb_latexmk
+main.synctex.gz
+cognitive.idx
+cognitive.ind
+cognitive.ilg
+*.bbl
+*.blg
