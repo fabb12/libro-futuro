@@ -379,9 +379,14 @@ columns=2
 % riquadro con la descrizione, e il libro compila lo stesso. Quando il file
 % viene aggiunto, l'immagine appare da sola.
 % Uso: \immagine{images/nome.png}{descrizione di cosa deve mostrare}
+% Dimensionamento delle immagini: tutta la larghezza del testo, ma mai piu'
+% alte di 0.87 dell'altezza utile, cosi' immagine e didascalia stanno sempre
+% nella stessa pagina. Un'immagine alta finisce da sola in una pagina che
+% riempie quasi per intero; una bassa si incastra nel testo senza vuoti.
+\setkeys{Gin}{keepaspectratio,height=0.87\textheight}
 \newcommand{\immagine}[2]{%
 	\IfFileExists{#1}%
-		{\includegraphics[width=0.9\textwidth]{#1}}%
+		{\includegraphics[width=\textwidth]{#1}}%
 		{\fbox{\parbox{0.8\textwidth}{\centering\small\vspace{1.5em}%
 			[IMMAGINE DA INSERIRE: #2]\\[0.4em]\texttt{\detokenize{#1}}\vspace{1.5em}}}}%
 }
