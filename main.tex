@@ -84,6 +84,12 @@
 
 % Stile e opzioni del template
 \input{misc/options}
+
+% --- COVER: colori e font del titolo ---
+\definecolor{covernight}{RGB}{12, 15, 30}     % pannello scuro sotto il titolo
+\definecolor{covergold}{RGB}{247, 190, 70}    % filo e autore, in tinta con l'illustrazione
+\pdfmapfile{+PlayfairDisplay.map}             % abilita Playfair Display (solo per la cover)
+\newcommand{\coverdisplayfont}{\fontencoding{T1}\fontfamily{PlyfrDisplay-LF}\selectfont}
 \usepackage{graphicx}
 \usepackage{eso-pic}
 \usepackage{fancyhdr}
@@ -105,20 +111,22 @@
 
   \fancypagestyle{mainmatter}{%
     \fancyhf{}
+    \fancyfoot[R]{\pagenumberfooter}
     % Pari (Left Even): numero + titolo libro
-    \fancyhead[LE]{\sffamily\footnotesize\color{moderngray}\thepage\quad\textls[50]{\MakeUppercase{\chaptertitlename\ \thechapter}}}
+    \fancyhead[LE]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{\chaptertitlename\ \thechapter}}}
     % Dispari (Right Odd): titolo capitolo + numero + tag BOZZA
-    \fancyhead[RO]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{\leftmark}}\quad\thepage\quad\sffamily\tiny\color{modernred}[BOZZA~v\draftversion]}
+    \fancyhead[RO]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{\leftmark}}\quad\sffamily\tiny\color{modernred}[BOZZA~v\draftversion]}
     % Riquadro fisso a destra con data/versione
     \fancyhead[R]{\sffamily\tiny\color{modernred}BOZZA~v\draftversion, \draftdate}
     \renewcommand{\headrulewidth}{0pt}
   }
   \fancypagestyle{prologue}{%
     \fancyhf{}
+    \fancyfoot[R]{\pagenumberfooter}
     % Pari (Left Even): numero + Prologo
-    \fancyhead[LE]{\sffamily\footnotesize\color{moderngray}\thepage\quad\textls[50]{\MakeUppercase{Prologo}}}
+    \fancyhead[LE]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{Prologo}}}
     % Dispari (Right Odd): Prologo + numero + tag BOZZA
-    \fancyhead[RO]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{Prologo}}\quad\thepage\quad\sffamily\tiny\color{modernred}[BOZZA~v\draftversion]}
+    \fancyhead[RO]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{Prologo}}\quad\sffamily\tiny\color{modernred}[BOZZA~v\draftversion]}
     % Riquadro fisso a destra con data/versione
     \fancyhead[R]{\sffamily\tiny\color{modernred}BOZZA~v\draftversion, \draftdate}
     \renewcommand{\headrulewidth}{0pt}
@@ -127,18 +135,20 @@
   % --- Stile FINALE ---
   \fancypagestyle{mainmatter}{%
     \fancyhf{}
+    \fancyfoot[R]{\pagenumberfooter}
     % Pari (Left Even): numero + titolo libro
-    \fancyhead[LE]{\sffamily\footnotesize\color{moderngray}\thepage\quad\textls[50]{\MakeUppercase{\chaptertitlename\ \thechapter}}}
+    \fancyhead[LE]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{\chaptertitlename\ \thechapter}}}
     % Dispari (Right Odd): titolo capitolo + numero
-    \fancyhead[RO]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{\leftmark}}\quad\thepage}
+    \fancyhead[RO]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{\leftmark}}}
     \renewcommand{\headrulewidth}{0pt}
   }
   \fancypagestyle{prologue}{%
     \fancyhf{}
+    \fancyfoot[R]{\pagenumberfooter}
     % Pari (Left Even): numero + Prologo
-    \fancyhead[LE]{\sffamily\footnotesize\color{moderngray}\thepage\quad\textls[50]{\MakeUppercase{Prologo}}}
+    \fancyhead[LE]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{Prologo}}}
     % Dispari (Right Odd): Prologo + numero
-    \fancyhead[RO]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{Prologo}}\quad\thepage}
+    \fancyhead[RO]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{Prologo}}}
     \renewcommand{\headrulewidth}{0pt}
   }
 \fi
@@ -151,7 +161,10 @@
 
 % Title page (con cover e testo bianco con contorno)
 \input{frontmatter/titlepage}
-\cleardoublepage
+\clearpage
+% Pagina a sinistra (verso della copertina): nota sulla copertina,
+% di fronte alla pagina del copyright
+\input{frontmatter/notacopertina}
 \cleardoublepage
 % Copyright page
 \thispagestyle{empty}
@@ -294,8 +307,8 @@ senza il previo consenso scritto dell'editore.
 \cleardoublepage
 \input{appendix/fonti_ispirazione}
 
-% Torna allo stile vuoto per gli indici
-\pagestyle{empty}
+% Indici: numero di pagina in basso a destra (stile plain)
+\pagestyle{plain}
 
 % Indice analitico principale
 \cleardoublepage
@@ -308,6 +321,7 @@ senza il previo consenso scritto dell'editore.
 \phantomsection
 \addcontentsline{toc}{chapter}{Indice dei bias cognitivi}
 \printindex[cognitive] 
+\pagestyle{empty}  % niente numero sulla pagina bianca prima della quarta di copertina
 \cleardoublepage
 \input{frontmatter/backpage}
 

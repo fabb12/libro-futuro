@@ -115,13 +115,17 @@ footskip=12mm
 \usepackage{fancyhdr}
 \setlength{\headheight}{25pt}
 
+% Numero di pagina: sempre in basso a destra (pagine pari e dispari)
+\newcommand{\pagenumberfooter}{\sffamily\small\color{darkgray}\thepage}
+
 % Main matter page style
 \fancypagestyle{mainmatter}{%
 	\fancyhf{}
-	% Even pages: page number and author
-	\fancyhead[LE]{\sffamily\footnotesize\color{moderngray}\thepage\quad\textls[50]{\MakeUppercase{\authorname}}}
-	% Odd pages: chapter title and page number
-	\fancyhead[RO]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{\leftmark}}\quad\thepage}
+	\fancyfoot[R]{\pagenumberfooter}
+	% Even pages: author
+	\fancyhead[LE]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{\authorname}}}
+	% Odd pages: chapter title
+	\fancyhead[RO]{\sffamily\footnotesize\color{moderngray}\textls[50]{\MakeUppercase{\leftmark}}}
 	% No header rule for cleaner look
 	\renewcommand{\headrulewidth}{0pt}
 }
@@ -129,7 +133,7 @@ footskip=12mm
 % Plain style for chapter openings
 \fancypagestyle{plain}{%
 	\fancyhf{}
-	\fancyfoot[C]{\sffamily\small\color{moderngray}\thepage}
+	\fancyfoot[R]{\pagenumberfooter}
 	\renewcommand{\headrulewidth}{0pt}
 }
 
@@ -260,7 +264,12 @@ pdfcreator={pdfLaTeX}
 % =============================================================================
 % INDEXING PACKAGE AND CONFIGURATION
 % =============================================================================
-\usepackage[xindy]{imakeidx}
+% L'ordinamento e' affidato a upmendex (UTF-8, gestisce accenti e apostrofi
+% italiani, incluso in ogni TeX Live) lanciato da latexmk: vedi latexmkrc.
+% 'noautomatic' evita che imakeidx cerchi di eseguire programmi esterni
+% (xindy/texindy richiedono shell-escape e perl, e su GitHub Actions
+% falliscono in silenzio lasciando gli indici vuoti).
+\usepackage{imakeidx}
 
 % Stile professionale per l'indice
 \indexsetup{
@@ -273,18 +282,16 @@ pdfcreator={pdfLaTeX}
 \makeindex[
 name=main,
 title=Indice analitico,
-program=texindy,
-options=-L italian -C utf8 -I latex,
-columns=2 
+columns=2,
+noautomatic
 ]
 
 % Indice dei bias cognitivi
 \makeindex[
 name=cognitive,
 title=Indice dei bias cognitivi,
-program=texindy,
-options=-L italian -C utf8 -I latex,
-columns=2 
+columns=2,
+noautomatic
 ]
 
 % =============================================================================

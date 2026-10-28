@@ -46,13 +46,14 @@ jobs:
           fi
           grep -nE '\\isdraft(true|false)' main.tex | grep -v newif || true
 
-      - name: Compila con latexmk (pdflatex + xindy/texindy)
+      - name: Compila con latexmk (pdflatex + upmendex)
         uses: xu-cheng/latex-action@v3
         with:
           root_file: main.tex
           latexmk_shell_escape: true
-          # TeX Live "full" include latexmk, pdflatex e xindy/texindy,
-          # necessari per i due indici analitici (main + cognitive).
+          # TeX Live "full" include latexmk, pdflatex e upmendex, usati per i
+          # due indici (main + cognitive): vedi latexmkrc. Niente xindy/texindy:
+          # su questa immagine mancava tex2xindy e gli indici uscivano vuoti.
 
       - name: Verifica che il PDF sia stato prodotto
         run: |

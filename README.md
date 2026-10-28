@@ -36,7 +36,7 @@ Nella cartella [`docs/`](docs/) c'è una web app installabile su cellulare e tab
 
 ## 📄 Generazione del PDF
 
-Il PDF viene compilato **su GitHub Actions** (non serve installare LaTeX in locale): il workflow [`.github/workflows/build-pdf.yml`](.github/workflows/build-pdf.yml) compila `main.tex` con `latexmk` (pdflatex + `texindy` per i due indici analitici) e pubblica il risultato su una **release con link diretto** (oltre che come *artifact* di riserva del run).
+Il PDF viene compilato **su GitHub Actions** (non serve installare LaTeX in locale): il workflow [`.github/workflows/build-pdf.yml`](.github/workflows/build-pdf.yml) compila `main.tex` con `latexmk` (pdflatex + `upmendex` per i due indici: analitico e dei bias cognitivi) e pubblica il risultato su una **release con link diretto** (oltre che come *artifact* di riserva del run).
 
 ### ⬇️ Scaricare il PDF (link diretti, sempre aggiornati)
 
