@@ -1,0 +1,31 @@
+% =============================================================================
+% Frontespizio – pagina a destra dopo la pagina bianca: titolo, sottotitolo,
+% autore. Sobrio, su fondo bianco, con lo stesso carattere del titolo in
+% copertina (Playfair Display).
+% =============================================================================
+\thispagestyle{empty}
+
+\begin{center}
+	\vspace*{0.18\textheight}
+
+	% Titolo
+	{\coverdisplayfont\fontsize{30}{36}\selectfont\bfseries\color{modernblack}%
+		Memorie di un\\futuro anteriore\par}
+
+	\vspace{1.4em}
+	{\color{modernred}\rule{3cm}{0.8pt}\par}
+	\vspace{1.4em}
+
+	% Sottotitolo
+	{\large\itshape\color{darkgray}%
+		\subtitleA\\[0.3em]\subtitleB\par}
+
+	\vfill
+
+	% Autore
+	{\sffamily\large\bfseries\color{modernblack}\textls[160]{\MakeUppercase{\authorname}}\par}
+
+	\vspace*{0.12\textheight}
+\end{center}
+
+\clearpage

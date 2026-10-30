@@ -162,7 +162,13 @@
 % Title page (con cover e testo bianco con contorno)
 \input{frontmatter/titlepage}
 \clearpage
-% Pagina a sinistra (verso della copertina): nota sulla copertina,
+% Pagina bianca (verso della copertina)
+\null
+\thispagestyle{empty}
+\clearpage
+% Frontespizio: titolo e autore (pagina a destra)
+\input{frontmatter/frontespizio}
+% Pagina a sinistra: nota sulla copertina,
 % di fronte alla pagina del copyright
 \input{frontmatter/notacopertina}
 \cleardoublepage
@@ -207,12 +213,14 @@ senza il previo consenso scritto dell'editore.
 
 \cleardoublepage
 
-% Indice
+% Prefazione (subito dopo il copyright)
 \pagestyle{plain}
-\tableofcontents
+\input{frontmatter/preface}  % ok
 \cleardoublepage
 
-\input{frontmatter/preface}  % ok 
+% Indice
+\tableofcontents
+\cleardoublepage
 
 % ===== MAIN CONTENT =====
 \mainmatter
