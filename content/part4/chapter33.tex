@@ -1,4 +1,4 @@
-\chapter{Il Simulatore di Bias: Quando l'IA Insegna all'Uomo a Non Sbagliare}
+\chapter{Il simulatore di bias: quando l'IA ci allena a sbagliare meno}
 \label{cap:p4c33}
 
 \epigraph{«Le cose che dobbiamo imparare prima di poterle fare, le impariamo facendole.»}{Aristotele, \textit{Etica Nicomachea} (II, 1)}
@@ -9,22 +9,28 @@ Aristotele avrebbe trovato la cosa ovvia: le virtù non si imparano studiandole,
 
 Una precisazione: i personaggi e i casi che seguono (il medico specializzando, il procuratore, il dottor Smith, la dottoressa Jones, il giudice) sono ipotetici. Li ho costruiti per ragionare su come potrebbe funzionare un simulatore di questo tipo, non per raccontare persone o episodi realmente accaduti.
 
+\begin{concetto}[Avvertenza: che cosa è reale e che cosa è immaginato]
+\textbf{Reale}: la simulazione clinica è già largamente usata nella formazione medica; e alcuni esperimenti hanno mostrato che un allenamento mirato, per esempio con un videogioco educativo, può ridurre alcuni bias in modo misurabile anche a distanza di settimane.\footnote{Morewedge, C. K., e altri (2015). Debiasing decisions: Improved decision making with a single training intervention. \textit{Policy Insights from the Behavioral and Brain Sciences}, 2(1), 129-140.}
+
+\textbf{Immaginato}: il simulatore descritto in questo capitolo non esiste. In particolare, le misure fisiologiche citate (la dilatazione della pupilla), i tempi al secondo e le percentuali di domande sono un \textit{mock-up narrativo}: numeri inventati per mostrare che aspetto potrebbe avere un resoconto, non capacità già sviluppate o validate. Misurare in modo affidabile, da segnali fisiologici, \textit{quando} una persona si sta «ancorando» a un'ipotesi è oggi un problema di ricerca aperto, non una tecnologia disponibile.
+\end{concetto}
+
 \section{La trappola del sushi}
 \label{sec:p4c33-la-trappola-del}
-Immaginate un giovane specializzando al pronto soccorso, al terzo turno notturno consecutivo. Alle 3 del mattino arriva un paziente. Stanco com'è, è il bersaglio ideale di quello che i ricercatori chiamano «cognitive load bias»: la tendenza a semplificare eccessivamente quando siamo mentalmente esausti\footnote{Sweller, J. (1988). «Cognitive Load During Problem Solving: Effects on Learning». \textit{Cognitive Science}, 12(2), 257-285.}. Ma questa notte il paziente è virtuale: lo specializzando è dentro un simulatore, e il caso è stato costruito apposta per lui.
+Immaginate un giovane specializzando al pronto soccorso, al terzo turno notturno consecutivo. Alle 3 del mattino arriva un paziente. Stanco com'è, è il bersaglio ideale degli errori legati al sovraccarico cognitivo: quando la mente è esausta, tende a semplificare troppo\footnote{Sweller, J. (1988). «Cognitive Load During Problem Solving: Effects on Learning». \textit{Cognitive Science}, 12(2), 257-285.}. Ma questa notte il paziente è virtuale: lo specializzando è dentro un simulatore, e il caso è stato costruito apposta per lui.
 
 Il paziente sembra avere una semplice gastroenterite: dolore addominale, nausea, febbre lieve. Racconta del sushi mangiato la sera prima, e quel dettaglio spinge subito il riconoscimento di pattern verso l'intossicazione alimentare. È l'esca. Sotto, l'IA ha nascosto sottili indizi di qualcosa di più serio, una dissecazione aortica in fase iniziale. Da quel momento il medico fa solo domande che confermerebbero la sua prima ipotesi. Non chiede della storia familiare di problemi cardiovascolari, non nota la leggera asimmetria di pressione tra un braccio e l'altro.
 
-Il punto interessante non è l'errore, che abbiamo già imparato a prevedere. È quello che succede dopo: il debriefing, che io chiamerei un modo di \emph{riavvolgere il pensiero}. L'IA non dice soltanto «diagnosi sbagliata»; ricostruisce il percorso decisionale momento per momento: «Al timestamp 2:34, quando il paziente ha menzionato il sushi, la tua pupilla si è dilatata leggermente, un segno di riconoscimento del pattern. Nei successivi 8 minuti, l'87\% delle tue domande erano orientate a confermare intossicazione alimentare. Zero domande sulla storia cardiovascolare». La Figura~\ref{fig:debriefing_simulatore} ne dà un esempio ipotetico.
+Il punto interessante non è l'errore, che abbiamo già imparato a prevedere. È quello che succede dopo: il debriefing, che io chiamerei un modo di \emph{riavvolgere il pensiero}. L'IA non dice soltanto «diagnosi sbagliata»; ricostruisce il percorso decisionale momento per momento. Nel nostro esempio immaginario (dati e misure sono inventati, come avvertito sopra) potrebbe dire: «Al minuto 2:34, quando il paziente ha menzionato il sushi, la tua pupilla si è dilatata leggermente, un segno di riconoscimento del pattern. Nei successivi 8 minuti, l'87\% delle tue domande erano orientate a confermare intossicazione alimentare. Zero domande sulla storia cardiovascolare». La Figura~\ref{fig:debriefing_simulatore} ne dà un esempio, anch'esso ipotetico.
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\textwidth]{images/debriefing_cognitivo_simulatore.png}
-	\caption{Il debriefing cognitivo di un simulatore di bias (esempio ipotetico): il percorso decisionale ricostruito momento per momento.}
+	\caption{Il debriefing cognitivo di un simulatore di bias. Mock-up: tutte le misure, i tempi e le percentuali sono inventati a scopo illustrativo e non corrispondono a un sistema esistente.}
 	\label{fig:debriefing_simulatore}
 \end{figure}
 
-Poi viene la domanda che nessun reparto vero può permettersi: «Se avessi iniziato chiedendo della storia familiare invece che dei pasti recenti, quale sarebbe stata la tua ipotesi principale?» Questo controfattuale è impossibile nella formazione tradizionale ma banale in un ambiente simulato\footnote{Croskerry, P. (2003). «The Importance of Cognitive Errors in Diagnosis and Strategies to Minimize Them». \textit{Academic Medicine}, 78(8), 775-780. L'autore propone strategie di «debiasing» che potrebbero essere potenziate attraverso la simulazione.}.
+Poi viene la domanda che nessun reparto vero può permettersi: «Se avessi iniziato chiedendo della storia familiare invece che dei pasti recenti, quale sarebbe stata la tua ipotesi principale?» Questo controfattuale è difficile da proporre in reparto, molto più semplice in un ambiente simulato\footnote{Croskerry, P. (2003). «The Importance of Cognitive Errors in Diagnosis and Strategies to Minimize Them». \textit{Academic Medicine}, 78(8), 775-780. L'autore propone strategie di «debiasing» che potrebbero essere potenziate attraverso la simulazione.}.
 
 Ecco perché, almeno in teoria, allenare i bias può funzionare dove spiegarli fallisce. Nel cap.~\ref{cap:p1c2} abbiamo visto che le nostre scorciatoie mentali sono automatismi, non opinioni: non si correggono con un argomento, si modificano con l'esperienza ripetuta. Il simulatore non aggiunge conoscenza; aggiunge esperienza, e la aggiunge proprio nel punto in cui la mente sbaglia, con il feedback immediato che la vita reale quasi mai ci concede. Come disse Søren Kierkegaard: «La vita può essere capita solo all'indietro, ma deve essere vissuta in avanti». Il simulatore ci fa vivere le conseguenze all'indietro, prima che accadano.
 
@@ -34,7 +40,7 @@ La stessa idea vale ovunque un giudizio rapido possa fare danni. Pensate a un pr
 
 Lo stesso schema si estende alle decisioni che si sviluppano nel tempo. Un analista finanziario in formazione parte da una leggera sopravvalutazione della crescita di un'azienda (bias di ottimismo\index[cognitive]{bias di ottimismo}), e il simulatore gli mostra come quell'errore iniziale si amplifichi proiezione dopo proiezione: quella che i ricercatori chiamano «bias cascade»\footnote{Sunstein, C. R., \& Hastie, R. (2015). \textit{Wiser: Getting Beyond Groupthink to Make Groups Smarter}. Harvard Business Review Press.}. Una valanga cognitiva al rallentatore.
 
-Ciò che accomuna questi casi è la struttura, non il mestiere. I bias non sono competenze professionali: sono il modo in cui il cervello paleolitico affronta l'incertezza, e un medico, un magistrato e un analista lo portano al lavoro identico.
+Ciò che accomuna questi casi è la struttura, non il mestiere. I bias non sono competenze professionali: sono il modo in cui il cervello affronta l'incertezza, e un medico, un magistrato e un analista lo portano al lavoro identico.
 
 \section{Su misura: profili di vulnerabilità e allenamento}
 \label{sec:p4c33-su-misura-profili}
