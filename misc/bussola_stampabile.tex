@@ -1,0 +1,29 @@
+% =============================================================================
+% La bussola in 7 domande - versione stampabile autonoma (una pagina A5)
+% Compilazione: pdflatex misc/bussola_stampabile.tex (dalla radice del repository)
+% =============================================================================
+\documentclass[11pt]{article}
+\usepackage[a5paper, margin=1.4cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage[default,semibold]{sourceserifpro}
+\usepackage{sourcesanspro}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{microtype}
+\definecolor{moderngray}{RGB}{110, 110, 110}
+\pagestyle{empty}
+\begin{document}
+\begin{center}
+{\sffamily\Large\bfseries La bussola in 7 domande}\\[0.3em]
+{\sffamily\small\color{moderngray}da \textit{Memorie di un futuro anteriore} --- Fabio Fargnoli}
+\end{center}
+\vspace{0.6em}
+\small
+\input{appendix/bussola_contenuto}
+\vfill
+\begin{center}\footnotesize\color{moderngray}
+Non rendono immuni dai bias. Aiutano a rallentare nel punto giusto.
+\end{center}
+\end{document}

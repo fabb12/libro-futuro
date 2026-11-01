@@ -75,6 +75,44 @@ Questa frammentazione non è soltanto un fastidio sociale, è una minaccia a qua
 
 Ed è qui che la questione smette di essere psicologica e diventa politica. Il filosofo tedesco Jürgen Habermas ha dedicato la vita a studiare la sfera pubblica e quello che chiamava agire comunicativo: lo scambio ideale in cui cittadini liberi possono confrontarsi e deliberare insieme, lasciando che sia la forza del miglior argomento, e non quella del più forte, a orientare le decisioni comuni.\footnote{Habermas, J. (1981). \textit{Theorie des kommunikativen Handelns}. Suhrkamp, Francoforte.} Ma una deliberazione del genere ha una condizione elementare, che diamo per scontata solo finché esiste: i partecipanti devono abitare la stessa realtà, condividere un minimo di fatti su cui ragionare. Si può discutere all'infinito su cosa sia giusto fare, ma non si può deliberare se non si concorda nemmeno su cosa stia accadendo. Frantumando la realtà condivisa in milioni di bolle incomunicabili, l'ecosistema digitale non avvelena soltanto il dibattito: ne erode le fondamenta. Senza un mondo comune, la conversazione democratica non si svolge male, semplicemente non può più cominciare.
 
+\section{Il ciclo: dove agisce la persona, dove agisce il sistema}
+\label{sec:p2c11-ciclo}
+
+Vale la pena fermarsi un momento per mettere in ordine i pezzi. La Figura~\ref{fig:ciclo_bias} mostra il percorso di un'informazione, dal momento in cui ci viene mostrata a quello in cui la nostra reazione torna a influenzare ciò che vedremo dopo. Alcuni passaggi avvengono nella nostra testa, altri nei sistemi delle piattaforme. Distinguerli serve a capire dove si può intervenire: sulle proprie abitudini, sulla progettazione dei sistemi, o su entrambe.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  node distance=5mm and 4mm,
+  box/.style={draw, rounded corners=2pt, align=center, font=\sffamily\footnotesize, minimum width=23mm, minimum height=13mm, text width=22mm, fill=white},
+  arr/.style={-{Stealth[length=2.2mm]}, thick},
+  lab/.style={font=\sffamily\scriptsize\bfseries, text=moderngray}
+]
+% persona (riga in basso)
+\node[box] (att) {\textbf{Attenzione}\\ notiamo ciò che è nuovo, emotivo, familiare};
+\node[box, right=of att] (int) {\textbf{Interpretazione}\\ conferma, alone, disponibilità};
+\node[box, right=of int] (dec) {\textbf{Decisione}\\ clic, condivido, credo, scelgo};
+% sistema (riga in alto)
+\node[box, above=11mm of att, fill=aicolor!8] (inf) {\textbf{Informazione}\\ selezione e ordine dei contenuti};
+\node[box, above=11mm of dec, fill=aicolor!8] (rin) {\textbf{Rinforzo}\\ il sistema registra la reazione e aggiorna le previsioni};
+% frecce
+\draw[arr] (inf) -- (att);
+\draw[arr] (att) -- (int);
+\draw[arr] (int) -- (dec);
+\draw[arr] (dec) -- (rin);
+\draw[arr] (rin) -- node[above, font=\sffamily\scriptsize, align=center]{ciò che vedremo dopo} (inf);
+% fasce
+\begin{scope}[on background layer]
+\node[fit=(inf)(rin), fill=aicolor!4, draw=aicolor!40, rounded corners=4pt, inner sep=7pt, label={[lab]above:SISTEMA DIGITALE (piattaforma, algoritmo)}] {};
+\node[fit=(att)(int)(dec), fill=lightgray!60, draw=moderngray!40, rounded corners=4pt, inner sep=7pt, label={[lab]below:ESSERE UMANO (bias cognitivi)}] {};
+\end{scope}
+\end{tikzpicture}
+\caption{Il ciclo di interazione tra bias umani e sistemi digitali. In grigio i passaggi che avvengono nella mente, in azzurro quelli che avvengono nel sistema. Le frecce indicano influenze possibili, non causalità automatiche: quanto ciascun passaggio pesi davvero varia molto da persona a persona e da piattaforma a piattaforma, come mostrano gli studi citati in questo capitolo.}
+\label{fig:ciclo_bias}
+\end{figure}
+
+Nessun anello del ciclo è sufficiente da solo. Senza la nostra attenzione selettiva, il sistema non avrebbe nulla da rinforzare; senza il rinforzo, le nostre tendenze resterebbero confinate alle nostre scelte. È nella somma che il ciclo può stringersi, ed è per questo che le risposte efficaci, come vedremo nella Parte IV, lavorano su entrambi i lati.
+
 \section{Il pensiero come unica via d'uscita}
 
 A questo punto sorge la domanda più importante: come si esce da questa macchina? Non possiamo disinstallare i nostri bias. Ma c'è qualcosa di unico nella mente umana: la capacità di osservare i propri processi mentali mentre accadono. Si chiama \textbf{metacognizione}, letteralmente pensare al proprio pensiero. È insieme la nostra condanna e la nostra salvezza. Condanna, perché ci rende dolorosamente consapevoli di quanto siamo inadeguati al mondo che abbiamo costruito. Salvezza, perché una volta che si vedono i fili del burattinaio, la magia perde una parte del suo potere.

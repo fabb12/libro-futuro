@@ -260,6 +260,8 @@ pdfcreator={pdfLaTeX}
 
 % Optional: Better tables
 \usepackage{booktabs}
+\usepackage{longtable}
+\usetikzlibrary{positioning,arrows.meta,fit,backgrounds}
 \renewcommand{\arraystretch}{1.2}
 % =============================================================================
 % INDEXING PACKAGE AND CONFIGURATION
@@ -308,7 +310,7 @@ noautomatic
 	enhanced,
 	arc=3mm,
 	boxrule=0.8pt,
-	title=#1
+	title={#1}
 }
 
 % --- Riquadro per lo pseudo-codice ---
@@ -334,7 +336,7 @@ noautomatic
 	enhanced,
 	arc=3mm,
 	boxrule=0.8pt,
-	title=#1
+	title={#1}
 }
 
 % =============================================================================
