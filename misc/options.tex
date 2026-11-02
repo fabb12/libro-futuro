@@ -440,3 +440,45 @@ noautomatic
 	title={#1}
 }
 \newcommand{\dascrivere}[1]{{\sffamily\small\color{modernred}[DA SCRIVERE DALL'AUTORE: #1]}}
+
+% =============================================================================
+% LA STORIA DI GIULIA (filo narrativo ricorrente, dichiaratamente immaginario)
+% Riquadro per gli episodi della storia che attraversa le quattro parti.
+% Il titolo del riquadro ricorda sempre che si tratta di finzione.
+% =============================================================================
+\definecolor{storiacolor}{RGB}{52, 92, 120}
+\newtcolorbox{storia}[1][]{
+	enhanced,
+	breakable,
+	colback=storiacolor!5,
+	colframe=storiacolor,
+	boxrule=0pt,
+	leftrule=3pt,
+	arc=0mm,
+	left=10pt,
+	fonttitle=\sffamily\bfseries\small,
+	coltitle=storiacolor,
+	colbacktitle=storiacolor!5,
+	title={La storia di Giulia\ifx\relax#1\relax\else\ \textperiodcentered\ #1\fi},
+	fontupper=\itshape
+}
+
+% =============================================================================
+% IMMAGINI DA SOLE IN UNA PAGINA
+% Una figura che finisce da sola in una pagina viene ingrandita il più
+% possibile senza deformarla: può uscire di 12 mm per lato nei margini e
+% occupa tutta l'altezza utile, tolto lo spazio della didascalia (misurata).
+% Uso: \figurasola{images/file.png}{didascalia}{etichetta}
+% =============================================================================
+\newlength{\figsolacapht}
+\newlength{\figsolaextra}
+\setlength{\figsolaextra}{24mm}
+\newcommand{\figurasola}[3]{%
+	\begin{figure}[p]
+		\centering
+		\settototalheight{\figsolacapht}{\parbox{\dimexpr\textwidth-1cm\relax}{\scriptsize\sffamily\centering\textbf{Figura 00.00} #2}}%
+		\makebox[\textwidth][c]{\includegraphics[width=\dimexpr\textwidth+\figsolaextra\relax,height=\dimexpr\textheight-\figsolacapht-\abovecaptionskip-\belowcaptionskip-8pt\relax,keepaspectratio]{#1}}%
+		\caption{#2}%
+		\label{#3}%
+	\end{figure}%
+}
