@@ -440,3 +440,45 @@ noautomatic
 	title={#1}
 }
 \newcommand{\dascrivere}[1]{{\sffamily\small\color{modernred}[DA SCRIVERE DALL'AUTORE: #1]}}
+
+% =============================================================================
+% IL VOSTRO TACCUINO (filo narrativo ricorrente)
+% Nel prologo il lettore annota un ricordo e una convinzione; ogni parte e
+% alcuni capitoli gli chiedono di riprenderli. Nessun personaggio inventato.
+% =============================================================================
+\definecolor{taccuinocolor}{RGB}{52, 92, 120}
+\newtcolorbox{taccuino}[1][]{
+	enhanced,
+	breakable,
+	colback=taccuinocolor!5,
+	colframe=taccuinocolor,
+	boxrule=0pt,
+	leftrule=3pt,
+	arc=0mm,
+	left=10pt,
+	fonttitle=\sffamily\bfseries\small,
+	coltitle=taccuinocolor,
+	colbacktitle=taccuinocolor!5,
+	title={Il vostro taccuino\ifx\relax#1\relax\else\ \textperiodcentered\ #1\fi}
+}
+
+% =============================================================================
+% IMMAGINI DA SOLE IN UNA PAGINA
+% Una figura che finisce da sola in una pagina viene ingrandita il più
+% possibile senza deformarla: può uscire di 12 mm per lato nei margini e
+% occupa tutta l'altezza utile, tolto lo spazio della didascalia (misurata).
+% Uso: \figurasola{images/file.png}{didascalia}{etichetta}
+% =============================================================================
+\newlength{\figsolacapht}
+\newlength{\figsolaextra}
+\newsavebox{\figsolabox}
+\setlength{\figsolaextra}{24mm}
+\newcommand{\figurasola}[3]{%
+	\begin{figure}[p]
+		\centering
+		\sbox{\figsolabox}{\parbox{\dimexpr\textwidth-1cm\relax}{\scriptsize\sffamily\centering\textbf{Figura 00.00} #2}}\setlength{\figsolacapht}{\dimexpr\ht\figsolabox+\dp\figsolabox\relax}%
+		\makebox[\textwidth][c]{\includegraphics[width=\dimexpr\textwidth+\figsolaextra\relax,height=\dimexpr\textheight-\figsolacapht-\abovecaptionskip-\belowcaptionskip-14pt\relax,keepaspectratio]{#1}}%
+		\caption{#2}%
+		\label{#3}%
+	\end{figure}%
+}

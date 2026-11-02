@@ -2,45 +2,9 @@
 % Professional Book Template - DRAFT-READY VERSION
 % =============================================================================
 % 
-% LISTA COMPLETA DEI CAPITOLI IN SEQUENZA:
-% =========================================
-% Prologo: Introduzione
-% Capitolo 1: L'architettura impossibile del cervello digitale
-% Capitolo 2: Il cervello: una storia lunga 500 milioni di anni
-% Capitolo 3: Quando la paura salvava la vita
-% Capitolo 4: Due cervelli in uno: quando il pilota automatico prende il controllo
-% Capitolo 5: La fabbrica delle emozioni
-% Capitolo 6: Memoria: l'archivista bugiardo
-% Capitolo 7: L'illusione di essere razionali
-% Capitolo 8: Quando il nemico è in casa: i bias più pericolosi
-% Capitolo 9: La continuità evolutiva dei bias: dal topo all'intelligenza collettiva
-% Capitolo 10: Dal Prezzo dell'Evoluzione all'Ecosistema Digitale Consapevole
-% Capitolo 11: Quando le Macchine Imparano i Nostri Pregiudizi
-% Capitolo 12: L'Apprendimento Impossibile
-% Capitolo 13: Mille Modi di Sbagliare
-% Capitolo 14: Il Casinò nella Testa
-% Capitolo 15: Dottori, Pazienti e l'Arte di Sbagliarsi
-% Capitolo 16: Il Piedistallo Cognitivo: Quando l'Ammirazione Acceca
-% Capitolo 17: L'Arte dell'Errore Creativo
-% Capitolo 18: Il Pianeta che Bolle
-% Capitolo 19: Echo Chamber e Rabbit Hole
-% Capitolo 20: Venere e Marte Hanno lo Stesso Cervello (Quasi)
-% Capitolo 21: La tirannia delle infinite possibilità
-% Capitolo 22: La Dissonanza Cognitiva: Il Mal di Testa dell'Anima
-% Capitolo 23: Il Partner di Danza Inconsapevole
-% Capitolo 24: La Fabbrica dei Sogni e dei Bias
-% Capitolo 25: Bias sui Bias
-% Capitolo 26: Epilogo: L'Esperimento Non Concluso
-% Capitolo 27: Co-evoluzione Uomo-AI: Dalla Teoria alla Pratica
-% Capitolo 28: Quando la Giustizia Sbaglia: I Bias Cognitivi in Tribunale
-% Capitolo 29: Il Bias di Ancoraggio sulla Propria Infanzia
-% Capitolo 30: Il Bias del Sopravvissuto
-% Capitolo 31: Le Etichette Nutrizionali Algoritmiche
-% Capitolo 32: L'IA come Impalcatura Socratica
-% Capitolo 33: Il Simulatore di Bias
-% Capitolo 34: Il Co-pilota per la Neurodiversità
-% Capitolo 35: Il bias dell'antropomorfizzazione
-% Capitolo 36: Il cervello si rinnova
+% STRUTTURA DEL LIBRO: vedi le \input più sotto (ordine aggiornato a
+% novembre 2026, revisione narrativa). I commenti accanto a ogni \input
+% indicano il tema del capitolo.
 % =========================================
 
 % --- Modalità bozza / finale -------------------------------------------------
@@ -76,7 +40,9 @@
 
 %\newcommand{\publisher}{Editore}
 \newcommand{\editionyear}{2026}
-\newcommand{\isbn}{978-88-04-12345-6}
+% ISBN PROVVISORIO: il numero precedente (978-88-04-...) usava il prefisso di un
+% editore reale. Sostituire con l'ISBN assegnato all'opera prima della stampa.
+\newcommand{\isbn}{in attesa di assegnazione}
 
 % --- VERSION CONTROL ---
 \newcommand{\draftversion}{1.2}
@@ -229,71 +195,64 @@ senza il previo consenso scritto dell'editore.
 % ========================================
 \input{parts/part1}
 
-\input{content/part1/chapter1}   % L'architettura impossibile del cervello digitale
-%\input{content/chapter3}   % Quando la paura salvava la vita
-\input{content/part1/chapter2}   % Il cervello: una storia lunga 500 milioni di anni
-%\input{content/chapter4}   % Due cervelli in uno: quando il pilota automatico prende il controllo
-%\input{content/chapter5}   % La fabbrica delle emozioni
-\input{content/part1/chapter6}   % Memoria: l'archivista bugiardo 
+\input{content/part1/chapter1}   % L'architettura impossibile del cervello
+\input{content/part1/chapter6}   % Memoria: l'archivista bugiardo (anticipato: memoria, identità, convinzioni)
+\input{content/part1/chapter2}   % L'eredità del terrore e i due piloti della mente
 \input{content/part1/chapter7}   % L'illusione di essere razionali
-\input{content/part1/chapter22}  % La Dissonanza Cognitiva: Il Mal di Testa dell'Anima
+\input{content/part1/chapter22}  % La dissonanza cognitiva
 \input{content/part1/chapter9}   % La continuità evolutiva dei bias: dal topo all'intelligenza collettiva
 %\input{content/part1/chapter36}  % Il cervello si rinnova
 
 % ========================================
 % PARTE II: LA MENTE FUORI POSTO
-% I nostri bias in azione nel mondo moderno. 
-% Casi di studio di una struttura cerebrale antica in un mondo nuovo.
+% Tre gruppi: decisioni e conseguenze; costruzione culturale della realtà;
+% trasmissione e rinforzo delle convinzioni.
 % ========================================
 \input{parts/part2}
 
-\input{content/part2/chapter11}  % Echo Chamber e Rabbit Hole
-%\input{content/old/chapter19}  % Echo Chamber e Rabbit Hole
+% --- Decisioni e conseguenze ---
 \input{content/part2/chapter14}  % Il Casinò nella Testa (Finanza)
-\input{content/part2/chapter15}  % Dottori, Pazienti e l'Arte di Sbagliarsi (Medicina)
-\input{content/part2/chapter28}  % Quando la Giustizia Sbaglia: I Bias Cognitivi in Tribunale (Giustizia)
-\input{content/part2/chapter18}  % Il Pianeta che Bolle (Cambiamento Climatico)
-\input{content/part2/chapter16}  % Il Piedistallo Cognitivo: Quando l'Ammirazione Acceca (CORRETTO)
-\input{content/part2/chapter24}  % La Fabbrica dei Sogni e dei Bias (Cultura di massa)
-\input{content/part2/chapter20}  % Venere e Marte Hanno lo Stesso Cervello (Quasi) (Bias di genere)
-\input{content/part2/chapter13}  % Mille Modi di Sbagliare (Bias culturali)
-\input{content/part2/chapter12}  % L'Apprendimento Impossibile (Formazione dei bias)
-\input{content/part2/chapter29}  % Il Bias di Ancoraggio sulla Propria Infanzia (Genitorialità)
-% \input{content/part2/chapter21}  % La tirannia delle infinite possibilità (Paradosso della scelta) (fuso in chapter30)
-\input{content/part2/chapter30}  % Il Bias del Sopravvissuto: Quando vediamo solo i successi
+\input{content/part2/chapter15}  % Dottori, pazienti e l'arte di sbagliarsi (Medicina)
+\input{content/part2/chapter28}  % Quando la giustizia sbaglia (Giustizia)
+\input{content/part2/chapter18}  % Il pianeta che bolle (Clima)
+% --- Costruzione culturale della realtà ---
+\input{content/part2/chapter16}  % Il piedistallo cognitivo (Autorità)
+\input{content/part2/chapter24}  % La fabbrica dei sogni e dei bias (Narrazioni)
+\input{content/part2/chapter20}  % Venere e Marte hanno lo stesso cervello (quasi) (Genere)
+\input{content/part2/chapter13}  % Mille modi di sbagliare (Culture)
+% --- Trasmissione e rinforzo delle convinzioni ---
+\input{content/part2/chapter12}  % L'apprendimento impossibile (Infanzia)
+\input{content/part2/chapter29}  % L'infanzia come ancora (Famiglia)
+\input{content/part2/chapter30}  % Troppe scelte, troppi vincitori: il bias del sopravvissuto (Scelte e successo; ponte verso la Parte III)
 
 % ========================================
 % PARTE III: LO SPECCHIO DIGITALE
-% Come l'Intelligenza Artificiale riflette, 
-% amplifica e cambia la nostra mente.
 % ========================================
 \input{parts/part3}
 
-\input{content/part3/chapter11}  % Quando le Macchine Imparano i Nostri Pregiudizi 
-\input{content/part3/chapter35}  % Il bias dell'antropomorfizzazione: quando proiettiamo umanità nelle macchine
-% \input{content/part3/chapter37}  % La Macchina del Vuoto: Come l'IA Sostituisce la Connessione Umana (fuso in chapter35)
-\input{content/part3/chapter24} % thumos
-\input{content/part3/chapter27}  % Co-evoluzione Uomo-AI: Dalla Teoria alla Pratica
-\input{content/part3/chapter38} % Deepfake
-
+\input{content/part3/chapter11}  % Quando le macchine imparano i nostri pregiudizi
+\input{content/part3/chapter19}  % La gravità dell'algoritmo e la caverna digitale (spostato dalla Parte II)
+\input{content/part3/chapter35}  % Il bias dell'antropomorfizzazione (con estratto Liminal)
+\input{content/part3/chapter27}  % Co-evoluzione uomo-IA
+\input{content/part3/chapter39}  % Il deserto del reale digitale (spostato dalla Parte IV)
+\input{content/part3/chapter38}  % Deepfake e realtà condivisa
 
 % ========================================
 % PARTE IV: LA BUSSOLA DEL PENSIERO
-% Strategie, strumenti e riflessioni 
-% per un futuro più consapevole.
+% Difese personali, trasparenza, IA socratica, simulazione, creatività,
+% responsabilità, consapevolezza dei propri limiti.
 % ========================================
 \input{parts/part4}
 
-\input{content/part4/chapter10}  % Dal Prezzo dell'Evoluzione all'Ecosistema Digitale Consapevole 
-\input{content/part4/chapter31}  % Le Etichette Nutrizionali Algoritmiche
-\input{content/part4/chapter32}  % L'IA come Impalcatura Socratica: Un Mentore, non un Oracolo
-\input{content/part4/chapter33}  % Il Simulatore di Bias: Quando l'IA Insegna all'Uomo a Non Sbagliare
-\input{content/part4/chapter17}  % L'Arte dell'Errore Creativo
-\input{content/part4/chapter39} % AI slop
-\input{content/part4/chapter41}  % inganno 
-\input{content/part4/chapter25}  % Bias sui Bias
-\input{content/part4/chapter26}  % Epilogo: L'Esperimento Non Concluso
-%\input{content/old/chapter42}  % Epilogo: L'Esperimento Non Concluso
+\input{content/part4/chapter10}  % Difese personali: dall'autocontrollo al progetto
+\input{content/part4/chapter31}  % Trasparenza: le etichette nutrizionali algoritmiche
+\input{content/part4/chapter32}  % L'IA come impalcatura socratica
+\input{content/part4/chapter33}  % Il simulatore di bias
+\input{content/part4/chapter17}  % L'arte dell'errore creativo
+\input{content/part4/chapter41}  % Responsabilità: l'architettura dell'inganno volontario
+\input{content/part4/chapter24}  % Uomini senza petto: autonomia di giudizio (spostato dalla Parte III)
+\input{content/part4/chapter25}  % Bias sui bias: consapevolezza dei propri limiti
+\input{content/part4/chapter26}  % Epilogo
 
 % ===== BACK MATTER =====
 \backmatter
@@ -302,6 +261,8 @@ senza il previo consenso scritto dell'editore.
 \appendix
 \pagestyle{mainmatter}  % Riattiva lo stile delle pagine
 \input{appendix/bussola}
+\cleardoublepage
+\input{appendix/taccuino}
 \cleardoublepage
 \input{appendix/dialogue}
 \cleardoublepage
