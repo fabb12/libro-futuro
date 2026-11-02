@@ -472,12 +472,13 @@ noautomatic
 % =============================================================================
 \newlength{\figsolacapht}
 \newlength{\figsolaextra}
+\newsavebox{\figsolabox}
 \setlength{\figsolaextra}{24mm}
 \newcommand{\figurasola}[3]{%
 	\begin{figure}[p]
 		\centering
-		\settototalheight{\figsolacapht}{\parbox{\dimexpr\textwidth-1cm\relax}{\scriptsize\sffamily\centering\textbf{Figura 00.00} #2}}%
-		\makebox[\textwidth][c]{\includegraphics[width=\dimexpr\textwidth+\figsolaextra\relax,height=\dimexpr\textheight-\figsolacapht-\abovecaptionskip-\belowcaptionskip-8pt\relax,keepaspectratio]{#1}}%
+		\sbox{\figsolabox}{\parbox{\dimexpr\textwidth-1cm\relax}{\scriptsize\sffamily\centering\textbf{Figura 00.00} #2}}\setlength{\figsolacapht}{\dimexpr\ht\figsolabox+\dp\figsolabox\relax}%
+		\makebox[\textwidth][c]{\includegraphics[width=\dimexpr\textwidth+\figsolaextra\relax,height=\dimexpr\textheight-\figsolacapht-\abovecaptionskip-\belowcaptionskip-14pt\relax,keepaspectratio]{#1}}%
 		\caption{#2}%
 		\label{#3}%
 	\end{figure}%
