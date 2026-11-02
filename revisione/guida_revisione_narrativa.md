@@ -60,14 +60,9 @@ Documento di lavoro condiviso per la revisione strutturale di *Memorie di un fut
 
 Le label LaTeX restano quelle originali anche per i file spostati (non rinominarle).
 
-## 3. Il filo narrativo: il taccuino del lettore (sostituisce la storia di Giulia, scartata dall'autore)
+## 3. Filo narrativo
 
-Nessun personaggio inventato. Nel prologo il lettore annota un ricordo nitido e una convinzione su cui scommetterebbe (pagina in appendice, `appendix/taccuino.tex`). Il riquadro `\begin{taccuino}[titolo]...\end{taccuino}` lo invita a riprenderli:
-- Parte I: sicurezza e verifica del ricordo; capitolo Memoria: confronto con un testimone, direzione della distorsione, quanto la convinzione poggia sul ricordo.
-- Parte II: una decisione orientata dalla convinzione e la sua origine; capitolo Medicina: un'etichetta ricevuta o data; capitolo Sopravvissuto: i casi che la convinzione non vede.
-- Parte III: che cosa concluderebbe una macchina dalle vostre tracce; capitolo Macchine che imparano: il vostro archivio digitale; capitolo Co-evoluzione: l'ultima volta che avete seguito una macchina senza verificare.
-- Parte IV: che cosa mi farebbe cambiare idea; capitolo IA socratica: chiedere all'IA l'argomento contrario e verificarlo.
-- Epilogo: rilettura e una riga al futuro anteriore.
+Scartati, su indicazione dell'autore, sia il personaggio inventato (Giulia) sia il taccuino del lettore. Il filo è affidato alla domanda centrale, al titolo e ai casi reali documentati.
 
 **Caso reale ricorrente: Stanislav Petrov (26 settembre 1983).** Raccontato nel capitolo sulla co-evoluzione come esempio documentato di senso critico verso una macchina (falso allarme del sistema di allerta precoce sovietico), richiamato nell'apertura della Parte IV, nel capitolo sull'IA socratica («il radar di terra») e nell'epilogo, in contrappunto a Chernobyl.
 

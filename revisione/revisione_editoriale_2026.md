@@ -38,7 +38,8 @@ Applicata la lista di 22 modifiche editoriali. Guida di lavoro: `revisione/guida
 - **Struttura** (`main.tex`). Memoria anticipata al secondo capitolo della Parte I. Parte II in tre gruppi (decisioni e conseguenze; costruzione culturale della realtà; trasmissione e rinforzo delle convinzioni). Il capitolo sull'algoritmo passa nella Parte III, dopo «Quando le macchine imparano». «Il deserto del reale digitale» passa nella Parte III, prima dei deepfake. «Uomini senza petto» passa nella Parte IV, accorciato, dopo la responsabilità. Le label LaTeX sono rimaste quelle originali.
 - **Prologo**. Domanda centrale esplicita e nuova sezione «Perché "futuro anteriore"» (memoria che prevede, macchine fatte di memorie, decisioni di oggi come dati di domani). Invito al lettore a compilare il taccuino.
 - **Aperture delle parti** (`parts/`). Un testo di 220–300 parole per parte, più un riquadro del taccuino.
-- **Filo narrativo**. La storia di Giulia è stata scartata su richiesta dell'autore. Al suo posto il «taccuino del lettore» (riquadro `taccuino` in `misc/options.tex`, pagina da compilare in `appendix/taccuino.tex`) e la storia vera di Stanislav Petrov (capitolo sulla co-evoluzione, richiamata nella Parte IV e nell'epilogo) sul senso critico verso le macchine.
+- **Filo narrativo**. Scartati il personaggio inventato e il taccuino del lettore. Aggiunta la storia vera di Stanislav Petrov (capitolo sulla co-evoluzione, richiamata nel prologo, nella Parte IV, nel capitolo sull'IA socratica e nell'epilogo) sul senso critico verso le macchine.
+- **Testi dell'autore completati** con episodi documentati nel manoscritto: le fonti inesistenti accettate durante la scrittura (cap. 7), il ripensamento sul cervello trino (cap. 22), la riflessione su Liminal e i criteri di montaggio (appendice), periodo, strumenti e metodo di verifica nella nota metodologica. Da rileggere e confermare.
 - **Transizioni** riscritte in tutti i capitoli; rimandi errati corretti (antropomorfizzazione → deepfake; simulatore → bias sui bias; altri emersi con lo spostamento).
 - **Tagli e integrazioni**. Disney da 2780 a circa 1880 parole; thymos da circa 1630 a circa 1280; cap. 10, 17, 32, 39 accorciati; estratto Liminal commentato nel capitolo sull'antropomorfizzazione (fatti, contenuti generati, interpretazione) con rimando all'appendice (`app:liminal`).
 - **Clima** collegato al futuro anteriore (sezione «Il passato di chi verrà»). **Sopravvissuto** come ponte verso la Parte III («L'archivio dei sopravvissuti»).
@@ -52,8 +53,7 @@ Applicata la lista di 22 modifiche editoriali. Guida di lavoro: `revisione/guida
 
 ## Da fare (autore)
 
-1. I tre episodi personali e i criteri di montaggio di Liminal (punto 19): restano segnaposto, non possono essere scritti da altri.
-2. Nota metodologica: periodo, strumenti e versioni, recapito per i lettori.
+1. Rileggere e confermare i testi in prima persona (cap. 7, cap. 22, appendice Liminal, nota metodologica). In particolare: che la trascrizione completa di Liminal sia conservata, che la conversazione fosse in italiano, gli strumenti usati. Aggiungere un recapito per i lettori se lo si desidera.
 3. Confermare l'episodio delle conferenze di psicologia raccontato in prima persona nel cap. «Bias sui bias».
 4. Fonti da ricontrollare, segnalate durante la revisione: frase attribuita a Barbero e dato sui docenti «migliori della media» (Parte I); Libet 1985 e Scheibehenne 2010; Li 2021 (Cochrane, cap. medicina); NIJ 2020 e il dettaglio Guthrie 2001 (giustizia); Atari et al. 2023 (preprint) ed Eliot et al. 2021; Bavelier et al. 2021 e Işıkoğlu et al. 2025 (famiglia); Fišer et al. 2025, video Kurzgesagt, rinvii dell'AI Act (Parte III); Arantes 2019 e Floridi (Parte IV); fonte della frase di Sean Parker (Axios, 2017).
 5. Eseguire il test con 8–12 lettori (punto 22).
