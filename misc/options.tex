@@ -442,25 +442,24 @@ noautomatic
 \newcommand{\dascrivere}[1]{{\sffamily\small\color{modernred}[DA SCRIVERE DALL'AUTORE: #1]}}
 
 % =============================================================================
-% LA STORIA DI GIULIA (filo narrativo ricorrente, dichiaratamente immaginario)
-% Riquadro per gli episodi della storia che attraversa le quattro parti.
-% Il titolo del riquadro ricorda sempre che si tratta di finzione.
+% IL VOSTRO TACCUINO (filo narrativo ricorrente)
+% Nel prologo il lettore annota un ricordo e una convinzione; ogni parte e
+% alcuni capitoli gli chiedono di riprenderli. Nessun personaggio inventato.
 % =============================================================================
-\definecolor{storiacolor}{RGB}{52, 92, 120}
-\newtcolorbox{storia}[1][]{
+\definecolor{taccuinocolor}{RGB}{52, 92, 120}
+\newtcolorbox{taccuino}[1][]{
 	enhanced,
 	breakable,
-	colback=storiacolor!5,
-	colframe=storiacolor,
+	colback=taccuinocolor!5,
+	colframe=taccuinocolor,
 	boxrule=0pt,
 	leftrule=3pt,
 	arc=0mm,
 	left=10pt,
 	fonttitle=\sffamily\bfseries\small,
-	coltitle=storiacolor,
-	colbacktitle=storiacolor!5,
-	title={La storia di Giulia\ifx\relax#1\relax\else\ \textperiodcentered\ #1\fi},
-	fontupper=\itshape
+	coltitle=taccuinocolor,
+	colbacktitle=taccuinocolor!5,
+	title={Il vostro taccuino\ifx\relax#1\relax\else\ \textperiodcentered\ #1\fi}
 }
 
 % =============================================================================

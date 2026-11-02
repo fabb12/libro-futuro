@@ -36,9 +36,9 @@ Applicata la lista di 22 modifiche editoriali. Guida di lavoro: `revisione/guida
 ## Fatto
 
 - **Struttura** (`main.tex`). Memoria anticipata al secondo capitolo della Parte I. Parte II in tre gruppi (decisioni e conseguenze; costruzione culturale della realtà; trasmissione e rinforzo delle convinzioni). Il capitolo sull'algoritmo passa nella Parte III, dopo «Quando le macchine imparano». «Il deserto del reale digitale» passa nella Parte III, prima dei deepfake. «Uomini senza petto» passa nella Parte IV, accorciato, dopo la responsabilità. Le label LaTeX sono rimaste quelle originali.
-- **Prologo**. Domanda centrale esplicita e nuova sezione «Perché "futuro anteriore"» (memoria che prevede, macchine fatte di memorie, decisioni di oggi come dati di domani). Annuncio della storia di Giulia, dichiarata inventata.
-- **Aperture delle parti** (`parts/`). Un testo di 220–250 parole per parte, più l'episodio di Giulia.
-- **Storia di Giulia**. Riquadro `storia` (in `misc/options.tex`) nelle quattro aperture e nei capitoli su memoria, medicina, sopravvissuto, macchine che imparano, co-evoluzione, impalcatura socratica, epilogo.
+- **Prologo**. Domanda centrale esplicita e nuova sezione «Perché "futuro anteriore"» (memoria che prevede, macchine fatte di memorie, decisioni di oggi come dati di domani). Invito al lettore a compilare il taccuino.
+- **Aperture delle parti** (`parts/`). Un testo di 220–300 parole per parte, più un riquadro del taccuino.
+- **Filo narrativo**. La storia di Giulia è stata scartata su richiesta dell'autore. Al suo posto il «taccuino del lettore» (riquadro `taccuino` in `misc/options.tex`, pagina da compilare in `appendix/taccuino.tex`) e la storia vera di Stanislav Petrov (capitolo sulla co-evoluzione, richiamata nella Parte IV e nell'epilogo) sul senso critico verso le macchine.
 - **Transizioni** riscritte in tutti i capitoli; rimandi errati corretti (antropomorfizzazione → deepfake; simulatore → bias sui bias; altri emersi con lo spostamento).
 - **Tagli e integrazioni**. Disney da 2780 a circa 1880 parole; thymos da circa 1630 a circa 1280; cap. 10, 17, 32, 39 accorciati; estratto Liminal commentato nel capitolo sull'antropomorfizzazione (fatti, contenuti generati, interpretazione) con rimando all'appendice (`app:liminal`).
 - **Clima** collegato al futuro anteriore (sezione «Il passato di chi verrà»). **Sopravvissuto** come ponte verso la Parte III («L'archivio dei sopravvissuti»).

@@ -22,15 +22,15 @@ Kit per il punto 22 della lista di modifiche. Il test va fatto dall'autore con p
 3. Qual è l'idea che ti porti a casa?
 4. C'è un filo che lega i capitoli? Quale?
 5. Quale capitolo ricordi meglio? Quale hai dimenticato?
-6. Ti ricordi di Giulia? Che cosa le succede?
+6. Hai compilato il taccuino del prologo? Lo hai ripreso durante la lettura?
 
 ## Domande guidate (dopo)
 
 7. Da 1 a 5, quanto è chiaro il significato del titolo alla fine del libro?
 8. Da 1 a 5, quanto è chiaro il collegamento tra la Parte II (decisioni umane) e la Parte III (intelligenza artificiale)?
 9. Per ogni capitolo, dall'indice: indispensabile, utile, eliminabile?
-10. La storia di Giulia ti ha aiutato a seguire il percorso o ti ha distratto?
-11. Ti è stato chiaro che Giulia è un personaggio inventato?
+10. Il taccuino ti ha aiutato a seguire il percorso o lo hai saltato? Perché?
+11. Ti ricordi la storia di Petrov? Che cosa insegna?
 12. Hai mai avuto l'impressione che un'affermazione fosse esagerata o non dimostrata? Dove?
 13. Hai fatto almeno una delle cinque esperienze «Prova tu»? Che effetto ha avuto?
 14. Ricordi la domanda finale del libro?
