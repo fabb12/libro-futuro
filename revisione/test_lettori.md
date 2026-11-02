@@ -22,14 +22,14 @@ Kit per il punto 22 della lista di modifiche. Il test va fatto dall'autore con p
 3. Qual è l'idea che ti porti a casa?
 4. C'è un filo che lega i capitoli? Quale?
 5. Quale capitolo ricordi meglio? Quale hai dimenticato?
-6. Hai compilato il taccuino del prologo? Lo hai ripreso durante la lettura?
+6. Quale storia vera del libro ricordi meglio (Chernobyl, Petrov, Wald, altre)?
 
 ## Domande guidate (dopo)
 
 7. Da 1 a 5, quanto è chiaro il significato del titolo alla fine del libro?
 8. Da 1 a 5, quanto è chiaro il collegamento tra la Parte II (decisioni umane) e la Parte III (intelligenza artificiale)?
 9. Per ogni capitolo, dall'indice: indispensabile, utile, eliminabile?
-10. Il taccuino ti ha aiutato a seguire il percorso o lo hai saltato? Perché?
+10. I tre episodi personali dell'autore ti sono sembrati utili o fuori posto?
 11. Ti ricordi la storia di Petrov? Che cosa insegna?
 12. Hai mai avuto l'impressione che un'affermazione fosse esagerata o non dimostrata? Dove?
 13. Hai fatto almeno una delle cinque esperienze «Prova tu»? Che effetto ha avuto?
