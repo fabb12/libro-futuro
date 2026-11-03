@@ -459,6 +459,7 @@ noautomatic
 % possibile senza deformarla: può uscire di 12 mm per lato nei margini e
 % occupa tutta l'altezza utile, tolto lo spazio della didascalia (misurata).
 % Uso: \figurasola{images/file.png}{didascalia}{etichetta}
+% Se il file non esiste ancora compare un segnaposto e il libro compila lo stesso.
 % =============================================================================
 \newlength{\figsolacapht}
 \newlength{\figsolaextra}
@@ -468,7 +469,10 @@ noautomatic
 	\begin{figure}[p]
 		\centering
 		\sbox{\figsolabox}{\parbox{\dimexpr\textwidth-1cm\relax}{\scriptsize\sffamily\centering\textbf{Figura 00.00} #2}}\setlength{\figsolacapht}{\dimexpr\ht\figsolabox+\dp\figsolabox\relax}%
-		\makebox[\textwidth][c]{\includegraphics[width=\dimexpr\textwidth+\figsolaextra\relax,height=\dimexpr\textheight-\figsolacapht-\abovecaptionskip-\belowcaptionskip-14pt\relax,keepaspectratio]{#1}}%
+		\IfFileExists{#1}%
+			{\makebox[\textwidth][c]{\includegraphics[width=\dimexpr\textwidth+\figsolaextra\relax,height=\dimexpr\textheight-\figsolacapht-\abovecaptionskip-\belowcaptionskip-14pt\relax,keepaspectratio]{#1}}}%
+			{\fbox{\parbox{0.8\textwidth}{\centering\small\vspace{3em}%
+				[IMMAGINE DA INSERIRE]\\[0.4em]\texttt{\detokenize{#1}}\vspace{3em}}}}%
 		\caption{#2}%
 		\label{#3}%
 	\end{figure}%
