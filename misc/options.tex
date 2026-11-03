@@ -300,42 +300,65 @@ noautomatic
 % STILI PER RIQUADRI CONCETTUALI E CODICE
 % =============================================================================
 
+% --- Stile comune a tutti i riquadri ---
+% Fondo chiaro appena tinto, barra colorata a sinistra, titolo scritto nel
+% colore d'accento sopra il testo (niente barre scure con testo scuro).
+% Uso: stile riquadro=<colore d'accento>
+\definecolor{conceptcolor}{RGB}{39, 84, 138}    % blu ardesia: concetti chiave
+\definecolor{personalcolor}{RGB}{70, 70, 70}    % grafite: casi personali
+\definecolor{paper}{RGB}{248, 246, 241}         % carta calda: casi personali
+\tcbset{
+	stile riquadro/.style={
+		enhanced,
+		breakable,
+		colback=#1!6,
+		colframe=#1,
+		boxrule=0pt,
+		leftrule=3.5pt,
+		arc=2mm,
+		sharp corners=west,
+		left=12pt, right=12pt, top=9pt, bottom=9pt,
+		before skip=1.2\baselineskip, after skip=1.2\baselineskip,
+		fonttitle=\sffamily\bfseries\large,
+		coltitle=#1,
+		attach title to upper,
+		after title={\par\nointerlineskip\vspace{4pt}\noindent{\color{#1!35}\rule{\linewidth}{0.6pt}}\par\vspace{4pt}},
+		parbox=false,
+		fontupper={\setlength{\parindent}{0pt}\setlength{\parskip}{0.5em}},
+	},
+	etichetta/.style={% piccola etichetta maiuscola sopra il titolo
+		before title={{\footnotesize\mdseries\textls[120]{\MakeUppercase{#1}}}\par\nointerlineskip\vspace{3pt}\noindent},
+	},
+}
+
 % --- Riquadro per concetti chiave ---
 \newtcolorbox{concetto}[1][]{
-	colback=lightgray,       
-	colframe=darkgray,       
-	fonttitle=\sffamily\bfseries,
-	coltitle=modernblack,
-	breakable,
-	enhanced,
-	arc=3mm,
-	boxrule=0.8pt,
+	stile riquadro=conceptcolor,
 	title={#1}
 }
 
 % --- Riquadro per lo pseudo-codice ---
+\definecolor{codebg}{RGB}{40, 44, 52}
 \newtcolorbox{codice}[1][]{
-	colback=darkgray,       
-	coltext=white,
-	fontupper=\ttfamily,      
+	enhanced,
 	breakable,
-	arc=1mm,
+	colback=codebg,
+	colframe=codebg,
+	coltext=white,
+	fontupper=\ttfamily\small,
+	arc=2mm,
 	boxrule=0pt,
-	title=#1,
+	left=12pt, right=12pt, top=9pt, bottom=9pt,
+	title={#1},
 	fonttitle=\sffamily\bfseries,
-	coltitle=white
+	coltitle=white!85!codebg,
+	attach title to upper,
+	after title={\par\vspace{4pt}},
 }
 
 % --- Riquadro per Dati e Grafici ---
 \newtcolorbox{boxdati}[1][]{
-	colback=white,            
-	colframe=modernred,       
-	fonttitle=\sffamily\bfseries,
-	coltitle=white,
-	breakable,
-	enhanced,
-	arc=3mm,
-	boxrule=0.8pt,
+	stile riquadro=modernred,
 	title={#1}
 }
 
@@ -407,15 +430,9 @@ noautomatic
 % =============================================================================
 \definecolor{provacolor}{RGB}{176, 120, 30}
 \newtcolorbox{provatu}[1][]{
-	enhanced,
-	breakable,
-	colback=provacolor!6,
-	colframe=provacolor,
-	boxrule=0.8pt,
-	arc=2mm,
-	fonttitle=\sffamily\bfseries,
-	coltitle=white,
-	title={Prova tu \textperiodcentered{} #1}
+	stile riquadro=provacolor,
+	etichetta={Prova tu},
+	title={#1}
 }
 % Separatore interno: dalla prova alla spiegazione
 \newcommand{\spiegazione}{\par\medskip\noindent{\sffamily\bfseries\color{provacolor}Che cosa è successo.}\ }
@@ -427,16 +444,9 @@ noautomatic
 % episodi inventati.
 % =============================================================================
 \newtcolorbox{casopersonale}[1][]{
-	enhanced,
-	breakable,
-	colback=white,
-	colframe=moderngray,
-	boxrule=0.6pt,
-	leftrule=3pt,
-	arc=0mm,
-	fonttitle=\sffamily\bfseries,
-	coltitle=modernblack,
-	colbacktitle=white,
+	stile riquadro=personalcolor,
+	colback=paper,
+	etichetta={Un caso personale},
 	title={#1}
 }
 \newcommand{\dascrivere}[1]{{\sffamily\small\color{modernred}[DA SCRIVERE DALL'AUTORE: #1]}}
