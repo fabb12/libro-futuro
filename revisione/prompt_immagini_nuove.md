@@ -42,11 +42,13 @@ Verifica rifatta sui capitoli inclusi in `main.tex` dopo l'aggiornamento di main
 
 **Da sistemare per forza:** Prologo e cap. 15, gli unici capitoli senza immagini. Nessun `\figurasola` punta più a un file mancante (controllo rifatto dopo l'aggiornamento di main). Le altre proposte servono a illustrare concetti difficili che oggi sono spiegati solo a parole.
 
-**Una cosa da verificare nel testo (cap. 4).** `chapter7.tex` descrive la «piramide dell'autogiustificazione» di Tavris e Aronson come una salita («ogni giustificazione ci porta un gradino più in alto, finché ci ritroviamo in cima»). In *Mistakes Were Made (But Not by Me)* l'immagine è al contrario: due persone partono vicine **in cima**, prendono una piccola decisione opposta e, giustificandola, **scivolano giù** su versanti opposti fino a ritrovarsi lontanissime alla base. Il prompt n. 9 segue l'originale; conviene correggere la frase prima di inserire la figura.
+**Cap. 4, piramide dell'autogiustificazione:** la frase di `chapter7.tex` è stata corretta e ora segue l'immagine originale di Tavris e Aronson, con due persone che partono dalla cima e scendono su versanti opposti.
 
 **Immagini già presenti in `images/` ma non usate:** `due_piloti_mente.png` contiene la parola inglese «CONTROL» ed etichette ripetute; `uomo_senza_petto.png` è già sostituita da `giungla_deserto.png`. Non le consiglio come ripiego.
 
 ## 2. Come usare i prompt
+
+**Tutte le 20 figure sono già inserite nel testo** con `\figurasola` e la didascalia proposta. Basta salvare l'immagine in `images/` con il nome indicato (minuscole, `.png`) e comparirà al posto del segnaposto.
 
 Usa lo **stesso blocco di stile** di `revisione/prompt_immagini.md` (sfondo crema #FBF1DE, contorni blu notte, palette arancio/giallo/blu ardesia/verde acqua, testi in italiano) e allega come riferimento `images/neurodiversita.png` e `images/piramide_wallace.png`. Formato 3:2 (1536×1024) salvo indicazione diversa.
 
