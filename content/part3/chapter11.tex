@@ -9,6 +9,8 @@ Nel 2014 alcuni ingegneri di Amazon cominciarono a costruire un sistema che rico
 
 È tentante riassumere la storia in una frase, «le macchine hanno i nostri stessi bias». È una frase efficace e in parte vera, ma confonde cose diverse. Il sistema di Amazon non aveva pregiudizi nel senso in cui li ha una persona. Non provava antipatia per le donne, non aveva un'identità da difendere, non sentiva dissonanza. Aveva imparato una regolarità statistica da dati che riflettevano decisioni umane passate, e la applicava con uno zelo che nessun selezionatore avrebbe avuto. Per capire che cosa succede quando le macchine incontrano i nostri pregiudizi, conviene separare i livelli in cui un sistema di intelligenza artificiale può essere distorto. Sono almeno cinque.
 
+\figurasola{images/cinque_livelli_bias_ia.png}{Cinque punti in cui può nascere la distorsione di un sistema di IA: i dati da cui impara, l'obiettivo per cui è ottimizzato, le scelte di chi lo progetta, il modo in cui lo interroghiamo, i bias di chi legge la risposta.}{fig:cinque_livelli_bias_ia}
+
 \section{Primo livello: i dati}
 
 Un sistema che impara dagli esempi impara anche le loro sproporzioni. Il caso più studiato riguarda il linguaggio.
@@ -64,7 +66,6 @@ I modelli linguistici aggiungono la fluidità. Un testo ben scritto e sicuro di 
 \noindent Una distorsione osservata in una risposta può nascere a qualunque livello, o dalla loro combinazione. I rimedi sono diversi per ciascuno.
 \end{concetto}
 
-\figurasola{images/cinque_livelli_bias_ia.png}{Cinque punti in cui può nascere la distorsione di un sistema di IA: i dati da cui impara, l'obiettivo per cui è ottimizzato, le scelte di chi lo progetta, il modo in cui lo interroghiamo, i bias di chi legge la risposta.}{fig:cinque_livelli_bias_ia}
 
 La distinzione aiuta anche a non confondere sistemi diversi. Il punteggio COMPAS del cap.~\ref{cap:p2c28}, il classificatore di Amazon e un modello linguistico generativo possono essere tutti distorti, ma non nello stesso modo, e le lezioni di uno non si trasferiscono automaticamente agli altri.
 
