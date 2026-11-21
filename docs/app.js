@@ -827,6 +827,18 @@ function latexToHtml(src, notes) {
         const path = readBraceArg() || '';
         return { inline: imgTag(path, opt) };
       }
+      // macro del libro: \figurasola{file}{didascalia}{label} e \immagine{file}{descrizione}
+      case 'figurasola': {
+        const path = readBraceArg() || '';
+        const cap = readBraceArg() || '';
+        readBraceArg(); // label
+        return { block: '<figure>' + imgTag(path, '') + '<figcaption>' + renderFragment(cap) + '</figcaption></figure>' };
+      }
+      case 'immagine': {
+        const path = readBraceArg() || '';
+        readBraceArg(); // descrizione (usata solo come segnaposto in PDF)
+        return { block: '<figure>' + imgTag(path, '') + '</figure>' };
+      }
       case 'caption':
         return { inline: '<figcaption>' + renderFragment(readBraceArg() || '') + '</figcaption>' };
       case 'captionof': {
